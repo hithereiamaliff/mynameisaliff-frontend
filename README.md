@@ -1,3 +1,9 @@
+**NOTE**: This repo is merely the showcase of what the frontend of my website looks like, with sensitive information in the code already retracted.
+
+Do check out my website right here: https://mynameisaliff.co.uk
+
+-----
+
 # My Name Is Aliff
 
 A personal website and portfolio showcasing my journey as a tour guide and content creator in Penang, Malaysia. Features an AI-powered chatbot to help visitors learn more about my experience and services.
