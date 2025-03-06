@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    touch-action: manipulation;
+  }
+  
+  body {
+    @apply antialiased;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  button {
+    @apply cursor-pointer;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-gradient-to-r from-blue-500 to-indigo-500 text-white 
+           px-6 py-3 md:px-10 md:py-4 rounded-full font-semibold text-base md:text-lg
+           flex items-center justify-center mx-auto
+           transform transition-all duration-300 hover:scale-105 
+           hover:from-blue-400 hover:to-indigo-400
+           shadow-lg hover:shadow-xl cursor-pointer;
+  }
+
+  .btn-secondary {
+    @apply bg-white text-black 
+           px-4 py-2 md:px-8 md:py-3 rounded-full font-semibold text-base md:text-lg
+           flex items-center justify-center mx-auto
+           transform transition-all duration-300 hover:scale-105 hover:bg-gray-100
+           cursor-pointer;
+  }
+
+  .btn-action {
+    @apply px-4 py-2 md:px-8 md:py-4 rounded-xl font-semibold text-base md:text-lg
+           flex items-center justify-center
+           transform transition-all duration-300 hover:scale-105
+           shadow-lg hover:shadow-xl cursor-pointer;
+  }
+}
+
+@layer utilities {
+  .scrollbar-thin {
+    scrollbar-width: thin;
+  }
+  
+  .scrollbar-thumb-gray-400::-webkit-scrollbar-thumb {
+    background-color: #9ca3af;
+    border-radius: 9999px;
+  }
+  
+  .scrollbar-track-gray-200::-webkit-scrollbar-track {
+    background-color: #e5e7eb;
+  }
+  
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 1s ease-out;
+}
