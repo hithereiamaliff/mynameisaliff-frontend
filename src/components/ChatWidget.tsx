@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { MessageCircle, X, Send, ChevronDown, ExternalLink } from 'lucide-react';
 import { getChatResponse } from '../lib/openai';
+import ReactMarkdown from 'react-markdown';
 
 interface Message {
   text: string;
@@ -27,16 +28,46 @@ const detectUrls = (text: string): string[] => {
   return [...new Set(text.match(urlRegex) || [])];
 };
 
-// Add this component for URL display
-const UrlButton = ({ url }: { url: string }) => (
+const processMessageContent = (content: string) => {
+  const urlRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
+  const parts = [];
+  let lastIndex = 0;
+  let match;
+
+  while ((match = urlRegex.exec(content)) !== null) {
+    // Add text before the match
+    if (match.index > lastIndex) {
+      parts.push(<ReactMarkdown key={`md-${match.index}`}>{content.slice(lastIndex, match.index)}</ReactMarkdown>);
+    }
+    
+    // Add the button component
+    parts.push(
+      <UrlButton key={match.index} href={match[2]}>
+        {match[1]}
+      </UrlButton>
+    );
+    
+    lastIndex = match.index + match[0].length;
+  }
+
+  // Add remaining text
+  if (lastIndex < content.length) {
+    parts.push(<ReactMarkdown key="md-end">{content.slice(lastIndex)}</ReactMarkdown>);
+  }
+
+  return parts;
+};
+
+// Update the UrlButton component to handle both inline links and URL buttons
+const UrlButton = ({ url, href, children }: { url?: string; href?: string; children?: React.ReactNode }) => (
   <a
-    href={url}
+    href={url || href}
     target="_blank"
     rel="noopener noreferrer"
-    className="inline-flex items-center justify-center gap-2 mt-2 px-3 py-1 bg-yellow-700 text-white rounded-md hover:bg-yellow-800 transition-colors text-sm w-full"
+    className="inline-flex items-center justify-center gap-2 mt-2 px-3 py-1 bg-yellow-700 text-white rounded-md hover:bg-yellow-800 transition-colors text-sm"
   >
     <ExternalLink className="h-4 w-4" />
-    Click Here
+    {children || "Click Here"}
   </a>
 );
 
@@ -144,11 +175,22 @@ export function ChatWidget({ isOpen, onOpenChange }: ChatWidgetProps) {
                   <div
                     className={`max-w-[80%] p-3 rounded-lg ${
                       message.isUser
-                        ? 'bg-yellow-700 text-white'
-                        : 'bg-gray-100 text-gray-900 space-y-2'
-                    }`}
+                        ? 'bg-yellow-700 text-white prose-invert'
+                        : 'bg-gray-100 text-gray-900'
+                    } prose prose-sm max-w-none [&>*:first-child]:mt-0 [&>*:last-child]:mb-0
+                    prose-headings:font-semibold prose-headings:text-inherit
+                    prose-p:my-0.5 prose-p:leading-relaxed
+                    prose-strong:font-semibold prose-strong:text-inherit
+                    prose-em:text-inherit
+                    prose-code:bg-opacity-20 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:text-sm
+                    prose-pre:bg-opacity-20 prose-pre:p-3 prose-pre:rounded-lg
+                    prose-ul:my-0.5 prose-ul:list-disc prose-ul:pl-4
+                    prose-ol:my-0.5 prose-ol:list-decimal prose-ol:pl-4
+                    prose-li:my-0 prose-li:leading-normal`}
                   >
-                    <div className="whitespace-pre-wrap">{message.text}</div>
+                    <div className="whitespace-pre-wrap">
+                      {processMessageContent(message.text)}
+                    </div>
                     {!message.isUser && detectUrls(message.text).map((url, urlIndex) => (
                       <div key={urlIndex} className="flex flex-col">
                         <span className="text-sm text-gray-500 break-all">{url}</span>
