@@ -1,5 +1,6 @@
 import React from 'react';
 import { Linkedin, Download, ChevronDown, User, ScrollText, MapPin, Newspaper, Github } from 'lucide-react';
+import ReactGA from 'react-ga4';
 import { useTypewriter } from './hooks/useTypewriter';
 import { Modal } from './components/Modal';
 import { ChatWidget } from './components/ChatWidget';
@@ -8,9 +9,27 @@ import { TourModal } from './components/tourwithalan/TourModal';
 const scrollToContent = () => {
   const element = document.getElementById('what-i-do');
   element?.scrollIntoView({ behavior: 'smooth' });
+  // Track scroll event
+  ReactGA.event({
+    category: "Navigation",
+    action: "Scroll to Content",
+    label: "User scrolled to What I Do section"
+  });
 };
 
 function App() {
+  React.useEffect(() => {
+    // Initialize GA4 with your measurement ID
+    const measurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "your_ga4_id_here";
+    ReactGA.initialize(measurementId);
+    
+    // Send initial pageview
+    ReactGA.send({
+      hitType: "pageview",
+      page: window.location.pathname,
+    });
+  }, []);
+
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [isChatOpen, setIsChatOpen] = React.useState(false);
   const [isTourModalOpen, setIsTourModalOpen] = React.useState(false);
