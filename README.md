@@ -127,10 +127,10 @@ Contributions are welcome! Feel free to:
 
 ## Contact
 
-🌐 Website: [mynameisaliff.co.uk](https://mynameisaliff.co.uk)
-📧 Email: hello@mynameisaliff.co.uk
-📲 LinkedIn: [linkedin.com/in/hithereiamaliff](https://linkedin.com/in/hithereiamaliff)
-💻 GitHub: [@hithereiamaliff](https://github.com/hithereiamaliff)
+- 🌐 Website: [mynameisaliff.co.uk](https://mynameisaliff.co.uk)
+- 📧 Email: hello@mynameisaliff.co.uk
+- 📲 LinkedIn: [linkedin.com/in/hithereiamaliff](https://linkedin.com/in/hithereiamaliff)
+- 💻 GitHub: [@hithereiamaliff](https://github.com/hithereiamaliff)
 
 ## License
 
