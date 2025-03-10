@@ -78,9 +78,16 @@ function App() {
               <div className="text-xl text-gray-300 space-y-4">
                 <p>
                   I'm Aliff, a <span className="text-amber-400 font-semibold">multi-faceted</span><br />
-                  <span className="text-amber-400 font-semibold">digital experience creator</span><br />
+                  <span className="text-amber-400 font-semibold">digital experience creator</span>
+                </p>
+                
+                <p>
                   📍 George Town, Penang, Malaysia 🇲🇾<br />
                   <span className="text-sm text-amber-400">(Yes, where the amazing food is! 🍜)</span>
+                </p>
+                
+                <p>
+                  
                 </p>
                 <div className="h-8"> {/* Fixed height container to prevent layout shift */}
                   <p className="min-h-[1.5em]">{currentText}</p>
