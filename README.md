@@ -1,6 +1,6 @@
 # My Name Is Aliff
 
-A personal website and portfolio showcasing my journey as a tour guide and content creator in Penang, Malaysia. Features an AI-powered chatbot to help visitors learn more about my experience and services.
+The front-end of my personal website and portfolio showcasing my journey as a digital experience creator in Penang, Malaysia. Features an AI-powered chatbot to help visitors learn more about my experience and services.
 
 ## Features
 
