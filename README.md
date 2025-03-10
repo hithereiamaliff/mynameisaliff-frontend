@@ -30,7 +30,7 @@ The front-end of my personal website and portfolio built with React, TypeScript,
 
 ## Repository Structure
 
-This repository contains the frontend implementation of mynameisaliff.co.uk, with a focus on clean architecture and reusable components.
+This repository contains the frontend implementation of my mynameisaliff.co.uk website, with a focus on clean architecture and reusable components.
 
 ### Core Components
 - `src/components/`: Reusable UI components
@@ -58,7 +58,7 @@ This repository contains the frontend implementation of mynameisaliff.co.uk, wit
 ### Local Setup
 1. Clone the repository
 ```bash
-git clone https://github.com/yourusername/mynameisaliff.git
+git clone https://github.com/hithereiamaliff/mynameisaliff-frontend.git
 cd mynameisaliff
 ```
 
