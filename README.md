@@ -5,7 +5,7 @@ A personal website and portfolio showcasing my journey as a tour guide and conte
 ## Features
 
 - Modern, responsive design
-- Interactive Tour Guide modal with Malaysian-themed experience
+- Interactive Malaysia Welcome Guide modal with Malaysian-themed experience
 - An AI-powered chatbot for answering questions
 - "Let's Connect" section with LinkedIn and GitHub integration
 
