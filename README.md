@@ -1,130 +1,95 @@
-# Malaysian Tourism Interactive Guide Components
+# My Name Is Aliff
 
-An open-source collection of React components for creating an interactive Malaysian tourism experience. These components are part of my personal website [mynameisaliff.co.uk](https://mynameisaliff.co.uk), where they help visitors learn about traveling to Malaysia.
+A personal website and portfolio showcasing my journey as a tour guide and content creator in Penang, Malaysia. Features an AI-powered chatbot to help visitors learn more about my experience and services.
 
-## ✨ Features
+## Features
 
-- 🇲🇾 **Malaysian-Themed Experience**: Culturally authentic interface with local terms and Malaysian context
-- 📱 **Fully Responsive**: Works seamlessly on all devices
-- 🎨 **Modern UI/UX**: Clean, intuitive design with smooth transitions
-- 🔍 **Interactive Guides**:
-  - Visa Requirements Checker
-  - MDAC (Malaysia Digital Arrival Card) Guide
-  - Welcome to Malaysia Experience
+- Modern, responsive design
+- Interactive Tour Guide modal with Malaysian-themed experience
+- An AI-powered chatbot for answering questions
+- "Let's Connect" section with LinkedIn and GitHub integration
 
-## 🛠️ Tech Stack
+## Tech Stack
 
-- React + TypeScript
-- Tailwind CSS
-- Lucide React for icons
-- Framer Motion for transitions
+- Frontend:
+  - React + TypeScript
+  - Vite
+  - Tailwind CSS
+  - Lucide React for icons
 
-## 🚀 Getting Started
+- Backend:
+  - Node.js + Express
+  - OpenAI API integration
+  - Railway for deployment
 
-1. Install the dependencies:
-```bash
-npm install
-# or
-yarn install
+## Environment Variables
+
+### Frontend (.env)
+```
+VITE_BACKEND_URL_PROD=your_production_backend_url
+VITE_BACKEND_URL_DEV=http://localhost:3001/api/chat
+NEXT_PUBLIC_GA_MEASUREMENT_ID=your_ga4_measurement_id
 ```
 
-2. Import the components:
-```typescript
-import { TourModal } from './components/tourwithalan/TourModal';
+### Backend (.env)
+```
+OPENAI_API_KEY=your_openai_api_key
+CLIENT_URL=your_frontend_url
+CHATBOT_CONTENT=your_chatbot_content
+CHATBOT_SYSTEM_INSTRUCTIONS=your_chatbot_instructions
 ```
 
-3. Use in your React application:
-```typescript
-function App() {
-  const [isTourModalOpen, setIsTourModalOpen] = React.useState(false);
+## Repository Structure
 
-  return (
-    <>
-      <button onClick={() => setIsTourModalOpen(true)}>
-        Start Malaysia Tour
-      </button>
-      <TourModal 
-        isOpen={isTourModalOpen} 
-        onClose={() => setIsTourModalOpen(false)} 
-      />
-    </>
-  );
-}
-```
+This repository maintains two versions:
+1. **Private Repository** (this one): Contains the complete website with all features
+2. **Public Repository**: Contains only the tour components for open-source sharing
 
-## 📦 Component Structure
+### Tour Components Sync Process
 
-```
-src/components/tourwithalan/
-├── components/          # Shared components
-│   ├── BackButton.tsx
-│   ├── Layout.tsx      # Common layout with X close button
-│   ├── Portal.tsx
-│   ├── RestartButton.tsx
-│   └── Transition.tsx
-├── pages/              # Tour guide pages
-│   ├── Welcome.tsx
-│   ├── VisaCheck.tsx
-│   ├── MDAC.tsx
-│   └── WelcomeToMalaysia.tsx
-└── TourModal.tsx       # Main tour component
-```
+The tour components are automatically synced to the public repository using GitHub Actions.
 
-## 🎨 UI Components
+#### Automated Sync Workflow
 
-### Modal Layout
-- Consistent X close button across all pages
-- Responsive design with proper overlay
-- Smooth transitions between pages
+The workflow triggers automatically when changes are made to:
+- `src/components/tourwithalan/**`
+- `src/components/Modal.tsx`
+- `tailwind.config.js`
+- `postcss.config.js`
+- `README.md`
 
-### Tour Pages
-1. **Welcome (Selamat Datang!)**
-   - Warm Malaysian greeting
-   - Introduction to the journey
-   - Cultural context with local terms
+#### Setting Up Sync
 
-2. **Visa Requirements**
-   - Interactive visa checker
-   - Country-specific information
-   - Clear next steps
+1. Create a GitHub Personal Access Token:
+   - Go to GitHub Settings > Developer Settings > Personal Access Tokens
+   - Generate a new token with `repo` scope
+   - Copy the token
 
-3. **MDAC Guide**
-   - Step-by-step MDAC form guide
-   - Important tips and requirements
-   - Links to official resources
+2. Add Repository Secret:
+   - Go to your public repository settings
+   - Navigate to Settings > Secrets and variables > Actions
+   - Add new repository secret:
+     - Name: `SYNC_TOKEN`
+     - Value: Your GitHub token
 
-4. **Welcome to Malaysia**
-   - Celebratory completion page
-   - Malaysian cultural elements
-   - Helpful travel tips
+3. The workflow will:
+   - Copy tour components to a temporary directory
+   - Clean sensitive data (API keys, analytics IDs)
+   - Push changes to the public repository
 
-## 🔧 Configuration
+#### Manual Sync
 
-### Environment Variables (.env)
-```
-NEXT_PUBLIC_GA_MEASUREMENT_ID=your_ga4_id_here
-```
+You can also trigger the sync manually:
+1. Go to the Actions tab in GitHub
+2. Select "Sync Tour Components to Public Repository"
+3. Click "Run workflow"
 
-### Tailwind Configuration
-The components use a custom Tailwind configuration for consistent styling. Make sure to include the provided `tailwind.config.js` in your project.
+## Deployment
 
-## 📝 Contributing
+The project is set up for deployment on:
+- Frontend: Netlify
+- Backend: Railway
 
-Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
+## Feedback About This Site/Codebase
 
-## 📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 🙏 Acknowledgments
-
-- Inspired by Malaysia's rich cultural heritage
-- Built with love for travelers visiting Malaysia
-- Special thanks to the Malaysian tourism community
-
-## 🤝 Support
-
-If you have any questions or need help integrating these components, feel free to:
-- Open an issue
-- Contact me at hello@mynameisaliff.co.uk
-- Visit [mynameisaliff.co.uk](https://mynameisaliff.co.uk) to see the components in action
+Feel free to submit issues and enhancement requests at hello@mynameisaliff.co.uk!

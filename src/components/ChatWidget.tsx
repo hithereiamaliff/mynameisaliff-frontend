@@ -71,7 +71,8 @@ export function ChatWidget({ isOpen, onOpenChange }: ChatWidgetProps) {
 
     setIsLoading(true);
     try {
-      const response = await getChatResponse(inputText);
+      // Pass the entire message history including the new message
+      const response = await getChatResponse([...messages, userMessage]);
       
       const botResponse: Message = {
         text: response,

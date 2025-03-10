@@ -1,6 +1,6 @@
 import React from 'react';
-import { Linkedin, Download, ChevronDown, User, ScrollText, MapPin, Newspaper, Github } from 'lucide-react';
 import ReactGA from 'react-ga4';
+import { Linkedin, Download, ChevronDown, User, ScrollText, MapPin, Newspaper, Github } from 'lucide-react';
 import { useTypewriter } from './hooks/useTypewriter';
 import { Modal } from './components/Modal';
 import { ChatWidget } from './components/ChatWidget';
@@ -11,23 +11,35 @@ const scrollToContent = () => {
   element?.scrollIntoView({ behavior: 'smooth' });
   // Track scroll event
   ReactGA.event({
-    category: "Navigation",
-    action: "Scroll to Content",
-    label: "User scrolled to What I Do section"
+    category: 'User Interaction',
+    action: 'Scrolled to Content'
   });
 };
 
 function App() {
   React.useEffect(() => {
     // Initialize GA4 with your measurement ID
-    const measurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "your_ga4_id_here";
-    ReactGA.initialize(measurementId);
-    
+    ReactGA.initialize('your_ga4_id_here', {
+      gaOptions: {
+        cookieFlags: 'SameSite=None;Secure'
+      }
+    });
+
     // Send initial pageview
     ReactGA.send({
       hitType: "pageview",
-      page: window.location.pathname,
+      page: window.location.pathname + window.location.search,
+      title: document.title
     });
+
+    // Send a test event
+    ReactGA.event({
+      category: "Testing",
+      action: "GA4 Test Event",
+      label: new Date().toISOString()
+    });
+
+    console.log('GA4: Sent test event');
   }, []);
 
   const [isModalOpen, setIsModalOpen] = React.useState(false);
@@ -36,6 +48,10 @@ function App() {
 
   const descriptions = [
     'Tour guide-in-training 🙋🏻',
+    'AI enthusiast 🤖',
+    'User experience 🎨',
+    'Web application development 💻',
+    'Content writing 📝',
     'Digital marketing 📈',
     'FinTech enthusiast 📱💳',
     'Public transport user 🚌🚉'
@@ -56,13 +72,15 @@ function App() {
           {/* Left Column - Introduction */}
           <div className="space-y-6 text-center lg:text-left">
             <h1 className="text-5xl lg:text-7xl font-bold text-white">
-              Hi There! 👋
+              Selamat Datang! 👋
             </h1>
             <div className="space-y-4">
               <div className="text-xl text-gray-300 space-y-4">
                 <p>
-                  I'm Aliff, currently based in<br />
-                  George Town, Penang 🇲🇾
+                  I'm Aliff, a <span className="text-amber-400 font-semibold">multi-faceted</span><br />
+                  <span className="text-amber-400 font-semibold">digital experience creator</span><br />
+                  📍 George Town, Penang, Malaysia 🇲🇾<br />
+                  <span className="text-sm text-amber-400">(Yes, where the amazing food is! 🍜)</span>
                 </p>
                 <div className="h-8"> {/* Fixed height container to prevent layout shift */}
                   <p className="min-h-[1.5em]">{currentText}</p>
@@ -124,7 +142,13 @@ function App() {
                 <p className="text-gray-400 mb-4">{skill.description}</p>
                 {index === 2 ? (
                   <button
-                    onClick={() => setIsTourModalOpen(true)}
+                    onClick={() => {
+                      setIsTourModalOpen(true);
+                      ReactGA.event({
+                        category: 'User Interaction',
+                        action: 'Opened Tour Modal'
+                      });
+                    }}
                     className="inline-block px-4 py-2 bg-yellow-700 hover:bg-yellow-800 text-white rounded-lg text-sm font-medium transition-colors"
                   >
                     Visiting Malaysia Soon? Try Me Out!
@@ -137,6 +161,13 @@ function App() {
                     }
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={() => {
+                      ReactGA.event({
+                        category: 'External Link',
+                        action: 'Click',
+                        label: index === 0 ? 'Content Writing' : 'UX Case Study'
+                      });
+                    }}
                     className="inline-block px-4 py-2 bg-yellow-700 hover:bg-yellow-800 text-white rounded-lg text-sm font-medium transition-colors"
                   >
                     {index === 0 ? 'Learn More' : 'View Case Study'}
@@ -147,7 +178,13 @@ function App() {
           </div>
           <div className="mt-12 text-center">
             <button
-              onClick={() => setIsModalOpen(true)}
+              onClick={() => {
+                setIsModalOpen(true);
+                ReactGA.event({
+                  category: 'User Interaction',
+                  action: 'Opened CV Modal'
+                });
+              }}
               className="inline-flex items-center justify-center px-6 py-3 bg-gray-800 hover:bg-gray-700 text-white rounded-lg font-medium transition-colors"
             >
               Download CV
@@ -166,6 +203,13 @@ function App() {
               href="https://hithere.mynameisaliff.co.uk"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => {
+                ReactGA.event({
+                  category: 'External Link',
+                  action: 'Click',
+                  label: 'Ramblings'
+                });
+              }}
               className="inline-flex items-center px-6 py-3 bg-gray-800 hover:bg-gray-700 text-white rounded-lg font-medium transition-colors"
             >
               <Newspaper className="mr-2 h-5 w-5" />
@@ -175,6 +219,13 @@ function App() {
               href="https://www.linkedin.com/in/hithereiamaliff"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => {
+                ReactGA.event({
+                  category: 'External Link',
+                  action: 'Click',
+                  label: 'LinkedIn'
+                });
+              }}
               className="inline-flex items-center px-6 py-3 bg-gray-800 hover:bg-gray-700 text-white rounded-lg font-medium transition-colors"
             >
               <Linkedin className="mr-2 h-5 w-5" />
@@ -184,6 +235,13 @@ function App() {
               href="https://github.com/hithereiamaliff"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => {
+                ReactGA.event({
+                  category: 'External Link',
+                  action: 'Click',
+                  label: 'GitHub'
+                });
+              }}
               className="inline-flex items-center px-6 py-3 bg-gray-800 hover:bg-gray-700 text-white rounded-lg font-medium transition-colors"
             >
               <Github className="mr-2 h-5 w-5" />
@@ -194,6 +252,10 @@ function App() {
               onClick={(e) => {
                 e.preventDefault();
                 setIsChatOpen(true);
+                ReactGA.event({
+                  category: 'User Interaction',
+                  action: 'Opened Chat Widget'
+                });
               }}
               className="inline-flex items-center px-6 py-3 bg-gray-800 hover:bg-gray-700 text-white rounded-lg font-medium transition-colors"
             >
@@ -205,15 +267,35 @@ function App() {
       </div>
       
       {/* ConvertKit Modal */}
-      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+      <Modal isOpen={isModalOpen} onClose={() => {
+        setIsModalOpen(false);
+        ReactGA.event({
+          category: 'User Interaction',
+          action: 'Closed CV Modal'
+        });
+      }}>
         <div className="text-center mb-8">
           <h3 className="text-2xl font-bold text-gray-900 mb-2">Download My CV</h3>
           <p className="text-gray-600">Please fill in your details to receive my CV</p>
         </div>
         <div id="convertkit-form-container" className="min-h-[300px]" />
       </Modal>
-      <ChatWidget isOpen={isChatOpen} onOpenChange={setIsChatOpen} />
-      <TourModal isOpen={isTourModalOpen} onClose={() => setIsTourModalOpen(false)} />
+      <ChatWidget isOpen={isChatOpen} onOpenChange={(isOpen) => {
+        setIsChatOpen(isOpen);
+        if (!isOpen) {
+          ReactGA.event({
+            category: 'User Interaction',
+            action: 'Closed Chat Widget'
+          });
+        }
+      }} />
+      <TourModal isOpen={isTourModalOpen} onClose={() => {
+        setIsTourModalOpen(false);
+        ReactGA.event({
+          category: 'User Interaction',
+          action: 'Closed Tour Modal'
+        });
+      }} />
     </div>
   );
 }

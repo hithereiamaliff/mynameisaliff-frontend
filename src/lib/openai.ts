@@ -1,19 +1,23 @@
-export async function getChatResponse(userMessage: string): Promise<string> {
+export async function getChatResponse(messages: { text: string; isUser: boolean; timestamp: Date }[]): Promise<string> {
   try {
-    // Use Railway backend URL in production, local URL in development
-    const apiUrl = 'YOUR_API_BACKEND_URL_HERE';
+    const apiUrl = 'https://mynameisaliff-backend-production.up.railway.app/api/chat';
 
     console.log('Sending request to:', apiUrl);
-    console.log('Message:', userMessage);
+    
+    // Convert messages to OpenAI format
+    const formattedMessages = messages.map(msg => ({
+      role: msg.isUser ? 'user' : 'assistant',
+      content: msg.text
+    }));
+
+    console.log('Messages:', formattedMessages);
 
     const response = await fetch(apiUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        messages: [{ role: 'user', content: userMessage }]
-      })
+      body: JSON.stringify({ messages: formattedMessages })
     });
 
     if (!response.ok) {
