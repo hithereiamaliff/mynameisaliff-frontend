@@ -18,8 +18,11 @@ export function Welcome({ onNext, onClose }: WelcomeProps) {
         </div>
         
         <h2 className="text-4xl md:text-6xl font-bold mb-4 md:mb-6 animate-fade-in">
-          Selamat Datang ke Malaysia! 🇲🇾
-          <span className="block text-sm font-normal text-gray-500 mt-1">
+          <span className="bg-gradient-to-r from-red-500 via-yellow-300 to-blue-600 text-transparent bg-clip-text animate-gradient">
+            Selamat Datang ke Malaysia!
+          </span> 
+          🇲🇾
+          <span className="block text-sm font-normal text-white mt-1">
             (Welcome to Malaysia!)
           </span>
         </h2>
@@ -40,17 +43,8 @@ export function Welcome({ onNext, onClose }: WelcomeProps) {
               <li>Submit your Malaysia Digital Arrival Card (MDAC) ✈️</li>
             </ul>
             
-            <p className="text-sm text-gray-500 italic">
+            <p className="text-sm text-gray-200 italic">
               Note: MDAC must be submitted within 3 days before your arrival
-            </p>
-            
-            <p className="text-yellow-300 font-medium">
-              Currently covering:
-              <span className="block mt-2 space-y-1">
-                ✨ Visa Requirements Check
-                ✨ MDAC Declaration Form
-                ✨ More Features Coming Soon!
-              </span>
             </p>
           </div>
         </div>
