@@ -18,24 +18,30 @@ export function Welcome({ onNext, onClose }: WelcomeProps) {
         </div>
         
         <h2 className="text-4xl md:text-6xl font-bold mb-4 md:mb-6 animate-fade-in">
-          Selamat Datang!
+          Selamat Datang ke Malaysia! 🇲🇾
+          <span className="block text-sm font-normal text-gray-500 mt-1">
+            (Welcome to Malaysia!)
+          </span>
         </h2>
         
         <div className="bg-black/30 backdrop-blur-sm p-4 md:p-8 rounded-2xl shadow-xl mb-6 md:mb-8">
           <h2 className="text-xl md:text-2xl font-medium mb-4 md:mb-6 text-yellow-400">
-            Welcome to Malaysia, Truly Asia! 🌺
+            Hi there! I'm your friendly Malaysian local, ready to help you prepare for your journey to our beautiful country! 
+            You can call me <span className="text-yellow-600 font-medium">Aliff</span> 😄.
           </h2>
 
           <div className="space-y-4 text-base md:text-xl text-gray-200">
             <p>
-              We're excited to help you explore our beautiful country, where tradition meets modernity 
-              and diverse cultures blend harmoniously! 🏮 🕌 ⛩️
+              Before you embark on your Malaysian adventure, let me help you with two essential things:
             </p>
             
-            <p>
-              To make your journey as smooth as possible, we've created this interactive guide 
-              to help you with all the essential entry requirements. Think of me as your 
-              digital "Abang" (brother) or "Kakak" (sister) helping you out! 😊
+            <ul className="list-disc list-inside space-y-2 ml-4">
+              <li>Check if you need a visa 🛂</li>
+              <li>Submit your Malaysia Digital Arrival Card (MDAC) ✈️</li>
+            </ul>
+            
+            <p className="text-sm text-gray-500 italic">
+              Note: MDAC must be submitted within 3 days before your arrival
             </p>
             
             <p className="text-yellow-300 font-medium">
@@ -43,7 +49,6 @@ export function Welcome({ onNext, onClose }: WelcomeProps) {
               <span className="block mt-2 space-y-1">
                 ✨ Visa Requirements Check
                 ✨ MDAC Declaration Form
-                ✨ Entry Guidelines
                 ✨ More Features Coming Soon!
               </span>
             </p>
