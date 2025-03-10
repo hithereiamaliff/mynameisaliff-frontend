@@ -1,8 +1,13 @@
 export async function getChatResponse(messages: { text: string; isUser: boolean; timestamp: Date }[]): Promise<string> {
   try {
-    const apiUrl = 'https://mynameisaliff-backend-production.up.railway.app/api/chat';
+    // Use environment variable with fallback to production URL
+    const apiUrl = import.meta.env.VITE_API_URL || 'https://mynameisaliff-backend-production.up.railway.app/api/chat';
 
-    console.log('Sending request to:', apiUrl);
+    console.log('Using API URL:', apiUrl);
+    console.log('Environment variables:', {
+      VITE_API_URL: import.meta.env.VITE_API_URL,
+      NODE_ENV: import.meta.env.NODE_ENV
+    });
     
     // Convert messages to OpenAI format
     const formattedMessages = messages.map(msg => ({
@@ -16,6 +21,7 @@ export async function getChatResponse(messages: { text: string; isUser: boolean;
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Accept': 'application/json'
       },
       body: JSON.stringify({ messages: formattedMessages })
     });
@@ -25,6 +31,7 @@ export async function getChatResponse(messages: { text: string; isUser: boolean;
       console.error('API request failed:', {
         status: response.status,
         statusText: response.statusText,
+        url: apiUrl,
         errorData
       });
       throw new Error(`API request failed: ${response.status} ${response.statusText}`);
@@ -38,7 +45,8 @@ export async function getChatResponse(messages: { text: string; isUser: boolean;
     if (error instanceof Error) {
       console.error('Error details:', {
         message: error.message,
-        stack: error.stack
+        stack: error.stack,
+        url: import.meta.env.VITE_API_URL
       });
     }
     return 'I apologize, but I am currently experiencing technical difficulties. Please try again in a few moments.';

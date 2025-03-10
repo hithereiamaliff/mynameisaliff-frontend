@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MessageCircle, X, Send, ChevronDown, ExternalLink } from 'lucide-react';
+import { MessageCircle, X, Send, ChevronDown, ExternalLink, Link } from 'lucide-react';
 import { getChatResponse } from '../lib/openai';
 import ReactMarkdown from 'react-markdown';
 
@@ -22,10 +22,7 @@ interface ChatWidgetProps {
 
 // Update the URL detection function with a more precise regex
 const detectUrls = (text: string): string[] => {
-  // This regex will match URLs but exclude common punctuation and special characters
-  const urlRegex = /(https?:\/\/[^\s,;:!?()*\[\]{}]+)/g;
-  // Get all URLs and remove duplicates using Set
-  return [...new Set(text.match(urlRegex) || [])];
+  return [];  // Return empty array since we don't want additional URL buttons
 };
 
 const processMessageContent = (content: string) => {
@@ -40,11 +37,15 @@ const processMessageContent = (content: string) => {
       parts.push(<ReactMarkdown key={`md-${match.index}`}>{content.slice(lastIndex, match.index)}</ReactMarkdown>);
     }
     
-    // Add the button component
+    // Add the button component and URL display
     parts.push(
-      <UrlButton key={match.index} href={match[2]}>
-        {match[1]}
-      </UrlButton>
+      <div key={match.index} className="flex flex-col">
+        <UrlButton href={match[2]}>Click Here</UrlButton>
+        <div className="flex items-center gap-1 mt-1">
+          <Link className="h-4 w-4 text-gray-500" />
+          <span className="text-sm text-gray-500 break-all">{match[2]}</span>
+        </div>
+      </div>
     );
     
     lastIndex = match.index + match[0].length;
@@ -64,7 +65,7 @@ const UrlButton = ({ url, href, children }: { url?: string; href?: string; child
     href={url || href}
     target="_blank"
     rel="noopener noreferrer"
-    className="inline-flex items-center justify-center gap-2 mt-2 px-3 py-1 bg-yellow-700 text-white rounded-md hover:bg-yellow-800 transition-colors text-sm"
+    className="inline-flex items-center justify-center gap-2 mt-2 px-3 py-1.5 bg-yellow-700 text-white rounded-md hover:bg-yellow-800 transition-colors w-fit"
   >
     <ExternalLink className="h-4 w-4" />
     {children || "Click Here"}
@@ -177,12 +178,12 @@ export function ChatWidget({ isOpen, onOpenChange }: ChatWidgetProps) {
                       message.isUser
                         ? 'bg-yellow-700 text-white prose-invert'
                         : 'bg-gray-100 text-gray-900'
-                    } prose prose-sm max-w-none [&>*:first-child]:mt-0 [&>*:last-child]:mb-0
+                    } prose max-w-none [&>*:first-child]:mt-0 [&>*:last-child]:mb-0
                     prose-headings:font-semibold prose-headings:text-inherit
                     prose-p:my-0.5 prose-p:leading-relaxed
                     prose-strong:font-semibold prose-strong:text-inherit
                     prose-em:text-inherit
-                    prose-code:bg-opacity-20 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:text-sm
+                    prose-code:bg-opacity-20 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md
                     prose-pre:bg-opacity-20 prose-pre:p-3 prose-pre:rounded-lg
                     prose-ul:my-0.5 prose-ul:list-disc prose-ul:pl-4
                     prose-ol:my-0.5 prose-ol:list-decimal prose-ol:pl-4
@@ -191,12 +192,6 @@ export function ChatWidget({ isOpen, onOpenChange }: ChatWidgetProps) {
                     <div className="whitespace-pre-wrap">
                       {processMessageContent(message.text)}
                     </div>
-                    {!message.isUser && detectUrls(message.text).map((url, urlIndex) => (
-                      <div key={urlIndex} className="flex flex-col">
-                        <span className="text-sm text-gray-500 break-all">{url}</span>
-                        <UrlButton url={url} />
-                      </div>
-                    ))}
                   </div>
                 </div>
               ))}
