@@ -9,7 +9,7 @@ interface Message {
 }
 
 const INITIAL_MESSAGE = {
-  text: "Hi! I'm Aliff's virtual assistant. You can ask me in whichever language you prefer, and I'll reply back the same (powered by AI). How can I help you today?",
+  text: "Selamat datang! 🇲🇾 I'm Aliff's virtual assistant. You can chat with me in any language you prefer, and I'll reply in the same language you use (powered by AI). How can I help you today?",
   isUser: false,
   timestamp: new Date()
 };
@@ -115,7 +115,7 @@ export function ChatWidget({ isOpen, onOpenChange }: ChatWidgetProps) {
       <div className="bg-white sm:rounded-lg shadow-xl flex flex-col h-[100vh] sm:h-auto sm:max-h-[600px]">
         {/* Header */}
         <div className="p-4 bg-yellow-700 text-white sm:rounded-t-lg flex justify-between items-center">
-          <h3 className="font-medium">Chat with Aliff's Assistant</h3>
+          <h3 className="font-medium">Chat with Aliff's Assistant 🇲🇾</h3>
           <div className="flex gap-2">
             <button
               onClick={() => setIsMinimized(!isMinimized)}
