@@ -3,6 +3,23 @@ import { MessageCircle, X, Send, ExternalLink, Link } from 'lucide-react';
 import { getChatResponse } from '../lib/openai';
 import ReactMarkdown from 'react-markdown';
 
+const fadeInKeyframes = `
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+`;
+
+const style = document.createElement('style');
+style.textContent = fadeInKeyframes;
+document.head.appendChild(style);
+
 interface Message {
   text: string;
   isUser: boolean;
@@ -183,17 +200,17 @@ export function ChatWidget({ isOpen, onOpenChange }: ChatWidgetProps) {
         </div>
 
         {/* Chat Content */}
-        <div className="flex-1 overflow-y-auto px-4 py-2 pb-1 space-y-2 min-h-0">
+        <div className="flex-1 overflow-y-auto px-4 py-2 pb-1 space-y-3 min-h-0">
           {messages.map((message, index) => (
             <div
               key={index}
-              className={`flex ${message.isUser ? 'justify-end' : 'justify-start'} mb-2`}
+              className={`flex ${message.isUser ? 'justify-end' : 'justify-start'} mb-2 animate-fade-in`}
             >
               <div
-                className={`max-w-[85%] px-3 py-2 rounded-lg ${
+                className={`max-w-[70%] px-3.5 py-2.5 rounded-lg shadow-sm transition-all ${
                   message.isUser
-                    ? 'bg-yellow-700 text-white prose-invert ml-auto rounded-tr-none'
-                    : 'bg-gray-100 text-gray-900 mr-auto rounded-tl-none'
+                    ? 'bg-yellow-700 text-white prose-invert ml-auto rounded-tr-none hover:bg-yellow-800'
+                    : 'bg-gray-100 text-gray-900 mr-auto rounded-tl-none hover:bg-gray-200'
                 } prose max-w-none [&>*:first-child]:mt-0 [&>*:last-child]:mb-0
                 prose-headings:font-semibold prose-headings:text-inherit
                 prose-p:my-0.5 prose-p:leading-relaxed
@@ -212,11 +229,13 @@ export function ChatWidget({ isOpen, onOpenChange }: ChatWidgetProps) {
             </div>
           ))}
           {isLoading && (
-            <div className="flex justify-start mb-1.5">
-              <div className="bg-gray-100 rounded-lg px-2.5 py-2 flex items-center space-x-2">
-                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
-                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
-                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+            <div className="flex justify-start mb-2 animate-fade-in">
+              <div className="max-w-[70%] px-4 py-2.5 rounded-lg bg-gray-100 text-gray-900 mr-auto rounded-tl-none shadow-sm">
+                <div className="flex items-center gap-1">
+                  <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce [animation-delay:-0.3s]"></div>
+                  <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce [animation-delay:-0.15s]"></div>
+                  <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
+                </div>
               </div>
             </div>
           )}
