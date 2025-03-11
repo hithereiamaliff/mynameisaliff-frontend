@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MessageCircle, X, Send, ExternalLink, Link } from 'lucide-react';
 import { getChatResponse } from '../lib/openai';
 import ReactMarkdown from 'react-markdown';
@@ -72,15 +72,44 @@ export function ChatWidget({ isOpen, onOpenChange }: ChatWidgetProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [inputText, setInputText] = useState('');
   const messagesEndRef = React.useRef<HTMLDivElement>(null);
+  const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
+
+  // Update viewport height when window resizes or orientation changes
+  useEffect(() => {
+    const updateViewportHeight = () => {
+      setViewportHeight(window.innerHeight);
+    };
+
+    window.addEventListener('resize', updateViewportHeight);
+    window.addEventListener('orientationchange', updateViewportHeight);
+
+    // Initial update
+    updateViewportHeight();
+
+    return () => {
+      window.removeEventListener('resize', updateViewportHeight);
+      window.removeEventListener('orientationchange', updateViewportHeight);
+    };
+  }, []);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isOpen) {
       scrollToBottom();
+      // Prevent body scrolling when chat is open on mobile
+      if (window.innerWidth < 640) {
+        document.body.style.overflow = 'hidden';
+      }
+    } else {
+      document.body.style.overflow = 'auto';
     }
+
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
   }, [messages, isOpen]);
 
   const handleSend = async () => {
@@ -138,7 +167,10 @@ export function ChatWidget({ isOpen, onOpenChange }: ChatWidgetProps) {
 
   return (
     <div className="fixed bottom-0 right-0 w-full sm:w-auto sm:max-w-sm sm:bottom-6 sm:right-6 z-50">
-      <div className="flex flex-col bg-white sm:rounded-lg shadow-xl h-[100vh] sm:h-[calc(100vh-6rem)] max-h-[600px]">
+      <div 
+        className="flex flex-col bg-white sm:rounded-lg shadow-xl sm:h-[calc(100vh-6rem)] sm:max-h-[600px]"
+        style={{ height: window.innerWidth < 640 ? `${viewportHeight}px` : undefined }}
+      >
         {/* Header - Fixed position */}
         <div className="sticky top-0 p-4 bg-yellow-700 text-white sm:rounded-t-lg flex justify-between items-center z-10">
           <h3 className="font-medium">Chat with Aliff's Assistant 🇲🇾</h3>
