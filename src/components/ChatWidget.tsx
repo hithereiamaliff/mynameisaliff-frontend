@@ -183,17 +183,17 @@ export function ChatWidget({ isOpen, onOpenChange }: ChatWidgetProps) {
         </div>
 
         {/* Chat Content */}
-        <div className="flex-1 overflow-y-auto px-2 py-2 pb-1 space-y-2 min-h-0">
+        <div className="flex-1 overflow-y-auto px-4 py-2 pb-1 space-y-2 min-h-0">
           {messages.map((message, index) => (
             <div
               key={index}
-              className={`flex ${message.isUser ? 'justify-end' : 'justify-start'} mb-1.5`}
+              className={`flex ${message.isUser ? 'justify-end' : 'justify-start'} mb-2`}
             >
               <div
-                className={`max-w-[70%] px-2.5 py-2 rounded-lg ${
+                className={`max-w-[85%] px-3 py-2 rounded-lg ${
                   message.isUser
-                    ? 'bg-yellow-700 text-white prose-invert ml-auto'
-                    : 'bg-gray-100 text-gray-900 mr-auto'
+                    ? 'bg-yellow-700 text-white prose-invert ml-auto rounded-tr-none'
+                    : 'bg-gray-100 text-gray-900 mr-auto rounded-tl-none'
                 } prose max-w-none [&>*:first-child]:mt-0 [&>*:last-child]:mb-0
                 prose-headings:font-semibold prose-headings:text-inherit
                 prose-p:my-0.5 prose-p:leading-relaxed
