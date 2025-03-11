@@ -138,7 +138,7 @@ export function ChatWidget({ isOpen, onOpenChange }: ChatWidgetProps) {
       setMessages(prev => [...prev, botResponse]);
     } catch (error) {
       const errorMessage: Message = {
-        text: "I'm currently unable to respond. Please make sure the OpenAI API key is properly configured.",
+        text: "I'm currently unable to respond. Please check your environment configuration.",
         isUser: false,
         timestamp: new Date()
       };
@@ -212,8 +212,8 @@ export function ChatWidget({ isOpen, onOpenChange }: ChatWidgetProps) {
             </div>
           ))}
           {isLoading && (
-            <div className="flex justify-start mb-1.5">
-              <div className="bg-gray-100 rounded-lg px-2.5 py-2 flex items-center space-x-2">
+            <div className="flex justify-start mb-4">
+              <div className="bg-gray-100 rounded-lg p-4 flex items-center space-x-2">
                 <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
                 <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
                 <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
@@ -223,20 +223,20 @@ export function ChatWidget({ isOpen, onOpenChange }: ChatWidgetProps) {
           <div ref={messagesEndRef} />
         </div>
 
-        {/* Input area - Fixed at bottom */}
-        <div className="sticky bottom-0 bg-white border-t border-gray-200 pt-2 px-3 pb-3 sm:rounded-b-lg">
-          <div className="flex gap-3">
+        {/* Input Area */}
+        <div className="p-4 border-t">
+          <div className="flex gap-2">
             <textarea
               value={inputText}
               onChange={(e) => setInputText(e.target.value)}
-              onKeyDown={handleKeyPress}
+              onKeyPress={handleKeyPress}
               placeholder="Type your message..."
-              className="flex-1 resize-none rounded-lg border border-gray-300 focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 p-2 min-h-[44px] max-h-32"
+              className="flex-1 resize-none border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-yellow-700 text-base"
               rows={1}
             />
             <button
               onClick={handleSend}
-              disabled={!inputText.trim() || isLoading}
+              disabled={!inputText.trim()}
               className="p-2 bg-yellow-700 text-white rounded-lg hover:bg-yellow-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Send className="h-5 w-5" />
