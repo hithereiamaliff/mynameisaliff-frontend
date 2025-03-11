@@ -10,7 +10,7 @@ interface Message {
 }
 
 const INITIAL_MESSAGE = {
-  text: "Selamat datang! 🇲🇾 I'm Aliff's virtual assistant. You can chat with me in any language you prefer, and I'll reply in the same language you use (powered by AI). How can I help you today?",
+  text: "Selamat datang! I'm Aliff's virtual assistant. You can chat with me in any language you prefer, and I'll reply in the same language you use (powered by AI). How can I help you today?",
   isUser: false,
   timestamp: new Date()
 };
