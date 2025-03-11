@@ -209,9 +209,11 @@ export function ChatWidget({ isOpen, onOpenChange }: ChatWidgetProps) {
               <div
                 className={`max-w-[70%] px-3.5 py-2.5 rounded-lg shadow-sm transition-all ${
                   message.isUser
-                    ? 'bg-yellow-700 text-white prose-invert ml-auto rounded-tr-none hover:bg-yellow-800'
+                    ? 'bg-yellow-700 text-white ml-auto rounded-tr-none hover:bg-yellow-800'
                     : 'bg-gray-100 text-gray-900 mr-auto rounded-tl-none hover:bg-gray-200'
-                } prose max-w-none [&>*:first-child]:mt-0 [&>*:last-child]:mb-0
+                }`}
+              >
+                <div className={`prose prose-sm ${message.isUser ? 'prose-invert' : ''} max-w-none [&>*:first-child]:mt-0 [&>*:last-child]:mb-0
                 prose-headings:font-semibold prose-headings:text-inherit
                 prose-p:my-0.5 prose-p:leading-relaxed
                 prose-strong:font-semibold prose-strong:text-inherit
@@ -220,10 +222,10 @@ export function ChatWidget({ isOpen, onOpenChange }: ChatWidgetProps) {
                 prose-pre:bg-opacity-20 prose-pre:p-3 prose-pre:rounded-lg
                 prose-ul:my-0.5 prose-ul:list-disc prose-ul:pl-4
                 prose-ol:my-0.5 prose-ol:list-decimal prose-ol:pl-4
-                prose-li:my-0 prose-li:leading-normal`}
-              >
-                <div className="whitespace-pre-wrap">
-                  {processMessageContent(message.text)}
+                prose-li:my-0 prose-li:leading-normal`}>
+                  <div className="whitespace-pre-wrap">
+                    {processMessageContent(message.text)}
+                  </div>
                 </div>
               </div>
             </div>
