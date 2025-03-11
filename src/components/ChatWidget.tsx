@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MessageCircle, X, Send, ChevronDown, ExternalLink, Link } from 'lucide-react';
+import { MessageCircle, X, Send, ExternalLink, Link } from 'lucide-react';
 import { getChatResponse } from '../lib/openai';
 import ReactMarkdown from 'react-markdown';
 
@@ -19,11 +19,6 @@ interface ChatWidgetProps {
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
 }
-
-// Update the URL detection function with a more precise regex
-const detectUrls = (text: string): string[] => {
-  return [];  // Return empty array since we don't want additional URL buttons
-};
 
 const processMessageContent = (content: string) => {
   const urlRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
@@ -73,7 +68,6 @@ const UrlButton = ({ url, href, children }: { url?: string; href?: string; child
 );
 
 export function ChatWidget({ isOpen, onOpenChange }: ChatWidgetProps) {
-  const [isMinimized, setIsMinimized] = useState(false);
   const [messages, setMessages] = useState<Message[]>([INITIAL_MESSAGE]);
   const [isLoading, setIsLoading] = useState(false);
   const [inputText, setInputText] = useState('');
@@ -144,91 +138,79 @@ export function ChatWidget({ isOpen, onOpenChange }: ChatWidgetProps) {
 
   return (
     <div className="fixed bottom-0 right-0 w-full sm:w-auto sm:max-w-sm sm:bottom-6 sm:right-6 z-50">
-      <div className="bg-white sm:rounded-lg shadow-xl flex flex-col h-[100vh] sm:h-auto sm:max-h-[600px]">
-        {/* Header */}
-        <div className="p-4 bg-yellow-700 text-white sm:rounded-t-lg flex justify-between items-center">
+      <div className="flex flex-col bg-white sm:rounded-lg shadow-xl h-[100vh] sm:h-[calc(100vh-6rem)] max-h-[600px]">
+        {/* Header - Fixed position */}
+        <div className="sticky top-0 p-4 bg-yellow-700 text-white sm:rounded-t-lg flex justify-between items-center z-10">
           <h3 className="font-medium">Chat with Aliff's Assistant 🇲🇾</h3>
-          <div className="flex gap-2">
-            <button
-              onClick={() => setIsMinimized(!isMinimized)}
-              className="p-1 hover:bg-yellow-800 rounded"
-            >
-              <ChevronDown className={`h-5 w-5 transition-transform ${isMinimized ? 'rotate-180' : ''}`} />
-            </button>
-            <button
-              onClick={() => onOpenChange(false)}
-              className="p-1 hover:bg-yellow-800 rounded"
-            >
-              <X className="h-5 w-5" />
-            </button>
-          </div>
+          <button
+            onClick={() => onOpenChange(false)}
+            className="p-1 hover:bg-yellow-800 rounded"
+          >
+            <X className="h-5 w-5" />
+          </button>
         </div>
 
         {/* Chat Content */}
-        {!isMinimized && (
-          <>
-            <div className="flex-1 overflow-y-auto p-4 space-y-4 h-full sm:min-h-[300px] sm:max-h-[400px]">
-              {messages.map((message, index) => (
-                <div
-                  key={index}
-                  className={`flex ${message.isUser ? 'justify-end' : 'justify-start'} mb-4`}
-                >
-                  <div
-                    className={`max-w-[80%] p-3 rounded-lg ${
-                      message.isUser
-                        ? 'bg-yellow-700 text-white prose-invert'
-                        : 'bg-gray-100 text-gray-900'
-                    } prose max-w-none [&>*:first-child]:mt-0 [&>*:last-child]:mb-0
-                    prose-headings:font-semibold prose-headings:text-inherit
-                    prose-p:my-0.5 prose-p:leading-relaxed
-                    prose-strong:font-semibold prose-strong:text-inherit
-                    prose-em:text-inherit
-                    prose-code:bg-opacity-20 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md
-                    prose-pre:bg-opacity-20 prose-pre:p-3 prose-pre:rounded-lg
-                    prose-ul:my-0.5 prose-ul:list-disc prose-ul:pl-4
-                    prose-ol:my-0.5 prose-ol:list-decimal prose-ol:pl-4
-                    prose-li:my-0 prose-li:leading-normal`}
-                  >
-                    <div className="whitespace-pre-wrap">
-                      {processMessageContent(message.text)}
-                    </div>
-                  </div>
+        <div className="flex-1 overflow-y-auto px-3 py-3 pb-2 space-y-3 min-h-0">
+          {messages.map((message, index) => (
+            <div
+              key={index}
+              className={`flex ${message.isUser ? 'justify-end' : 'justify-start'} mb-2`}
+            >
+              <div
+                className={`max-w-[80%] p-3 rounded-lg ${
+                  message.isUser
+                    ? 'bg-yellow-700 text-white prose-invert'
+                    : 'bg-gray-100 text-gray-900'
+                } prose max-w-none [&>*:first-child]:mt-0 [&>*:last-child]:mb-0
+                prose-headings:font-semibold prose-headings:text-inherit
+                prose-p:my-0.5 prose-p:leading-relaxed
+                prose-strong:font-semibold prose-strong:text-inherit
+                prose-em:text-inherit
+                prose-code:bg-opacity-20 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md
+                prose-pre:bg-opacity-20 prose-pre:p-3 prose-pre:rounded-lg
+                prose-ul:my-0.5 prose-ul:list-disc prose-ul:pl-4
+                prose-ol:my-0.5 prose-ol:list-decimal prose-ol:pl-4
+                prose-li:my-0 prose-li:leading-normal`}
+              >
+                <div className="whitespace-pre-wrap">
+                  {processMessageContent(message.text)}
                 </div>
-              ))}
-              {isLoading && (
-                <div className="flex justify-start mb-4">
-                  <div className="bg-gray-100 rounded-lg p-4 flex items-center space-x-2">
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
-                  </div>
-                </div>
-              )}
-              <div ref={messagesEndRef} />
-            </div>
-
-            {/* Input Area */}
-            <div className="p-4 border-t">
-              <div className="flex gap-2">
-                <textarea
-                  value={inputText}
-                  onChange={(e) => setInputText(e.target.value)}
-                  onKeyPress={handleKeyPress}
-                  placeholder="Type your message..."
-                  className="flex-1 resize-none border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-yellow-700 text-base"
-                  rows={1}
-                />
-                <button
-                  onClick={handleSend}
-                  disabled={!inputText.trim()}
-                  className="p-2 bg-yellow-700 text-white rounded-lg hover:bg-yellow-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  <Send className="h-5 w-5" />
-                </button>
               </div>
             </div>
-          </>
-        )}
+          ))}
+          {isLoading && (
+            <div className="flex justify-start mb-2">
+              <div className="bg-gray-100 rounded-lg p-3 flex items-center space-x-2">
+                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+              </div>
+            </div>
+          )}
+          <div ref={messagesEndRef} />
+        </div>
+
+        {/* Input area - Fixed at bottom */}
+        <div className="sticky bottom-0 bg-white border-t border-gray-200 pt-2 px-3 pb-3 sm:rounded-b-lg">
+          <div className="flex gap-3">
+            <textarea
+              value={inputText}
+              onChange={(e) => setInputText(e.target.value)}
+              onKeyDown={handleKeyPress}
+              placeholder="Type your message..."
+              className="flex-1 resize-none rounded-lg border border-gray-300 focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 p-2 min-h-[44px] max-h-32"
+              rows={1}
+            />
+            <button
+              onClick={handleSend}
+              disabled={!inputText.trim() || isLoading}
+              className="p-2 bg-yellow-700 text-white rounded-lg hover:bg-yellow-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <Send className="h-5 w-5" />
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );

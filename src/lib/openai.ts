@@ -1,12 +1,14 @@
 export async function getChatResponse(messages: { text: string; isUser: boolean; timestamp: Date }[]): Promise<string> {
   try {
-    // Use environment variable with fallback to production URL
-    const apiUrl = import.meta.env.VITE_API_URL || 'https://mynameisaliff-backend-production.up.railway.app/api/chat';
+    // Use localhost in development, fallback to production URL
+    const apiUrl = import.meta.env.MODE === 'development' 
+      ? 'http://localhost:3000/api/chat'
+      : 'https://mynameisaliff-backend-production.up.railway.app/api/chat';
 
     console.log('Using API URL:', apiUrl);
     console.log('Environment variables:', {
       VITE_API_URL: import.meta.env.VITE_API_URL,
-      NODE_ENV: import.meta.env.NODE_ENV
+      MODE: import.meta.env.MODE
     });
     
     // Convert messages to OpenAI format
