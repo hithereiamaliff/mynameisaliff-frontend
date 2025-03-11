@@ -213,9 +213,9 @@ export function ChatWidget({ isOpen, onOpenChange }: ChatWidgetProps) {
                     : 'bg-gray-100 text-gray-900 mr-auto rounded-tl-none hover:bg-gray-200'
                 }`}
               >
-                <div className={`prose prose-sm ${message.isUser ? 'prose-invert' : ''} max-w-none [&>*:first-child]:mt-0 [&>*:last-child]:mb-0
+                <div className={`prose ${message.isUser ? 'prose-invert' : ''} max-w-none [&>*:first-child]:mt-0 [&>*:last-child]:mb-0
                 prose-headings:font-semibold prose-headings:text-inherit
-                prose-p:my-0.5 prose-p:leading-relaxed
+                prose-p:my-0.5 prose-p:leading-relaxed prose-p:text-[15px]
                 prose-strong:font-semibold prose-strong:text-inherit
                 prose-em:text-inherit
                 prose-code:bg-opacity-20 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md
