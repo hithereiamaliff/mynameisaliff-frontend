@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, MapPin, Compass, Camera, Coffee } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { SEO } from '../../components/SEO';
 import ReactGA from 'react-ga4';
 
@@ -48,20 +48,6 @@ export function TourismPage() {
                   alt="Penang skyline view"
                   className="w-full rounded-lg my-8 hidden md:block"
                 />
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
-                {EXPERIENCES.map((experience, index) => (
-                  <div key={index} className="bg-yellow-900/30 p-6 rounded-lg">
-                    <div className="flex items-start gap-4">
-                      {experience.icon}
-                      <div>
-                        <h3 className="text-lg font-medium text-yellow-500 mb-2">{experience.title}</h3>
-                        <p className="text-gray-300 text-sm leading-relaxed">{experience.description}</p>
-                      </div>
-                    </div>
-                  </div>
-                ))}
               </div>
 
               <div className="bg-yellow-900/30 p-8 rounded-lg text-center mt-12">
