@@ -155,7 +155,7 @@ export function UXCaseStudyModal({ isOpen, onClose }: UXCaseStudyModalProps) {
           <X className="h-5 w-5" />
         </button>
         
-        <div className="relative h-24 sm:h-32 overflow-hidden shrink-0 hidden sm:block">
+        <div className="relative h-24 sm:h-32 overflow-hidden shrink-0 hidden md:block">
           <img
             src={step.image}
             alt={step.title}
