@@ -20,5 +20,7 @@ export default defineConfig({
         },
       },
     },
+    // Ensure _redirects is copied to build output
+    copyPublicDir: true,
   },
 });
