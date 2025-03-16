@@ -1,13 +1,12 @@
 export async function getChatResponse(messages: { text: string; isUser: boolean; timestamp: Date }[]): Promise<string> {
   try {
-    // Use localhost in development, fallback to production URL
+    // Use current window location for development, fallback to production URL
     const apiUrl = import.meta.env.MODE === 'development' 
-      ? 'http://localhost:3000/api/chat'
+      ? `${window.location.protocol}//${window.location.hostname}:3000/api/chat`
       : 'https://mynameisaliff-backend-production.up.railway.app/api/chat';
 
     console.log('Using API URL:', apiUrl);
     console.log('Environment variables:', {
-      VITE_API_URL: import.meta.env.VITE_API_URL,
       MODE: import.meta.env.MODE
     });
     
