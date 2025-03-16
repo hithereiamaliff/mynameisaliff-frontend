@@ -1,13 +1,44 @@
-import React, { useState } from 'react';
-import { X, ArrowRight, ArrowLeft, ThumbsUp, ThumbsDown } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { X, ArrowRight, ArrowLeft } from 'lucide-react';
 import { CaseStudySelectorModal } from './CaseStudySelectorModal';
+import { useCountAnimation } from '../hooks/useCountAnimation';
+import ReactGA from 'react-ga4';
+
+interface PollOption {
+  text: string;
+  votes: number;
+}
+
+interface UXStep {
+  title: string;
+  content: string;
+  image: string;
+  stats?: {
+    performance: string;
+    improvement: string;
+  };
+  bulletPoints?: string[];
+  beforeScore?: string;
+  steps?: {
+    title: string;
+    description: string;
+  }[];
+  caseStudies?: {
+    title: string;
+    points: string[];
+  }[];
+  poll?: {
+    question: string;
+    options: PollOption[];
+  };
+}
 
 interface UXCaseStudyModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-const CASE_STUDY_STEPS = [
+const CASE_STUDY_STEPS: UXStep[] = [
   {
     title: "Experience This Site's Performance",
     content: "You're experiencing it right now - a blazing fast website built with modern technologies. \n\nNotice the smooth animations and instant page loads? This site leverages React with Vite for optimal performance.\n\nThe result? Sub-second page loads and a perfect Lighthouse performance score.",
@@ -86,23 +117,39 @@ const CASE_STUDY_STEPS = [
 
 export function UXCaseStudyModal({ isOpen, onClose }: UXCaseStudyModalProps) {
   const [currentStep, setCurrentStep] = useState(0);
-  const [isSelectorOpen, setIsSelectorOpen] = useState(false);
   const [pollAnswers, setPollAnswers] = useState<Record<number, number>>({});
+  const [isSelectorOpen, setIsSelectorOpen] = useState(false);
+  
   const step = CASE_STUDY_STEPS[currentStep];
   const isLastStep = currentStep === CASE_STUDY_STEPS.length - 1;
+
+  const performanceScore = useCountAnimation(
+    step.stats ? parseInt(step.stats.performance) : 0,
+    1500
+  );
+  const improvementScore = useCountAnimation(
+    step.stats ? parseInt(step.stats.improvement) : 0,
+    1500
+  );
+
+  useEffect(() => {
+    if (step.stats) {
+      ReactGA.event({
+        category: 'UX Case Study',
+        action: 'View Stats',
+        label: `Step ${currentStep + 1}`,
+      });
+    }
+  }, [currentStep, step.stats]);
 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div 
-        className="fixed inset-0 bg-black/60 backdrop-blur-sm"
-        onClick={onClose}
-      />
-      <div className="relative bg-gray-900/90 rounded-xl w-full max-w-4xl flex flex-col max-h-[90vh]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70" role="dialog" aria-modal="true">
+      <div className="bg-gray-900 rounded-xl w-full max-w-2xl max-h-[90vh] overflow-hidden relative" role="document">
         <button
           onClick={onClose}
-          className="fixed top-4 right-4 sm:absolute sm:top-3 sm:right-3 p-2 bg-white/10 text-white hover:bg-white/20 rounded-full transition-colors z-10 backdrop-blur-sm"
+          className="absolute top-4 right-4 p-1 text-gray-400 hover:text-white transition-colors"
           aria-label="Close modal"
         >
           <X className="h-5 w-5" />
@@ -117,7 +164,7 @@ export function UXCaseStudyModal({ isOpen, onClose }: UXCaseStudyModalProps) {
           <div className="absolute inset-0 bg-gradient-to-t from-gray-900/90 to-transparent" />
         </div>
         
-        <div className="p-4 sm:p-6 overflow-y-auto">
+        <div className="p-4 sm:p-6 overflow-y-auto" role="main">
           <div className="flex items-center justify-between mb-4">
             <div className="flex gap-1">
               {CASE_STUDY_STEPS.map((_, index) => (
@@ -143,39 +190,41 @@ export function UXCaseStudyModal({ isOpen, onClose }: UXCaseStudyModalProps) {
           <div className="text-gray-300 space-y-4 sm:space-y-6">
             <div className="leading-relaxed whitespace-pre-wrap">{step.content}</div>
             
-            {step.poll && (
-              <div className="space-y-3">
-                <p className="font-medium text-white">{step.poll.question}</p>
-                {step.poll.options.map((option, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setPollAnswers(prev => ({ ...prev, [currentStep]: index }))}
-                    className={`w-full p-4 rounded-lg text-left transition-colors ${
-                      pollAnswers[currentStep] === index
-                        ? 'bg-yellow-600/20 text-yellow-200 border border-yellow-500/30'
-                        : 'bg-gray-800 hover:bg-gray-700 text-white'
-                    }`}
-                  >
-                    <div className="flex items-center">
-                      <span className="flex-1">{option}</span>
-                      {pollAnswers[currentStep] === index && (
-                        <ThumbsUp className="h-5 w-5 text-yellow-500" />
-                      )}
-                    </div>
-                  </button>
-                ))}
-              </div>
-            )}
-
             {step.stats && (
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-3" role="region" aria-label="Performance Statistics">
                 <div className="bg-gray-800/50 p-4 rounded-lg text-center">
-                  <div className="text-3xl font-bold text-yellow-500">{step.stats.performance}</div>
+                  <div className="text-3xl font-bold text-yellow-500" aria-live="polite">
+                    {performanceScore}%
+                  </div>
                   <div className="text-sm text-gray-400">Performance Score</div>
                 </div>
                 <div className="bg-gray-800/50 p-4 rounded-lg text-center">
-                  <div className="text-3xl font-bold text-yellow-500">+{step.stats.improvement}</div>
+                  <div className="text-3xl font-bold text-yellow-500" aria-live="polite">
+                    +{improvementScore}%
+                  </div>
                   <div className="text-sm text-gray-400">Average Improvement</div>
+                </div>
+              </div>
+            )}
+
+            {step.poll && (
+              <div className="space-y-4">
+                <h3 className="font-medium text-white">{step.poll.question}</h3>
+                <div className="space-y-3">
+                  {step.poll.options.map((option: PollOption, index: number) => (
+                    <div
+                      key={index}
+                      className={`bg-gray-800/50 p-4 rounded-lg flex items-center justify-between hover:bg-gray-800/70 transition-colors cursor-pointer ${
+                        pollAnswers[currentStep] === index ? 'border border-yellow-500/30' : ''
+                      }`}
+                      onClick={() => setPollAnswers(prev => ({ ...prev, [currentStep]: index }))}
+                    >
+                      <span className="text-gray-300">{option.text}</span>
+                      <span className="text-yellow-500 font-medium">
+                        {pollAnswers[currentStep] === index ? 'Selected' : `${option.votes} votes`}
+                      </span>
+                    </div>
+                  ))}
                 </div>
               </div>
             )}
