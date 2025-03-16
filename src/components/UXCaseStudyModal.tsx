@@ -4,11 +4,6 @@ import { CaseStudySelectorModal } from './CaseStudySelectorModal';
 import { useCountAnimation } from '../hooks/useCountAnimation';
 import ReactGA from 'react-ga4';
 
-interface PollOption {
-  text: string;
-  votes: number;
-}
-
 interface UXStep {
   title: string;
   content: string;
@@ -27,10 +22,6 @@ interface UXStep {
     title: string;
     points: string[];
   }[];
-  poll?: {
-    question: string;
-    options: PollOption[];
-  };
 }
 
 interface UXCaseStudyModalProps {
@@ -117,7 +108,6 @@ const CASE_STUDY_STEPS: UXStep[] = [
 
 export function UXCaseStudyModal({ isOpen, onClose }: UXCaseStudyModalProps) {
   const [currentStep, setCurrentStep] = useState(0);
-  const [pollAnswers, setPollAnswers] = useState<Record<number, number>>({});
   const [isSelectorOpen, setIsSelectorOpen] = useState(false);
   
   const step = CASE_STUDY_STEPS[currentStep];
@@ -146,10 +136,19 @@ export function UXCaseStudyModal({ isOpen, onClose }: UXCaseStudyModalProps) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70" role="dialog" aria-modal="true">
-      <div className="bg-gray-900 rounded-xl w-full max-w-2xl max-h-[90vh] overflow-hidden relative" role="document">
+      <div 
+        className="fixed inset-0 bg-black/70 backdrop-blur-sm cursor-pointer" 
+        onClick={onClose}
+        aria-label="Close modal"
+      />
+      <div 
+        className="bg-gray-900 rounded-xl w-full max-w-2xl flex flex-col relative z-10 max-h-[90vh]" 
+        role="document"
+        onClick={(e) => e.stopPropagation()}
+      >
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-1 text-gray-400 hover:text-white transition-colors"
+          className="absolute top-4 right-4 z-50 p-2 bg-gray-800/80 hover:bg-gray-700/80 text-gray-200 hover:text-white rounded-full transition-colors backdrop-blur-sm"
           aria-label="Close modal"
         >
           <X className="h-5 w-5" />
@@ -164,7 +163,7 @@ export function UXCaseStudyModal({ isOpen, onClose }: UXCaseStudyModalProps) {
           <div className="absolute inset-0 bg-gradient-to-t from-gray-900/90 to-transparent" />
         </div>
         
-        <div className="p-4 sm:p-6 overflow-y-auto" role="main">
+        <div className="flex-1 min-h-0 overflow-y-auto p-4 sm:p-6">
           <div className="flex items-center justify-between mb-4">
             <div className="flex gap-1">
               {CASE_STUDY_STEPS.map((_, index) => (
@@ -207,61 +206,33 @@ export function UXCaseStudyModal({ isOpen, onClose }: UXCaseStudyModalProps) {
               </div>
             )}
 
-            {step.poll && (
-              <div className="space-y-4">
-                <h3 className="font-medium text-white">{step.poll.question}</h3>
-                <div className="space-y-3">
-                  {step.poll.options.map((option: PollOption, index: number) => (
-                    <div
-                      key={index}
-                      className={`bg-gray-800/50 p-4 rounded-lg flex items-center justify-between hover:bg-gray-800/70 transition-colors cursor-pointer ${
-                        pollAnswers[currentStep] === index ? 'border border-yellow-500/30' : ''
-                      }`}
-                      onClick={() => setPollAnswers(prev => ({ ...prev, [currentStep]: index }))}
-                    >
-                      <span className="text-gray-300">{option.text}</span>
-                      <span className="text-yellow-500 font-medium">
-                        {pollAnswers[currentStep] === index ? 'Selected' : `${option.votes} votes`}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
             {step.bulletPoints && (
-              <ul className="space-y-2">
+              <ul className="space-y-2 list-disc list-inside">
                 {step.bulletPoints.map((point, index) => (
-                  <li key={index} className="flex items-center">
-                    <span className="w-2 h-2 bg-yellow-500 rounded-full mr-3" />
-                    {point}
-                  </li>
+                  <li key={index} className="text-gray-300">{point}</li>
                 ))}
               </ul>
             )}
 
             {step.steps && (
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {step.steps.map((item, index) => (
-                  <div key={index} className="bg-gray-800/50 p-4 rounded-lg flex flex-col">
-                    <h3 className="font-medium text-white mb-2 text-sm sm:text-base line-clamp-2">{item.title}</h3>
-                    <p className="text-xs sm:text-sm text-gray-400 line-clamp-2">{item.description}</p>
+                  <div key={index} className="bg-gray-800/50 p-4 rounded-lg">
+                    <h3 className="font-medium text-white mb-1">{item.title}</h3>
+                    <p className="text-gray-300 text-sm">{item.description}</p>
                   </div>
                 ))}
               </div>
             )}
 
             {step.caseStudies && (
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {step.caseStudies.map((study, index) => (
                   <div key={index} className="bg-gray-800/50 p-4 rounded-lg">
-                    <h3 className="font-medium text-white mb-3">{study.title}</h3>
-                    <ul className="space-y-2">
+                    <h3 className="font-medium text-white mb-2">{study.title}</h3>
+                    <ul className="space-y-1 list-disc list-inside">
                       {study.points.map((point, pointIndex) => (
-                        <li key={pointIndex} className="flex items-center text-sm">
-                          <span className="w-1.5 h-1.5 bg-yellow-500 rounded-full mr-2" />
-                          {point}
-                        </li>
+                        <li key={pointIndex} className="text-gray-300 text-sm">{point}</li>
                       ))}
                     </ul>
                   </div>
@@ -269,42 +240,37 @@ export function UXCaseStudyModal({ isOpen, onClose }: UXCaseStudyModalProps) {
               </div>
             )}
           </div>
-          
-          <div className="flex justify-between items-center mt-6 border-t border-gray-800 pt-4">
+        </div>
+
+        <div className="p-4 sm:p-6 border-t border-gray-800 bg-gray-900/80 backdrop-blur-sm mt-auto">
+          <div className="flex justify-between items-center gap-4">
             <button
               onClick={() => setCurrentStep(prev => prev - 1)}
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
+                currentStep === 0
+                  ? 'text-gray-600 cursor-not-allowed'
+                  : 'text-white hover:bg-gray-800/80'
+              }`}
               disabled={currentStep === 0}
-              className="px-4 py-2 text-gray-400 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center gap-2"
+              aria-label="Previous step"
             >
-              <ArrowLeft className="h-4 w-4" />
-              Back
+              <ArrowLeft className="h-5 w-5" />
+              <span className="font-medium">Back</span>
             </button>
             
-            {isLastStep ? (
-              <a
-                href="#"
-                onClick={(e) => {
-                  e.preventDefault();
-                  setIsSelectorOpen(true);
-                }}
-                className="inline-flex items-center px-4 py-2 bg-yellow-700 hover:bg-yellow-800 text-white rounded-lg font-medium transition-colors text-sm"
-              >
-                View Full Case Study
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </a>
-            ) : (
-              <button
-                onClick={() => setCurrentStep(prev => prev + 1)}
-                className="inline-flex items-center px-4 py-2 bg-yellow-700 hover:bg-yellow-800 text-white rounded-lg font-medium transition-colors text-sm"
-              >
-                Continue
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </button>
-            )}
+            <button
+              onClick={() => isLastStep ? setIsSelectorOpen(true) : setCurrentStep(prev => prev + 1)}
+              className="flex items-center gap-2 px-4 py-2 bg-yellow-700 hover:bg-yellow-800 text-white rounded-lg transition-colors font-medium"
+              aria-label={isLastStep ? "View case studies" : "Next step"}
+            >
+              <span>{isLastStep ? "View Case Studies" : "Next"}</span>
+              <ArrowRight className="h-5 w-5" />
+            </button>
           </div>
         </div>
       </div>
-      <CaseStudySelectorModal 
+
+      <CaseStudySelectorModal
         isOpen={isSelectorOpen}
         onClose={() => setIsSelectorOpen(false)}
       />
