@@ -4,29 +4,6 @@ import { ArrowLeft, MapPin, Compass, Camera, Coffee } from 'lucide-react';
 import { SEO } from '../../components/SEO';
 import ReactGA from 'react-ga4';
 
-const EXPERIENCES = [
-  {
-    title: "Heritage Walking Tours",
-    description: "Curated walking tours through George Town's most picturesque streets, focusing on the beauty of historical architecture and local life.",
-    icon: <MapPin className="h-6 w-6 text-yellow-500" />
-  },
-  {
-    title: "Hidden Gems Discovery",
-    description: "Off-the-beaten-path explorations to discover Penang's secret spots, from quiet cafes to stunning viewpoints.",
-    icon: <Compass className="h-6 w-6 text-yellow-500" />
-  },
-  {
-    title: "Photography Walks",
-    description: "Specially designed routes for photography enthusiasts, capturing Penang's most Instagram-worthy locations.",
-    icon: <Camera className="h-6 w-6 text-yellow-500" />
-  },
-  {
-    title: "Food Adventures",
-    description: "Guided tours to experience Penang's renowned street food scene, from hawker stalls to local coffee shops.",
-    icon: <Coffee className="h-6 w-6 text-yellow-500" />
-  }
-];
-
 export function TourismPage() {
   useEffect(() => {
     ReactGA.event({
