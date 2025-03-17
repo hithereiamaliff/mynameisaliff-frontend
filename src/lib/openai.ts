@@ -1,19 +1,30 @@
-export async function getChatResponse(userMessage: string): Promise<string> {
+export async function getChatResponse(messages: { text: string; isUser: boolean; timestamp: Date }[]): Promise<string> {
   try {
-    // Use Railway backend URL in production, local URL in development
-    const apiUrl = 'YOUR_API_BACKEND_URL_HERE';
+    // Use current window location for development, fallback to production URL
+    const apiUrl = import.meta.env.MODE === 'development' 
+      ? `${window.location.protocol}//${window.location.hostname}:3000/api/chat`
+      : 'https://mynameisaliff-backend-production.up.railway.app/api/chat';
 
-    console.log('Sending request to:', apiUrl);
-    console.log('Message:', userMessage);
+    console.log('Using API URL:', apiUrl);
+    console.log('Environment variables:', {
+      MODE: import.meta.env.MODE
+    });
+    
+    // Convert messages to OpenAI format
+    const formattedMessages = messages.map(msg => ({
+      role: msg.isUser ? 'user' : 'assistant',
+      content: msg.text
+    }));
+
+    console.log('Messages:', formattedMessages);
 
     const response = await fetch(apiUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Accept': 'application/json'
       },
-      body: JSON.stringify({
-        messages: [{ role: 'user', content: userMessage }]
-      })
+      body: JSON.stringify({ messages: formattedMessages })
     });
 
     if (!response.ok) {
@@ -21,6 +32,7 @@ export async function getChatResponse(userMessage: string): Promise<string> {
       console.error('API request failed:', {
         status: response.status,
         statusText: response.statusText,
+        url: apiUrl,
         errorData
       });
       throw new Error(`API request failed: ${response.status} ${response.statusText}`);
@@ -34,7 +46,8 @@ export async function getChatResponse(userMessage: string): Promise<string> {
     if (error instanceof Error) {
       console.error('Error details:', {
         message: error.message,
-        stack: error.stack
+        stack: error.stack,
+        url: import.meta.env.VITE_API_URL
       });
     }
     return 'I apologize, but I am currently experiencing technical difficulties. Please try again in a few moments.';

@@ -1,6 +1,6 @@
 const handleSendMessage = async (message) => {
   try {
-    const response = await fetch('YOUR_API_BACKEND_URL_HERE', {
+    const response = await fetch('https://your-backend-url.onrender.com/api/chat', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
