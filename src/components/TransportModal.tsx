@@ -29,7 +29,7 @@ const TRANSPORT_STEPS = [
         provider: "Rapid Kuantan"
       }
     ],
-    image: "https://images.unsplash.com/photo-1570125909232-e93688616381?auto=format&fit=crop&q=80&w=2000"
+    image: "https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&q=80&w=2000"
   },
   {
     title: "Personal Experience",
