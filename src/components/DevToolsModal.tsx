@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { X, ArrowRight, ArrowLeft, Github, FileCode, Bot, Terminal } from 'lucide-react';
+import { useState } from 'react';
+import { X, ArrowRight, ArrowLeft, Github } from 'lucide-react';
 
 interface DevToolsModalProps {
   isOpen: boolean;
@@ -83,23 +83,38 @@ export function DevToolsModal({ isOpen, onClose }: DevToolsModalProps) {
           </h2>
           
           <div className="text-gray-300 space-y-6">
-            <div className="leading-relaxed whitespace-pre-wrap">{step.content}</div>
-
-            {step.techStack && (
-              <div className="bg-gray-800/50 rounded-lg p-4">
-                <h3 className="text-white font-medium mb-3">Tech Stack:</h3>
-                <div className="flex flex-wrap gap-2">
-                  {step.techStack.map((tech, index) => (
-                    <span
-                      key={index}
-                      className="px-3 py-1 bg-gray-700/50 rounded-full text-sm text-yellow-400"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
+            <div className="leading-relaxed whitespace-pre-wrap">
+              {step.content.split('\n\nKey Features:').map((part, index) => {
+                if (index === 0) return part;
+                return (
+                  <div key={index} className="mt-6">
+                    <div className="md:flex md:gap-6">
+                      <div className="md:flex-1">
+                        <h3 className="text-white font-medium mb-3">Key Features:</h3>
+                        {part}
+                      </div>
+                      {step.techStack && (
+                        <div className="mt-6 md:mt-0 md:w-64">
+                          <div className="bg-gray-800/50 rounded-lg p-4">
+                            <h3 className="text-white font-medium mb-3">Tech Stack:</h3>
+                            <div className="flex flex-wrap gap-2">
+                              {step.techStack.map((tech, index) => (
+                                <span
+                                  key={index}
+                                  className="px-3 py-1 bg-gray-700/50 rounded-full text-sm text-yellow-400"
+                                >
+                                  {tech}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
 
             {step.repoUrl && (
               <a
