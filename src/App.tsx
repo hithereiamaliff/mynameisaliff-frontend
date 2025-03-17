@@ -35,8 +35,8 @@ function Card({ icon, title, description, actionText, link, action }: CardProps)
   const commonButtonClasses = "self-center px-4 py-2 bg-yellow-700 hover:bg-yellow-800 text-white rounded-lg text-sm font-medium transition-colors mt-6 inline-flex items-center";
 
   return (
-    <div className="flex flex-col items-center text-center p-6 bg-gray-800/50 backdrop-blur-sm rounded-xl hover:bg-gray-800/70 transition-colors">
-      <div className="mb-6">{icon}</div>
+    <div className="flex flex-col h-full">
+      <div className="flex justify-center mb-6">{icon}</div>
       <h3 className="text-xl font-semibold text-white mb-4">{title}</h3>
       <p className="text-gray-400 mb-auto">{description}</p>
       {link ? (

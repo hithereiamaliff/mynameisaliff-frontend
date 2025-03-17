@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { Linkedin, Download, ChevronDown, User, ScrollText, MapPin, Newspaper, Bot, Train, Wrench as Tool } from 'lucide-react';
 import { useTypewriter } from '../hooks/useTypewriter';
 import { CarouselSection } from '../components/CarouselSection';
@@ -10,7 +9,6 @@ import { AIDevModal } from '../components/AIDevModal';
 import { UXCaseStudyModal } from '../components/UXCaseStudyModal';
 
 interface HomePageProps {
-  isModalOpen: boolean;
   setIsModalOpen: (open: boolean) => void;
   setIsChatOpen: (open: boolean) => void;
   setIsBlogPreviewOpen: (open: boolean) => void;
@@ -21,7 +19,7 @@ const scrollToContent = () => {
   element?.scrollIntoView({ behavior: 'smooth' });
 };
 
-export function HomePage({ isModalOpen, setIsModalOpen, setIsChatOpen, setIsBlogPreviewOpen }: HomePageProps) {
+export function HomePage({ setIsModalOpen, setIsChatOpen, setIsBlogPreviewOpen }: HomePageProps) {
   const [isTransformationModalOpen, setIsTransformationModalOpen] = React.useState(false);
   const [isUXCaseStudyOpen, setIsUXCaseStudyOpen] = React.useState(false);
   const [isTransportModalOpen, setIsTransportModalOpen] = React.useState(false);
@@ -137,9 +135,9 @@ export function HomePage({ isModalOpen, setIsModalOpen, setIsChatOpen, setIsBlog
             ].map((skill, index) => (
               <div
                 key={index}
-                className="p-6 rounded-xl bg-gray-800/50 backdrop-blur-sm hover:bg-gray-800/70 transition-colors h-full flex flex-col min-h-[320px]"
+                className="flex flex-col h-full"
               >
-                <div className="mb-6">{skill.icon}</div>
+                <div className="flex justify-center mb-6">{skill.icon}</div>
                 <h3 className="text-xl font-semibold text-white mb-4">{skill.title}</h3>
                 <p className="text-gray-400 mb-auto">{skill.description}</p>
                 {skill.action ? (

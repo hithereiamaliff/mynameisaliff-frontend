@@ -94,8 +94,10 @@ export function CarouselSection({ children, autoScrollInterval = 5000 }: Carouse
                 animationFillMode: 'forwards'
               }}
             >
-              <div className="h-full">
-                {child}
+              <div className="h-full flex">
+                <div className="flex flex-col items-center text-center p-6 bg-gray-800/50 backdrop-blur-sm rounded-xl hover:bg-gray-800/70 transition-colors w-full">
+                  {child}
+                </div>
               </div>
             </div>
           ))}
