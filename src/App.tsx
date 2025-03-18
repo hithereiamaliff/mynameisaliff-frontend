@@ -123,7 +123,7 @@ function App() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-yellow-950 via-yellow-900 to-yellow-950">
       {/* Hero Section */}
-      <div className="min-h-screen flex items-center justify-center px-4">
+      <div className="min-h-screen flex items-center justify-center px-4 py-12 lg:py-16">
         <div className="max-w-6xl w-full mx-auto grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Column - Introduction */}
           <div className="space-y-6 text-center lg:text-left">
@@ -150,7 +150,10 @@ function App() {
                 </div>
                 <div className="flex lg:justify-start justify-center">
                 <a
-                  onClick={scrollToContent}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    scrollToContent();
+                  }}
                   href="#what-i-do"
                   className="inline-flex items-center px-6 py-3 bg-yellow-700 hover:bg-yellow-800 text-white rounded-lg font-medium transition-colors"
                 >

@@ -96,7 +96,7 @@ export function TransformationModal({ isOpen, onClose }: TransformationModalProp
               {isLastStep ? (
                 <>
                   <a
-                    href="https://works.alancopywritingservices.com"
+                    href="https://alancopywritingservices.com"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center px-4 py-2 bg-yellow-700 hover:bg-yellow-800 text-white rounded-lg font-medium transition-colors text-sm"
