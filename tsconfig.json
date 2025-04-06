@@ -1,10 +1,4 @@
 {
-<<<<<<< HEAD
-  "files": [],
-  "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
-=======
   "compilerOptions": {
     "baseUrl": ".",
     "lib": [
@@ -36,7 +30,7 @@
         "./src/payload.config.ts"
       ]
     },
-    "target": "ES2022",
+    "target": "ES2022"
   },
   "include": [
     "next-env.d.ts",
@@ -46,6 +40,5 @@
   ],
   "exclude": [
     "node_modules"
->>>>>>> ccb9e3c7f60ad3285938155e3acb01ebf02da95e
   ]
 }
