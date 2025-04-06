@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { getPost, urlFor } from '../lib/sanity';
 import { PortableText } from '@portabletext/react';
 import { Clock, Tag, User, Home, Newspaper } from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
 
 interface Post {
   _id: string;
@@ -10,6 +11,7 @@ interface Post {
   mainImage: any;
   body: any[];
   publishedAt: string;
+  excerpt?: string;
   categories: Array<{ _id: string; title: string }>;
   author: {
     name: string;
@@ -40,8 +42,58 @@ export default function BlogPost() {
     );
   }
 
+  // Create JSON-LD schema for blog post
+  const blogPostSchema = post ? {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    'headline': post.title,
+    'datePublished': post.publishedAt,
+    'author': {
+      '@type': 'Person',
+      'name': post.author?.name || 'Aliff',
+      'url': 'https://mynameisaliff.co.uk'
+    },
+    'publisher': {
+      '@type': 'Person',
+      'name': 'Aliff',
+      'url': 'https://mynameisaliff.co.uk'
+    },
+    'url': `https://mynameisaliff.co.uk/${slug}`,
+    ...(post.mainImage && {
+      'image': urlFor(post.mainImage).url()
+    }),
+    'description': post.excerpt || 'Read this blog post by Aliff about technology, Malaysia, and more.',
+    'articleBody': post.body ? post.body.map((block: any) => 
+      block._type === 'block' ? block.children.map((child: any) => child.text).join('') : ''
+    ).join(' ') : ''
+  } : null;
+
   return (
     <article className="min-h-screen bg-gradient-to-br from-yellow-950 via-yellow-900 to-yellow-950 py-16">
+      {post && (
+        <Helmet>
+          <title>{post.title} | Ramblings by Aliff</title>
+          <meta name="description" content={post.excerpt || `Read ${post.title} - a blog post by Aliff about technology, Malaysia, and more.`} />
+          <meta property="og:title" content={`${post.title} | Ramblings by Aliff`} />
+          <meta property="og:description" content={post.excerpt || `Read ${post.title} - a blog post by Aliff about technology, Malaysia, and more.`} />
+          <meta property="og:type" content="article" />
+          <meta property="og:url" content={`https://mynameisaliff.co.uk/${slug}`} />
+          {post.mainImage && (
+            <meta property="og:image" content={urlFor(post.mainImage).url()} />
+          )}
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta name="twitter:title" content={`${post.title} | Ramblings by Aliff`} />
+          <meta name="twitter:description" content={post.excerpt || `Read ${post.title} - a blog post by Aliff about technology, Malaysia, and more.`} />
+          {post.mainImage && (
+            <meta name="twitter:image" content={urlFor(post.mainImage).url()} />
+          )}
+          {blogPostSchema && (
+            <script type="application/ld+json">
+              {JSON.stringify(blogPostSchema)}
+            </script>
+          )}
+        </Helmet>
+      )}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center mb-8">
           <Link

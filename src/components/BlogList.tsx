@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getAllPosts, urlFor } from '../lib/sanity';
 import { Clock, Tag, Home } from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
 
 interface Post {
   _id: string;
@@ -28,8 +29,49 @@ export default function BlogList() {
     fetchPosts();
   }, []);
 
+  // Create JSON-LD schema for blog list
+  const blogListSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Blog',
+    'name': 'Ramblings by Aliff',
+    'description': 'Personal blog sharing thoughts and experiences about technology, Malaysia, and more.',
+    'url': 'https://mynameisaliff.co.uk/blog',
+    'author': {
+      '@type': 'Person',
+      'name': 'Aliff',
+      'url': 'https://mynameisaliff.co.uk'
+    },
+    'blogPost': posts.map(post => ({
+      '@type': 'BlogPosting',
+      'headline': post.title,
+      'datePublished': post.publishedAt,
+      'author': {
+        '@type': 'Person',
+        'name': post.author?.name || 'Aliff'
+      },
+      'url': `https://mynameisaliff.co.uk/${post.slug.current}`,
+      ...(post.mainImage && {
+        'image': urlFor(post.mainImage).url()
+      })
+    }))
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-yellow-950 via-yellow-900 to-yellow-950 py-16">
+      <Helmet>
+        <title>Ramblings by Aliff | Personal Blog</title>
+        <meta name="description" content="Explore thoughts and experiences about technology, Malaysia, and more in this personal blog by Aliff." />
+        <meta property="og:title" content="Ramblings by Aliff | Personal Blog" />
+        <meta property="og:description" content="Explore thoughts and experiences about technology, Malaysia, and more in this personal blog by Aliff." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://mynameisaliff.co.uk/blog" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Ramblings by Aliff | Personal Blog" />
+        <meta name="twitter:description" content="Explore thoughts and experiences about technology, Malaysia, and more in this personal blog by Aliff." />
+        <script type="application/ld+json">
+          {JSON.stringify(blogListSchema)}
+        </script>
+      </Helmet>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center mb-8">
           <Link
@@ -49,11 +91,17 @@ export default function BlogList() {
               className="bg-gray-800/30 rounded-lg overflow-hidden hover:bg-gray-800/50 transition-all duration-300 border border-yellow-900/20 hover:border-yellow-900/40"
             >
               {post.mainImage && (
-                <img
-                  src={urlFor(post.mainImage).width(600).height(300).url()}
-                  alt={post.title}
-                  className="w-full h-48 object-cover"
-                />
+                <div 
+                  className="w-full h-48 overflow-hidden select-none"
+                  onContextMenu={(e) => e.preventDefault()}
+                >
+                  <img
+                    src={urlFor(post.mainImage).width(600).height(300).url()}
+                    alt={post.title}
+                    className="w-full h-full object-cover pointer-events-none"
+                    draggable="false"
+                  />
+                </div>
               )}
               <div className="p-6">
                 <h2 className="text-xl font-semibold text-amber-400 mb-2">

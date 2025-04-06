@@ -67,7 +67,40 @@ function Card({ icon, title, description, actionText, link, action }: CardProps)
   );
 }
 
+// Error Boundary Component
+class ErrorBoundary extends React.Component<{ children: React.ReactNode }, { hasError: boolean }> {
+  constructor(props: { children: React.ReactNode }) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-yellow-950 via-yellow-900 to-yellow-950 text-white p-8">
+          <div className="text-center">
+            <h1 className="text-4xl font-bold mb-4">Oops! Something went wrong</h1>
+            <p className="mb-4">We're sorry for the inconvenience. Please try refreshing the page.</p>
+            <button 
+              onClick={() => window.location.reload()} 
+              className="bg-amber-600 hover:bg-amber-700 text-white font-bold py-2 px-4 rounded transition-colors"
+            >
+              Refresh Page
+            </button>
+          </div>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
 function App() {
+
   // Router configuration
   React.useEffect(() => {
     // Initialize GA4 with your measurement ID
@@ -122,7 +155,8 @@ function App() {
   });
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-yellow-950 via-yellow-900 to-yellow-950">
+    <ErrorBoundary>
+      <div className="min-h-screen bg-gradient-to-br from-yellow-950 via-yellow-900 to-yellow-950">
       {/* Hero Section */}
       <div className="min-h-screen flex items-center justify-center px-4 py-12 lg:py-16">
         <div className="max-w-6xl w-full mx-auto grid lg:grid-cols-2 gap-12 items-center">
@@ -419,6 +453,7 @@ function App() {
         onClose={() => setIsDevToolsModalOpen(false)}
       />
     </div>
+    </ErrorBoundary>
   );
 }
 
