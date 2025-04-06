@@ -20,10 +20,6 @@ export const router = createBrowserRouter([
     element: <BlogList />,
   },
   {
-    path: '/:slug',
-    element: <BlogPost />,
-  },
-  {
     path: '/content-writing',
     element: <ContentWritingPage />,
   },
@@ -50,5 +46,9 @@ export const router = createBrowserRouter([
   {
     path: '/download-cv',
     element: <DownloadCVPage />,
+  },
+  {
+    path: '/:slug',
+    element: <BlogPost />,
   },
 ]);
