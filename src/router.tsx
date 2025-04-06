@@ -1,5 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import App from './App';
+import BlogList from './components/BlogList';
+import BlogPost from './components/BlogPost';
 import { ContentWritingPage } from './pages/static/ContentWriting';
 import { AIProjectsPage } from './pages/static/AIProjects';
 import { DevToolsPage } from './pages/static/DevTools';
@@ -12,6 +14,14 @@ export const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
+  },
+  {
+    path: '/blog',
+    element: <BlogList />,
+  },
+  {
+    path: '/:slug',
+    element: <BlogPost />,
   },
   {
     path: '/content-writing',

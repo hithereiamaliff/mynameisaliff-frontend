@@ -68,6 +68,7 @@ function Card({ icon, title, description, actionText, link, action }: CardProps)
 }
 
 function App() {
+  // Router configuration
   React.useEffect(() => {
     // Initialize GA4 with your measurement ID
     ReactGA.initialize('your_ga4_id_here', {
