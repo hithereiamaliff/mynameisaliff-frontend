@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { X, ArrowRight, ArrowLeft, MessageCircle, Github, Bus } from 'lucide-react';
+import { X, ArrowRight, ArrowLeft, MessageCircle, Github, Bus, Calculator } from 'lucide-react';
 
 interface AIDevModalProps {
   isOpen: boolean;
@@ -59,6 +59,12 @@ const AI_DEV_STEPS = [
     content: "I've also developed a specialized chatbot for Rapid Penang bus information. It helps users navigate the public transport system by providing route information and travel tips based on my personal experience.\n\nTry it out to see how AI can make public transportation more accessible!",
     chatbotUrl: "https://pgbusapp.mynameisaliff.co.uk",
     image: "https://images.unsplash.com/photo-1527430253228-e93688616381?auto=format&fit=crop&q=80&w=2000"
+  },
+  {
+    title: "LHDN Tax Calculator",
+    content: "Simplify your Malaysian personal income tax calculation with my modern yet unofficial LHDN Tax Calculator. Built with the latest 2024 tax rates and reliefs, this tool provides instant, accurate calculations of your personal income tax.\n\nTry it now to get a clear picture of your tax obligations of 2024!",
+    chatbotUrl: "https://lhdn-calculator.mynameisaliff.co.uk",
+    image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&q=80&w=2000"
   },
   {
     title: "Open Source",
@@ -192,6 +198,17 @@ export function AIDevModal({ isOpen, onClose, onOpenChat }: AIDevModalProps) {
                 >
                   Visit Bus App
                   <Bus className="ml-2 h-4 w-4" />
+                </a>
+              )}
+              {currentStep === 4 && (
+                <a
+                  href={step.chatbotUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 bg-yellow-700 hover:bg-yellow-800 text-white rounded-lg font-medium transition-colors text-sm sm:text-base"
+                >
+                  Try Tax Calculator
+                  <Calculator className="ml-2 h-4 w-4" />
                 </a>
               )}
               {isLastStep ? (
