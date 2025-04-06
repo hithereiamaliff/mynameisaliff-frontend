@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useParams, Link } from 'react-router-dom';
 import { getPost, urlFor } from '../lib/sanity';
 import { PortableText } from '@portabletext/react';
-import { Clock, Tag, User } from 'lucide-react';
+import { Clock, Tag, User, Home, Newspaper } from 'lucide-react';
 
 interface Post {
   _id: string;
@@ -41,18 +41,35 @@ export default function BlogPost() {
   }
 
   return (
-    <article className="min-h-screen bg-gray-900 py-16">
+    <article className="min-h-screen bg-gradient-to-br from-yellow-950 via-yellow-900 to-yellow-950 py-16">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center mb-8">
+          <Link
+            to="/"
+            className="inline-flex items-center px-4 py-2 bg-gray-800/50 hover:bg-gray-800/70 text-white rounded-lg transition-colors"
+          >
+            <Home className="w-4 h-4 mr-2" />
+            Back to Home
+          </Link>
+        </div>
         {post.mainImage && (
-          <img
-            src={urlFor(post.mainImage).width(1200).height(600).url()}
-            alt={post.title}
-            className="w-full h-[400px] object-cover rounded-lg mb-8"
-          />
+          <div className="relative mb-8">
+            <div 
+              className="w-full h-[400px] rounded-lg overflow-hidden select-none"
+              onContextMenu={(e) => e.preventDefault()}
+            >
+              <img
+                src={urlFor(post.mainImage).width(1200).height(600).url()}
+                alt={post.title}
+                className="w-full h-full object-cover pointer-events-none"
+                draggable="false"
+              />
+            </div>
+          </div>
         )}
-        <h1 className="text-4xl font-bold text-white mb-6">{post.title}</h1>
+        <h1 className="text-5xl lg:text-6xl font-bold text-white mb-6">{post.title}</h1>
         
-        <div className="flex items-center space-x-6 mb-8 text-sm text-gray-400">
+        <div className="flex items-center space-x-6 mb-8 text-sm text-white/70">
           <div className="flex items-center">
             <Clock className="w-4 h-4 mr-2" />
             {new Date(post.publishedAt).toLocaleDateString()}
@@ -71,8 +88,26 @@ export default function BlogPost() {
           )}
         </div>
 
-        <div className="prose prose-invert prose-yellow max-w-none">
-          <PortableText value={post.body} />
+        <div className="prose prose-invert prose-yellow max-w-none prose-p:text-white/80 prose-headings:text-amber-400">
+          <div className="bg-gray-800/30 p-8 rounded-lg border border-yellow-900/20">
+            <PortableText value={post.body} />
+          </div>
+        </div>
+        <div className="mt-12 flex justify-center space-x-4">
+          <Link
+            to="/"
+            className="inline-flex items-center px-4 py-2 bg-gray-800/50 hover:bg-gray-800/70 text-white rounded-lg transition-colors"
+          >
+            <Home className="w-4 h-4 mr-2" />
+            Back to Home
+          </Link>
+          <Link
+            to="/blog"
+            className="inline-flex items-center px-4 py-2 bg-gray-800/50 hover:bg-gray-800/70 text-white rounded-lg transition-colors"
+          >
+            <Newspaper className="w-4 h-4 mr-2" />
+            View More Ramblings
+          </Link>
         </div>
       </div>
     </article>
