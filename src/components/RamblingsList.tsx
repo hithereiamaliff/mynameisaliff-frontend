@@ -36,8 +36,10 @@ interface Post {
 }
 
 export default function RamblingsList() {
-  const [posts, setPosts] = useState<Post[]>([]);
+  const [interactivePosts, setInteractivePosts] = useState<Post[]>([]);
+  const [mediumPosts, setMediumPosts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [mediumError, setMediumError] = useState(false);
   const navigate = useNavigate();
 
   const containerVariants = {
@@ -57,12 +59,21 @@ export default function RamblingsList() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
+        // Fetch interactive posts
         const fetchedPosts = await getAllPosts();
-        // Filter only posts that have interactive versions
-        const interactivePosts = fetchedPosts.filter((post: Post) => post.isInteractive);
-        setPosts(interactivePosts);
-      } catch (error) {
+        const filteredPosts = fetchedPosts.filter((post: Post) => post.isInteractive);
+        setInteractivePosts(filteredPosts);
+
+        // Fetch Medium posts
+        const response = await fetch('http://localhost:3001/api/medium-posts');
+        if (!response.ok) throw new Error('Failed to fetch Medium posts');
+        const mediumData = await response.json();
+        setMediumPosts(mediumData);
+      } catch (error: unknown) {
         console.error('Error fetching posts:', error);
+        if (error instanceof Error && error.message.includes('Medium')) {
+          setMediumError(true);
+        }
       } finally {
         setLoading(false);
       }
@@ -114,66 +125,133 @@ export default function RamblingsList() {
             <div className="flex justify-center items-center min-h-[400px]">
               <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-yellow-500"></div>
             </div>
-          ) : posts.length === 0 ? (
-            <div className="space-y-8">
-              <div className="text-center text-gray-300 py-8 bg-gray-800 rounded-lg shadow-xl">
-                <p className="mb-4">No interactive posts published yet.</p>
-                <p className="mb-8">In the meantime, check out my latest ramblings here:</p>
-              </div>
-              
-              {/* Medium Blog Embed */}
-              <div className="relative overflow-hidden pb-[56.25%] h-0 rounded-lg shadow-xl">
-                <iframe
-                  src="https://hithere.mynameisaliff.co.uk/"
-                  className="absolute top-0 left-0 w-full h-full border-0"
-                  title="Aliff's Medium Blog"
-                  allowFullScreen
-                />
-              </div>
-            </div>
           ) : (
-            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-              {posts.map((post) => (
-            <Link
-              key={post._id}
-              to={`/ramblings/${post.slug.current}`}
-              className="bg-gray-800/50 hover:bg-gray-800/70 rounded-lg p-6 transition-all duration-300 flex flex-col"
-            >
-              {post.mainImage && (
-                <div className="relative h-48 mb-6 rounded-lg overflow-hidden">
-                  <img
-                    src={urlFor(post.mainImage).url()}
-                    alt={post.title}
-                    className="object-cover w-full h-full"
-                  />
-                  <div className="absolute top-2 right-2 bg-yellow-700 text-white px-3 py-1 rounded-full text-sm flex items-center gap-2">
-                    <Gamepad2 size={16} />
-                    <span>Interactive</span>
+            <div className="space-y-8">
+              {/* Interactive Posts Section */}
+              {interactivePosts.length > 0 ? (
+                <div className="space-y-8">
+                  <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+                    {interactivePosts.map((post) => (
+                      <Link
+                        key={post._id}
+                        to={`/ramblings/${post.slug.current}`}
+                        className="bg-gray-800/50 hover:bg-gray-800/70 rounded-lg p-6 transition-all duration-300 flex flex-col"
+                      >
+                        {post.mainImage && (
+                          <div className="relative h-48 mb-6 rounded-lg overflow-hidden">
+                            <img
+                              src={urlFor(post.mainImage).url()}
+                              alt={post.title}
+                              className="object-cover w-full h-full"
+                            />
+                            <div className="absolute top-2 right-2 bg-yellow-700 text-white px-3 py-1 rounded-full text-sm flex items-center gap-2">
+                              <Gamepad2 size={16} />
+                              <span>Interactive</span>
+                            </div>
+                          </div>
+                        )}
+
+                        <h2 className="text-xl font-semibold text-white mb-4">{post.title}</h2>
+                        <p className="text-gray-400 mb-6">{post.excerpt}</p>
+
+                        <div className="mt-auto flex flex-wrap gap-4 text-sm text-gray-400">
+                          <div className="flex items-center gap-2">
+                            <Clock size={16} />
+                            <span>{new Date(post.publishedAt).toLocaleDateString()}</span>
+                          </div>
+                          {post.categories?.length > 0 && (
+                            <div className="flex items-center gap-2">
+                              <Tag size={16} />
+                              <span>{post.categories[0].title}</span>
+                            </div>
+                          )}
+                          <div className="flex items-center gap-2">
+                            <Book size={16} />
+                            <span>{post.interactiveContent?.sections.length || 0} sections</span>
+                          </div>
+                        </div>
+                      </Link>
+                    ))}
                   </div>
+                </div>
+              ) : (
+                <div className="text-center text-gray-300 py-8 bg-gray-800 rounded-lg shadow-xl">
+                  <p className="mb-4">No interactive posts published yet.</p>
+                  <p className="mb-8">In the meantime, check out my latest ramblings below:</p>
                 </div>
               )}
 
-              <h2 className="text-xl font-semibold text-white mb-4">{post.title}</h2>
-              <p className="text-gray-400 mb-6">{post.excerpt}</p>
+              {/* Medium Posts Section */}
+              <div>
+                {mediumError ? (
+                  <div className="text-center text-gray-300 py-8 bg-gray-800 rounded-lg shadow-xl">
+                    <p className="mb-4">Unable to load Medium posts.</p>
+                    <a
+                      href="https://medium.com/@hithereiamaliff"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-yellow-500 hover:text-yellow-400 transition-colors"
+                    >
+                      Visit my Medium profile →
+                    </a>
+                  </div>
+                ) : (
+                  <div>
+                    <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+                      {mediumPosts.map((post, index) => (
+                        <a
+                          key={index}
+                          href={post.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="bg-gray-800/50 hover:bg-gray-800/70 rounded-lg p-6 transition-all duration-300 flex flex-col"
+                        >
+                          {post.thumbnail && (
+                            <div className="relative h-48 mb-6 rounded-lg overflow-hidden">
+                              <img
+                                src={post.thumbnail}
+                                alt={post.title}
+                                className="object-cover w-full h-full"
+                              />
+                            </div>
+                          )}
 
-              <div className="mt-auto flex flex-wrap gap-4 text-sm text-gray-400">
-                <div className="flex items-center gap-2">
-                  <Clock size={16} />
-                  <span>{new Date(post.publishedAt).toLocaleDateString()}</span>
-                </div>
-                {post.categories?.length > 0 && (
-                  <div className="flex items-center gap-2">
-                    <Tag size={16} />
-                    <span>{post.categories[0].title}</span>
+                          <h2 className="text-xl font-semibold text-white mb-4">{post.title}</h2>
+                          <p className="text-gray-400 mb-6">{post.excerpt}</p>
+                          <div className="mt-auto flex flex-wrap gap-4 text-sm text-gray-400">
+                            <div className="flex items-center gap-2">
+                              <Clock size={16} />
+                              <span>
+                                {new Date(post.pubDate).toLocaleDateString('en-US', {
+                                  year: 'numeric',
+                                  month: 'long',
+                                  day: 'numeric'
+                                })}
+                              </span>
+                            </div>
+                            {post.categories?.length > 0 && (
+                              <div className="flex items-center gap-2">
+                                <Tag size={16} />
+                                <span>{post.categories[0]}</span>
+                              </div>
+                            )}
+                          </div>
+                        </a>
+                      ))}
+                    </div>
+                    <div className="mt-8 text-center">
+                      <a
+                        href="https://medium.com/@hithereiamaliff"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 bg-yellow-700 hover:bg-yellow-600 text-white px-6 py-3 rounded-lg transition-colors"
+                      >
+                        View all posts on Medium
+                      </a>
+                    </div>
                   </div>
                 )}
-                <div className="flex items-center gap-2">
-                  <Book size={16} />
-                  <span>{post.interactiveContent?.sections.length || 0} sections</span>
-                </div>
               </div>
-            </Link>
-          ))}
             </div>
           )}
 
