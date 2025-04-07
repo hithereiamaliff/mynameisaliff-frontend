@@ -65,7 +65,8 @@ export default function RamblingsList() {
         setInteractivePosts(filteredPosts);
 
         // Fetch Medium posts
-        const response = await fetch('http://localhost:3001/api/medium-posts');
+        const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3001';
+        const response = await fetch(`${backendUrl}/api/medium-posts`);
         if (!response.ok) throw new Error('Failed to fetch Medium posts');
         const mediumData = await response.json();
         setMediumPosts(mediumData);
