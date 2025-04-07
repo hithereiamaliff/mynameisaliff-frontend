@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactGA from 'react-ga4';
+import { Link } from 'react-router-dom';
 import { Linkedin, Download, ChevronDown, User, ScrollText, MapPin, Newspaper, Github, Bot, Train, Wrench as Tool } from 'lucide-react';
 import { useTypewriter } from './hooks/useTypewriter';
 import { Modal } from './components/Modal';
@@ -11,6 +12,7 @@ import { TransportModal } from './components/TransportModal';
 import { DevToolsModal } from './components/DevToolsModal';
 import { AIDevModal } from './components/AIDevModal';
 import { UXCaseStudyModal } from './components/UXCaseStudyModal';
+
 
 const scrollToContent = () => {
   const element = document.getElementById('what-i-do');
@@ -101,7 +103,17 @@ class ErrorBoundary extends React.Component<{ children: React.ReactNode }, { has
 
 function App() {
 
-  // Router configuration
+  // State declarations
+  const [isTransformationModalOpen, setIsTransformationModalOpen] = React.useState(false);
+  const [isUXCaseStudyOpen, setIsUXCaseStudyOpen] = React.useState(false);
+  const [isTransportModalOpen, setIsTransportModalOpen] = React.useState(false);
+  const [isDevToolsModalOpen, setIsDevToolsModalOpen] = React.useState(false);
+  const [isAIDevModalOpen, setIsAIDevModalOpen] = React.useState(false);
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [isChatOpen, setIsChatOpen] = React.useState(false);
+  const [isTourModalOpen, setIsTourModalOpen] = React.useState(false);
+
+  // GA4 configuration
   React.useEffect(() => {
     // Initialize GA4 with your measurement ID
     ReactGA.initialize('your_ga4_id_here', {
@@ -127,14 +139,7 @@ function App() {
     console.log('GA4: Sent test event');
   }, []);
 
-  const [isTransformationModalOpen, setIsTransformationModalOpen] = React.useState(false);
-  const [isUXCaseStudyOpen, setIsUXCaseStudyOpen] = React.useState(false);
-  const [isTransportModalOpen, setIsTransportModalOpen] = React.useState(false);
-  const [isDevToolsModalOpen, setIsDevToolsModalOpen] = React.useState(false);
-  const [isAIDevModalOpen, setIsAIDevModalOpen] = React.useState(false);
-  const [isModalOpen, setIsModalOpen] = React.useState(false);
-  const [isChatOpen, setIsChatOpen] = React.useState(false);
-  const [isTourModalOpen, setIsTourModalOpen] = React.useState(false);
+
 
   const descriptions = [
     'Tour guide-in-training 🙋🏻',
@@ -147,7 +152,7 @@ function App() {
     'Public transport user 🚌🚉'
   ];
 
-  const currentText = useTypewriter({
+  const { text: currentText } = useTypewriter({
     texts: descriptions,
     typingSpeed: 50,
     deletingSpeed: 25,
@@ -331,13 +336,11 @@ function App() {
         <div className="max-w-6xl mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold text-white mb-12">Let's Connect</h2>
           <div className="flex flex-wrap justify-center gap-4">
-            <a
-              href="https://hithere.mynameisaliff.co.uk"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              to="/ramblings"
               onClick={() => {
                 ReactGA.event({
-                  category: 'External Link',
+                  category: 'Navigation',
                   action: 'Click',
                   label: 'Ramblings'
                 });
@@ -346,7 +349,7 @@ function App() {
             >
               <Newspaper className="mr-2 h-5 w-5" />
               Ramblings
-            </a>
+            </Link>
             <a
               href="https://www.linkedin.com/in/hithereiamaliff"
               target="_blank"

@@ -7,12 +7,17 @@ interface TypewriterOptions {
   delayBetweenTexts?: number;
 }
 
+interface TypewriterResult {
+  text: string;
+  isDeleting: boolean;
+}
+
 export function useTypewriter({
   texts,
   typingSpeed = 100,
   deletingSpeed = 50,
   delayBetweenTexts = 2000,
-}: TypewriterOptions) {
+}: TypewriterOptions): TypewriterResult {
   const [currentText, setCurrentText] = useState('');
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -54,5 +59,8 @@ export function useTypewriter({
     return () => clearTimeout(timeout);
   }, [currentText, currentIndex, isDeleting, texts, typingSpeed, deletingSpeed, delayBetweenTexts]);
 
-  return currentText;
+  return {
+    text: currentText,
+    isDeleting
+  };
 }

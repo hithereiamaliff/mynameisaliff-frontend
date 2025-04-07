@@ -31,7 +31,9 @@ export const getAllPosts = async () => {
       author->{
         name,
         image
-      }
+      },
+      isInteractive,
+      interactiveContent
     } | order(publishedAt desc)`
   );
 };
@@ -46,6 +48,8 @@ export const getPost = async (slug: string) => {
       mainImage,
       body,
       publishedAt,
+      isInteractive,
+      interactiveContent,
       categories[]->{
         _id,
         title

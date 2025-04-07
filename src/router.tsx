@@ -2,6 +2,8 @@ import { createBrowserRouter } from 'react-router-dom';
 import App from './App';
 import BlogList from './components/BlogList';
 import BlogPost from './components/BlogPost';
+import RamblingsList from './components/RamblingsList';
+import { InteractivePostPage } from './components/InteractivePostPage';
 import { ContentWritingPage } from './pages/static/ContentWriting';
 import { AIProjectsPage } from './pages/static/AIProjects';
 import { DevToolsPage } from './pages/static/DevTools';
@@ -10,42 +12,59 @@ import { UXDesignPage } from './pages/static/UXDesign';
 import { TourismPage } from './pages/static/Tourism';
 import { DownloadCVPage } from './pages/static/DownloadCV';
 
+import { PageTransition } from './components/PageTransition';
+
+const withTransition = (Component: React.ComponentType) => (
+  <PageTransition>
+    <Component />
+  </PageTransition>
+);
+
 export const router = createBrowserRouter([
+  // Root route with error boundary
   {
     path: '/',
-    element: <App />,
+    element: <App />
   },
   {
     path: '/blog',
-    element: <BlogList />,
+    element: withTransition(BlogList),
+  },
+  {
+    path: '/ramblings',
+    element: withTransition(RamblingsList),
+  },
+  {
+    path: '/ramblings/:slug',
+    element: withTransition(InteractivePostPage),
   },
   {
     path: '/content-writing',
-    element: <ContentWritingPage />,
+    element: withTransition(ContentWritingPage),
   },
   {
     path: '/ai-projects',
-    element: <AIProjectsPage />,
+    element: withTransition(AIProjectsPage),
   },
   {
     path: '/dev-tools',
-    element: <DevToolsPage />,
+    element: withTransition(DevToolsPage),
   },
   {
     path: '/public-transport',
-    element: <PublicTransportPage />,
+    element: withTransition(PublicTransportPage),
   },
   {
     path: '/ux-design',
-    element: <UXDesignPage />,
+    element: withTransition(UXDesignPage),
   },
   {
     path: '/tourism',
-    element: <TourismPage />,
+    element: withTransition(TourismPage),
   },
   {
     path: '/download-cv',
-    element: <DownloadCVPage />,
+    element: withTransition(DownloadCVPage),
   },
   {
     path: '/:slug',

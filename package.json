@@ -17,6 +17,7 @@
     "@tailwindcss/typography": "^0.5.16",
     "@types/react-helmet-async": "^1.0.1",
     "dotenv": "^16.4.7",
+    "framer-motion": "^12.6.3",
     "lucide-react": "^0.344.0",
     "openai": "^4.28.0",
     "react": "^18.3.1",
