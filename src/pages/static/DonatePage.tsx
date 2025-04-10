@@ -32,7 +32,7 @@ export const DonatePage: React.FC = () => {
       'mainEntity': {
         '@type': 'DonateAction',
         'name': 'Donate to Support Aliff\'s Work',
-        'description': 'Your contribution helps continue creating content and improving this website.',
+        'description': 'Your contribution helps me to continue creating better digital experiences for people like you and me.',
         'potentialAction': {
           '@type': 'DonateAction',
           'target': {
@@ -67,7 +67,7 @@ export const DonatePage: React.FC = () => {
     <>
       <SEO
         title="Support Aliff's Work | Donate"
-        description="Support Aliff's work through various payment methods including DuitNow Transfer, DuitNow QR, and Touch 'n Go eWallet. Your contribution helps continue creating content and improving this website."
+        description="Support Aliff's work through various payment methods including DuitNow Transfer, DuitNow QR, and Touch 'n Go eWallet. Your contribution helps me to continue creating better digital experiences for people like you and me."
         keywords="donate, support, DuitNow, Touch n Go, eWallet, Malaysian payment, contribution"
         path="/donate"
         type="website"
@@ -93,7 +93,7 @@ export const DonatePage: React.FC = () => {
             </div>
             <h1 className="text-3xl font-bold mb-2">Support My Work</h1>
             <p className="text-gray-300 mb-8">
-              Thank you for considering supporting my work! Your contribution helps me continue creating content and improving this website.
+              Thank you for considering supporting my work! Your contribution helps me to continue creating better digital experiences for people like you and me.
             </p>
 
             {selectedMethod === null ? (

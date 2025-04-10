@@ -61,7 +61,7 @@ export function DonationModal({ isOpen, onClose }: DonationModalProps) {
               </h2>
               
               <p className="text-gray-300 mb-6">
-                Thank you for considering supporting my work! Your contribution helps me continue creating content and improving this website.
+                Thank you for considering supporting my work! Your contribution helps me to continue creating better digital experiences for people like you and me.
               </p>
               
               <div className="space-y-4">
