@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Copy, ExternalLink, Download, LinkIcon } from 'lucide-react';
+import { Copy, ExternalLink, LinkIcon } from 'lucide-react';
+import { ImageDownloader } from '../ImageDownloader';
 import ReactGA from 'react-ga4';
 
 // Device detection utilities
@@ -335,63 +336,7 @@ const QR_CODE_URL = 'https://mynameisaliff.s3.ap-southeast-1.amazonaws.com/Mayba
 export const DuitNowQR: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(1);
 
-  // Function to download the QR code
-  const downloadQR = () => {
-    // Track the event with Google Analytics
-    ReactGA.event({
-      action: 'download_duitnow_qr',
-      category: 'donation',
-    });
 
-    // For this approach, we'll use a proxy iframe to bypass CORS
-    // Create an invisible iframe
-    const iframe = document.createElement('iframe');
-    iframe.style.display = 'none';
-    document.body.appendChild(iframe);
-    
-    // Write a simple HTML document to the iframe that will handle the download
-    const iframeDoc = iframe.contentWindow?.document;
-    if (iframeDoc) {
-      iframeDoc.open();
-      iframeDoc.write(`
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <title>Downloading...</title>
-          <script>
-            function startDownload() {
-              const a = document.createElement('a');
-              a.href = '${QR_CODE_URL}';
-              a.download = 'DuitNow-QR-Code.jpg';
-              a.target = '_blank';
-              document.body.appendChild(a);
-              a.click();
-              setTimeout(function() {
-                document.body.removeChild(a);
-                window.parent.postMessage('download-complete', '*');
-              }, 1000);
-            }
-          </script>
-        </head>
-        <body onload="startDownload()">
-          <p>Downloading your file...</p>
-        </body>
-        </html>
-      `);
-      iframeDoc.close();
-      
-      // Listen for the completion message and remove the iframe
-      window.addEventListener('message', function handler(event) {
-        if (event.data === 'download-complete') {
-          document.body.removeChild(iframe);
-          window.removeEventListener('message', handler);
-        }
-      }, false);
-    } else {
-      // Fallback if iframe approach fails
-      window.open(QR_CODE_URL, '_blank');
-    }
-  };
 
   const openPaymentApp = (appUrl: string, appName: string) => {
     // Track the event
@@ -461,17 +406,25 @@ export const DuitNowQR: React.FC = () => {
       {currentStep === 1 ? (
         <div className="space-y-6">
           <div className="bg-gray-800/50 p-4 rounded-lg flex flex-col items-center">
-            <img 
-              src={QR_CODE_URL} 
-              alt="DuitNow QR Code" 
-              className="w-48 h-48 object-contain mb-4"
-            />
+            <div className="relative mb-4">
+              <ImageDownloader 
+                imageUrl={QR_CODE_URL} 
+                fileName="DuitNow-QR-Code"
+                className="w-48 h-48 object-contain"
+                alt="DuitNow QR Code"
+                trackingCategory="donation"
+                trackingAction="download_duitnow_qr"
+              />
+              <div className="absolute bottom-0 left-0 right-0 text-center text-xs text-gray-400">
+                Click image to download
+              </div>
+            </div>
             <button
-              onClick={downloadQR}
+              onClick={() => window.open(QR_CODE_URL, '_blank')}
               className="py-2 px-4 bg-yellow-700 hover:bg-yellow-800 text-white rounded-lg font-medium transition-colors flex items-center"
             >
-              <Download className="h-4 w-4 mr-2" />
-              Save QR Code
+              <ExternalLink className="h-4 w-4 mr-2" />
+              View QR Code
             </button>
           </div>
           
