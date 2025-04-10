@@ -17,7 +17,7 @@ const BANK_APPS = [
 ];
 
 // Replace with your actual bank details
-const ACCOUNT_NUMBER = '1234567890';
+const ACCOUNT_NUMBER = '557054644003';
 const BANK_NAME = 'Maybank';
 
 const DuitNowTransfer: React.FC = () => {

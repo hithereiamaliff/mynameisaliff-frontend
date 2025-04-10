@@ -236,9 +236,18 @@ export const DuitNowTransfer: React.FC = () => {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold text-white mb-4">
-        DuitNow Transfer
-      </h2>
+      <div className="flex flex-col items-center mb-4">
+        <div className="w-16 h-16 bg-white rounded-lg p-1 flex items-center justify-center mb-3">
+          <img 
+            src="/images/DuitNow Logos/DuitNow1.jpg" 
+            alt="DuitNow Transfer" 
+            className="max-w-full max-h-full object-contain"
+          />
+        </div>
+        <h2 className="text-2xl font-bold text-white">
+          DuitNow Transfer
+        </h2>
+      </div>
 
       {currentStep === 1 ? (
         <div className="space-y-6">
@@ -399,9 +408,18 @@ export const DuitNowQR: React.FC = () => {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold text-white mb-4">
-        DuitNow QR
-      </h2>
+      <div className="flex flex-col items-center mb-4">
+        <div className="w-16 h-16 bg-white rounded-lg p-1 flex items-center justify-center mb-3">
+          <img 
+            src="/images/DuitNow Logos/DuitNow-QR-Logo_FA2.png" 
+            alt="DuitNow QR" 
+            className="max-w-full max-h-full object-contain"
+          />
+        </div>
+        <h2 className="text-2xl font-bold text-white">
+          DuitNow QR
+        </h2>
+      </div>
 
       {currentStep === 1 ? (
         <div className="space-y-6">
@@ -513,9 +531,18 @@ export const TNGEWallet: React.FC = () => {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold text-white mb-4">
-        Touch 'n Go eWallet
-      </h2>
+      <div className="flex flex-col items-center mb-4">
+        <div className="w-16 h-16 bg-white rounded-lg p-1 flex items-center justify-center mb-3">
+          <img 
+            src="/images/Touch_'n_Go_eWallet.png" 
+            alt="Touch 'n Go eWallet" 
+            className="max-w-full max-h-full object-contain"
+          />
+        </div>
+        <h2 className="text-2xl font-bold text-white">
+          Touch 'n Go eWallet
+        </h2>
+      </div>
       
       <div className="space-y-6">
         <p className="text-gray-300">

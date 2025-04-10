@@ -69,6 +69,13 @@ export function DonationModal({ isOpen, onClose }: DonationModalProps) {
                   onClick={() => handleMethodSelect('duitnow-transfer')}
                   className="w-full p-4 bg-gray-800/50 hover:bg-gray-800/70 rounded-lg text-left transition-colors flex items-center"
                 >
+                  <div className="w-12 h-12 mr-4 flex-shrink-0 bg-white rounded-lg p-1 flex items-center justify-center">
+                    <img 
+                      src="/images/DuitNow Logos/DuitNow1.jpg" 
+                      alt="DuitNow Transfer" 
+                      className="max-w-full max-h-full object-contain"
+                    />
+                  </div>
                   <div className="flex-1">
                     <h3 className="text-white font-medium">DuitNow Transfer</h3>
                     <p className="text-gray-400 text-sm">Transfer directly to my bank account</p>
@@ -80,6 +87,13 @@ export function DonationModal({ isOpen, onClose }: DonationModalProps) {
                   onClick={() => handleMethodSelect('duitnow-qr')}
                   className="w-full p-4 bg-gray-800/50 hover:bg-gray-800/70 rounded-lg text-left transition-colors flex items-center"
                 >
+                  <div className="w-12 h-12 mr-4 flex-shrink-0 bg-white rounded-lg p-1 flex items-center justify-center">
+                    <img 
+                      src="/images/DuitNow Logos/DuitNow-QR-Logo_FA2.png" 
+                      alt="DuitNow QR" 
+                      className="max-w-full max-h-full object-contain"
+                    />
+                  </div>
                   <div className="flex-1">
                     <h3 className="text-white font-medium">DuitNow QR</h3>
                     <p className="text-gray-400 text-sm">Scan QR code with your banking app</p>
@@ -91,6 +105,13 @@ export function DonationModal({ isOpen, onClose }: DonationModalProps) {
                   onClick={() => handleMethodSelect('tng-ewallet')}
                   className="w-full p-4 bg-gray-800/50 hover:bg-gray-800/70 rounded-lg text-left transition-colors flex items-center"
                 >
+                  <div className="w-12 h-12 mr-4 flex-shrink-0 bg-white rounded-lg p-1 flex items-center justify-center">
+                    <img 
+                      src="/images/Touch_'n_Go_eWallet.png" 
+                      alt="Touch 'n Go eWallet" 
+                      className="max-w-full max-h-full object-contain"
+                    />
+                  </div>
                   <div className="flex-1">
                     <h3 className="text-white font-medium">Touch 'n Go eWallet</h3>
                     <p className="text-gray-400 text-sm">Pay via Touch 'n Go eWallet</p>
