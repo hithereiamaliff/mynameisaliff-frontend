@@ -329,57 +329,67 @@ const PAYMENT_APPS = [
   { name: 'Other App', appUrl: '', icon: '/images/wallets/other.png', category: 'Other' },
 ];
 
-// DuitNow QR code image URL
-const QR_CODE_URL = 'https://mynameisaliff.s3.ap-southeast-1.amazonaws.com/Maybank+QRPayBiz+(DuitNow).jpg';
+// DuitNow QR code image URL - properly encoded for spaces and special characters
+const QR_CODE_URL = 'https://mynameisaliff.s3.ap-southeast-1.amazonaws.com/Maybank%20QRPayBiz%20(DuitNow).jpg';
 
 export const DuitNowQR: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(1);
 
   // Function to download the QR code
-  const downloadQR = async () => {
+  const downloadQR = () => {
     // Track the event with Google Analytics
     ReactGA.event({
       action: 'download_duitnow_qr',
       category: 'donation',
     });
 
-    try {
-      // Show loading state or feedback to user
-      console.log('Starting download process...');
+    // For this approach, we'll use a proxy iframe to bypass CORS
+    // Create an invisible iframe
+    const iframe = document.createElement('iframe');
+    iframe.style.display = 'none';
+    document.body.appendChild(iframe);
+    
+    // Write a simple HTML document to the iframe that will handle the download
+    const iframeDoc = iframe.contentWindow?.document;
+    if (iframeDoc) {
+      iframeDoc.open();
+      iframeDoc.write(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <title>Downloading...</title>
+          <script>
+            function startDownload() {
+              const a = document.createElement('a');
+              a.href = '${QR_CODE_URL}';
+              a.download = 'DuitNow-QR-Code.jpg';
+              a.target = '_blank';
+              document.body.appendChild(a);
+              a.click();
+              setTimeout(function() {
+                document.body.removeChild(a);
+                window.parent.postMessage('download-complete', '*');
+              }, 1000);
+            }
+          </script>
+        </head>
+        <body onload="startDownload()">
+          <p>Downloading your file...</p>
+        </body>
+        </html>
+      `);
+      iframeDoc.close();
       
-      // Fetch the image data
-      const response = await fetch(QR_CODE_URL, { method: 'GET' });
-      if (!response.ok) {
-        throw new Error('Network response was not ok: ' + response.statusText);
-      }
-      
-      // Convert response to Blob
-      const blob = await response.blob();
-      
-      // Create object URL for the blob
-      const blobUrl = window.URL.createObjectURL(blob);
-      
-      // Create a temporary anchor element
-      const link = document.createElement('a');
-      link.href = blobUrl;
-      link.download = 'DuitNow-QR-Code.jpg';
-      link.style.display = 'none';
-      
-      // Append to body, trigger click, and remove
-      document.body.appendChild(link);
-      link.click();
-      
-      // Clean up after a short delay
-      setTimeout(() => {
-        document.body.removeChild(link);
-        window.URL.revokeObjectURL(blobUrl);
-        console.log('Download process completed');
-      }, 100);
-    } catch (error) {
-      console.error('Download failed:', error);
-      
-      // Fallback method for browsers that don't support the above
-      alert('Download failed. Please right-click on the QR code image and select "Save Image As..."');
+      // Listen for the completion message and remove the iframe
+      window.addEventListener('message', function handler(event) {
+        if (event.data === 'download-complete') {
+          document.body.removeChild(iframe);
+          window.removeEventListener('message', handler);
+        }
+      }, false);
+    } else {
+      // Fallback if iframe approach fails
+      window.open(QR_CODE_URL, '_blank');
     }
   };
 
