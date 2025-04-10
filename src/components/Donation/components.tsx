@@ -4,30 +4,82 @@ import ReactGA from 'react-ga4';
 
 // ===== DuitNow Transfer Component =====
 // Bank apps commonly used in Malaysia
-// Enhanced bank apps data with iOS-specific URLs and app store links
+// Enhanced bank apps data with device-specific URLs
 const BANK_APPS = [
-  { 
-    name: 'Maybank', 
-    appUrl: 'maybank2u://', 
-    iosAppUrl: 'maybank2u://', 
-    iosAppStoreUrl: 'https://apps.apple.com/my/app/m2u/id1192180092',
-    icon: '/images/banks/maybank.png' 
-  },
   { 
     name: 'MAE', 
     appUrl: 'maeapp://', 
     iosAppUrl: 'maeapp://', 
     iosAppStoreUrl: 'https://apps.apple.com/my/app/mae-by-maybank2u/id1481028763',
-    icon: '/images/banks/maybank.png' 
+    androidAppUrl: 'maeapp://',
+    androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=com.maybank2u.life',
+    webUrl: 'https://www.maybank2u.com.my/home/m2u/common/login.do',
+    icon: '/images/banks/mae.png' 
   },
-  { name: 'CIMB', appUrl: 'cimbclicks://', icon: '/images/banks/cimb.png' },
-  { name: 'Public Bank', appUrl: 'pbb://', icon: '/images/banks/publicbank.png' },
-  { name: 'RHB', appUrl: 'rhb://', icon: '/images/banks/rhb.png' },
-  { name: 'Hong Leong Bank', appUrl: 'hlb://', icon: '/images/banks/hongleong.png' },
-  { name: 'Bank Islam', appUrl: 'bankislam://', icon: '/images/banks/bankislam.png' },
-  { name: 'AmBank', appUrl: 'ambank://', icon: '/images/banks/ambank.png' },
-  { name: 'Bank Rakyat', appUrl: 'bankrakyat://', icon: '/images/banks/bankrakyat.png' },
-  { name: 'Alliance Bank', appUrl: 'alliancebank://', icon: '/images/banks/alliance.png' },
+  { 
+    name: 'CIMB', 
+    appUrl: 'cimbclicks://', 
+    webUrl: 'https://www.cimbclicks.com.my/clicks/',
+    iosAppStoreUrl: 'https://apps.apple.com/my/app/cimb-clicks-malaysia/id328803038',
+    androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=com.cimbmalaysia',
+    icon: '/images/banks/cimb.png' 
+  },
+  { 
+    name: 'Public Bank', 
+    appUrl: 'pbb://', 
+    webUrl: 'https://www2.pbebank.com/myIBK/apppbb/servlet/BxxxServlet',
+    iosAppStoreUrl: 'https://apps.apple.com/my/app/pb-engage-my/id1477321804',
+    androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=com.pbebank.engage.android',
+    icon: '/images/banks/publicbank.png' 
+  },
+  { 
+    name: 'RHB', 
+    appUrl: 'rhb://', 
+    webUrl: 'https://logon.rhb.com.my/',
+    iosAppStoreUrl: 'https://apps.apple.com/my/app/rhb-mobile-banking/id1405829991',
+    androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=my.com.rhbgroup.rhbmobileapp',
+    icon: '/images/banks/rhb.png' 
+  },
+  { 
+    name: 'Hong Leong Bank', 
+    appUrl: 'hlb://', 
+    webUrl: 'https://s.hongleongconnect.my/rib/app/fo/login',
+    iosAppStoreUrl: 'https://apps.apple.com/my/app/hlb-connect/id1457489341',
+    androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=my.com.hongleongconnect.rib',
+    icon: '/images/banks/hongleong.png' 
+  },
+  { 
+    name: 'Bank Islam', 
+    appUrl: 'bankislam://', 
+    webUrl: 'https://www.bankislam.biz/',
+    iosAppStoreUrl: 'https://apps.apple.com/my/app/go-by-bank-islam/id1276775911',
+    androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=my.com.bankislam.gobi',
+    icon: '/images/banks/bankislam.png' 
+  },
+  { 
+    name: 'AmBank', 
+    appUrl: 'ambank://', 
+    webUrl: 'https://amaccess.ambankgroup.com/AmAccessWeb/AmAccess/login.jsp',
+    iosAppStoreUrl: 'https://apps.apple.com/my/app/ambank-malaysia/id1459130651',
+    androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=com.ambank.ambankonline',
+    icon: '/images/banks/ambank.png' 
+  },
+  { 
+    name: 'Bank Rakyat', 
+    appUrl: 'bankrakyat://', 
+    webUrl: 'https://www2.irakyat.com.my/personal/common/login.do',
+    iosAppStoreUrl: 'https://apps.apple.com/my/app/irakyat/id1119723840',
+    androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=com.bankrakyat.irakyat',
+    icon: '/images/banks/bankrakyat.png' 
+  },
+  { 
+    name: 'Alliance Bank', 
+    appUrl: 'alliancebank://', 
+    webUrl: 'https://www.allianceonline.com.my/personal/common/login.do',
+    iosAppStoreUrl: 'https://apps.apple.com/my/app/alliance-bank-mobile/id1457918406',
+    androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=com.alliancebank.mobile',
+    icon: '/images/banks/alliance.png' 
+  },
   { name: 'Other Bank App', appUrl: '', icon: '/images/banks/other.png' },
 ];
 
@@ -73,8 +125,10 @@ export const DuitNowTransfer: React.FC = () => {
     }
   };
 
-  // Detect iOS device
+  // Device detection
   const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
+  const isAndroid = /android/i.test(navigator.userAgent);
+  const isMobile = isIOS || isAndroid || /Mobi|Android/i.test(navigator.userAgent);
   
   const openBankApp = (appUrl: string, bankName: string) => {
     // Track the event first in case the user leaves the page
@@ -84,104 +138,71 @@ export const DuitNowTransfer: React.FC = () => {
       label: bankName,
     });
     
-    if (appUrl) {
-      // Ask for confirmation before redirecting
-      const confirmed = window.confirm(`This will attempt to open the ${bankName} app. Continue?`);
+    // Find the bank app details
+    const bankApp = BANK_APPS.find(app => app.name === bankName);
+    if (!bankApp) {
+      // If bank not found in our list, just copy the account number
+      copyAccountNumber();
+      alert(`Account number copied! Open your ${bankName} app manually and paste the account number.`);
+      return;
+    }
+    
+    // Different behavior based on device type
+    if (isMobile) {
+      // For mobile devices, try to open the app or direct to app store
+      const confirmed = window.confirm(`Would you like to open the ${bankName} app or download it if not installed?`);
       
       if (confirmed) {
-        // Find the bank app details
-        const bankApp = BANK_APPS.find(app => app.name === bankName);
         let appUrlToUse = appUrl;
         let appStoreUrl = '';
         
-        // Use iOS-specific URL if available and on iOS device
-        if (isIOS && bankApp && bankApp.iosAppUrl) {
+        // Set appropriate URLs based on device type
+        if (isIOS && bankApp.iosAppUrl) {
           appUrlToUse = bankApp.iosAppUrl;
           appStoreUrl = bankApp.iosAppStoreUrl || '';
+        } else if (isAndroid && bankApp.androidAppUrl) {
+          appUrlToUse = bankApp.androidAppUrl;
+          appStoreUrl = bankApp.androidPlayStoreUrl || '';
         }
         
-        // For iOS, use a different approach that works better
-        if (isIOS) {
-          // Create a hidden anchor element
-          const link = document.createElement('a');
-          link.setAttribute('href', appUrlToUse);
-          link.style.display = 'none';
-          document.body.appendChild(link);
-          
-          // Set a timeout to detect if app opening failed
-          const timeoutId = setTimeout(() => {
-            // If we're still here after timeout, app didn't open
-            document.body.removeChild(link);
-            
-            // Offer fallback options with App Store link if available
-            let fallbackMessage = `Could not open ${bankName} app. Would you like to:\n`;
-            if (appStoreUrl) {
-              fallbackMessage += `- Download the app from App Store\n`;
-            }
-            fallbackMessage += `- Copy the account number and open your banking app manually\n`;
-            fallbackMessage += `- Continue with another payment method`;
-            
-            const useFallback = window.confirm(fallbackMessage);
-            
-            if (useFallback) {
-              if (appStoreUrl) {
-                const goToAppStore = confirm(`Go to App Store to download ${bankName}?`);
-                if (goToAppStore) {
-                  window.location.href = appStoreUrl;
-                  return;
-                }
-              }
-              
-              // Copy account number automatically as a convenience
-              copyAccountNumber();
-              alert(`Account number copied! Open your ${bankName} app manually and paste the account number.`);
-            }
-          }, 2500); // Slightly longer timeout for iOS
-          
-          // Try to open the app
+        // If we have an app store URL, go directly there
+        if (appStoreUrl) {
+          window.location.href = appStoreUrl;
+          return;
+        }
+        
+        // If no app store URL but we have an app URL, try to open it
+        if (appUrlToUse) {
           try {
-            link.click();
+            window.location.href = appUrlToUse;
           } catch (e) {
-            clearTimeout(timeoutId);
-            document.body.removeChild(link);
-            alert(`Could not open ${bankName} app. Please try another method.`);
+            // If that fails, copy the account number
+            copyAccountNumber();
+            alert(`Could not open ${bankName} app. Account number copied to clipboard.`);
           }
         } else {
-          // For non-iOS devices, use the iframe approach
-          const iframe = document.createElement('iframe');
-          iframe.style.display = 'none';
-          document.body.appendChild(iframe);
-          
-          // Set a timeout to detect if app opening failed
-          const timeoutId = setTimeout(() => {
-            // If we're still here after timeout, app didn't open
-            document.body.removeChild(iframe);
-            
-            // Offer fallback options
-            const useFallback = window.confirm(
-              `Could not open ${bankName} app. Would you like to:\n` +
-              `- Copy the account number and open your banking app manually\n` +
-              `- Continue with another payment method`
-            );
-            
-            if (useFallback) {
-              // Copy account number automatically as a convenience
-              copyAccountNumber();
-              alert(`Account number copied! Open your ${bankName} app manually and paste the account number.`);
-            }
-          }, 2000);
-          
-          // Try to open the app
-          try {
-            if (iframe.contentWindow) {
-              iframe.contentWindow.location.href = appUrlToUse;
-            }
-          } catch (e) {
-            clearTimeout(timeoutId);
-            document.body.removeChild(iframe);
-            alert(`Could not open ${bankName} app. Please try another method.`);
-          }
+          // No URLs available, just copy the account number
+          copyAccountNumber();
+          alert(`Account number copied! Open your ${bankName} app manually and paste the account number.`);
         }
+      }
+    } else {
+      // For desktop devices, direct to the online banking website
+      if (bankApp.webUrl) {
+        const confirmed = window.confirm(`Would you like to open the ${bankName} online banking website?`);
+        
+        if (confirmed) {
+          // Open in a new tab
+          window.open(bankApp.webUrl, '_blank');
+          
+          // Also copy the account number for convenience
+          copyAccountNumber();
+          alert(`Account number copied! You can now paste it in the ${bankName} online banking website.`);
+        }
+      } else {
+        // No web URL available, just copy the account number
+        copyAccountNumber();
+        alert(`Account number copied! Please open your online banking website manually and paste the account number.`);
       }
     }
   };
@@ -312,15 +333,42 @@ export const DuitNowQR: React.FC = () => {
   };
 
   const openPaymentApp = (appUrl: string, appName: string) => {
-    if (appUrl) {
-      window.location.href = appUrl;
-    }
-    
+    // Track the event
     ReactGA.event({
       action: 'open_payment_app',
       category: 'donation',
       label: appName,
     });
+    
+    // Find the app details if it's in our bank apps list
+    const appDetails = BANK_APPS.find(app => app.name === appName);
+    
+    // For mobile devices
+    if (isMobile) {
+      if (appDetails) {
+        // If we have app store links, use those instead of trying to open the app
+        if (isIOS && appDetails.iosAppStoreUrl) {
+          window.location.href = appDetails.iosAppStoreUrl;
+          return;
+        } else if (isAndroid && appDetails.androidPlayStoreUrl) {
+          window.location.href = appDetails.androidPlayStoreUrl;
+          return;
+        }
+      }
+      
+      // If no app store links or not in our list, try the direct app URL
+      if (appUrl) {
+        window.location.href = appUrl;
+      }
+    } else {
+      // For desktop, open web URL if available
+      if (appDetails && appDetails.webUrl) {
+        window.open(appDetails.webUrl, '_blank');
+      } else {
+        // No web URL, show instructions
+        alert(`Please use your mobile device to scan the QR code with the ${appName} app.`);
+      }
+    }
   };
 
   const nextStep = () => {
