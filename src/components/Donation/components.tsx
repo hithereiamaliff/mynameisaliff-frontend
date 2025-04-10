@@ -2,6 +2,24 @@ import React, { useState } from 'react';
 import { Copy, ExternalLink, Download } from 'lucide-react';
 import ReactGA from 'react-ga4';
 
+// Device detection utilities
+const detectUserAgent = (userAgent: string) => {
+  const isMobile = /iPhone|iPad|iPod|Android|webOS|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
+  const isIOS = /iPad|iPhone|iPod/.test(userAgent) && !(typeof window !== 'undefined' && (window as any).MSStream);
+  const isAndroid = /Android/i.test(userAgent);
+  return { isMobile, isIOS, isAndroid };
+};
+
+// Safe browser detection that works with SSR
+const getDeviceInfo = () => {
+  if (typeof navigator === 'undefined') {
+    return { isMobile: false, isIOS: false, isAndroid: false };
+  }
+  return detectUserAgent(navigator.userAgent);
+};
+
+const { isMobile, isIOS, isAndroid } = getDeviceInfo();
+
 // ===== DuitNow Transfer Component =====
 // Bank apps commonly used in Malaysia
 // Enhanced bank apps data with device-specific URLs
