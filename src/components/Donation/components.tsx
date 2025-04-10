@@ -335,72 +335,71 @@ const QR_CODE_URL = 'https://mynameisaliff.s3.ap-southeast-1.amazonaws.com/Mayba
 export const DuitNowQR: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(1);
 
+  // Function to directly open the QR code in a new tab
+  const openQRInNewTab = () => {
+    window.open(QR_CODE_URL, '_blank');
+  };
+
+  // Function to download the QR code
   const downloadQR = () => {
     // Track the event with Google Analytics
     ReactGA.event({
       action: 'download_duitnow_qr',
       category: 'donation',
     });
+
+    // Create an image element to ensure the image is loaded
+    const img = new Image();
+    img.crossOrigin = 'anonymous'; // Try to avoid CORS issues
+    img.src = QR_CODE_URL;
     
-    // For mobile devices, we need a different approach
-    if (isMobile) {
-      // First try to fetch the image
-      fetch(QR_CODE_URL)
-        .then(response => response.blob())
-        .then(blob => {
-          // Create a blob URL
-          const blobUrl = URL.createObjectURL(blob);
-          
-          // Create a temporary link
-          const link = document.createElement('a');
-          link.href = blobUrl;
-          link.download = 'DuitNow-QR-Code.jpg';
-          link.setAttribute('data-downloadurl', ['image/jpeg', link.download, link.href].join(':'));
-          link.style.display = 'none';
-          document.body.appendChild(link);
-          
-          // Click the link to trigger download
-          link.click();
-          
-          // Clean up
-          setTimeout(() => {
-            document.body.removeChild(link);
-            URL.revokeObjectURL(blobUrl);
-          }, 100);
-        })
-        .catch(error => {
-          console.error('Error downloading QR code:', error);
-          // Fallback to opening in new tab
-          window.open(QR_CODE_URL, '_blank');
-        });
-    } else {
-      // Desktop approach - fetch and create a blob to ensure download works
-      fetch(QR_CODE_URL)
-        .then(response => response.blob())
-        .then(blob => {
-          const blobUrl = URL.createObjectURL(blob);
-          const link = document.createElement('a');
-          link.href = blobUrl;
-          link.download = 'DuitNow-QR-Code.jpg';
-          link.style.display = 'none';
-          document.body.appendChild(link);
-          link.click();
-          
-          setTimeout(() => {
-            document.body.removeChild(link);
-            URL.revokeObjectURL(blobUrl);
-          }, 100);
-        })
-        .catch(() => {
-          // Fallback to direct link method
-          const link = document.createElement('a');
-          link.href = QR_CODE_URL;
-          link.download = 'DuitNow-QR-Code.jpg';
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-        });
-    }
+    img.onload = function() {
+      // Create a canvas element
+      const canvas = document.createElement('canvas');
+      canvas.width = img.width;
+      canvas.height = img.height;
+      
+      // Draw the image on the canvas
+      const ctx = canvas.getContext('2d');
+      if (ctx) {
+        ctx.drawImage(img, 0, 0);
+        
+        try {
+          // Convert canvas to blob
+          canvas.toBlob((blob) => {
+            if (blob) {
+              // Create a download link
+              const url = URL.createObjectURL(blob);
+              const link = document.createElement('a');
+              link.href = url;
+              link.download = 'DuitNow-QR-Code.jpg';
+              document.body.appendChild(link);
+              link.click();
+              
+              // Clean up
+              setTimeout(() => {
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+              }, 100);
+            } else {
+              // Fallback if blob creation fails
+              openQRInNewTab();
+            }
+          }, 'image/jpeg', 0.95);
+        } catch (e) {
+          console.error('Error creating download:', e);
+          openQRInNewTab();
+        }
+      } else {
+        // Fallback if canvas context fails
+        openQRInNewTab();
+      }
+    };
+    
+    img.onerror = function() {
+      console.error('Error loading image for download');
+      openQRInNewTab();
+    };
   };
 
   const openPaymentApp = (appUrl: string, appName: string) => {
