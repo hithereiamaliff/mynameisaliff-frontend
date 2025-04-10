@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Copy, ExternalLink, Download } from 'lucide-react';
+import { Copy, ExternalLink, Download, LinkIcon } from 'lucide-react';
 import ReactGA from 'react-ga4';
 
 // Device detection utilities
@@ -336,18 +336,71 @@ export const DuitNowQR: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(1);
 
   const downloadQR = () => {
-    // Create a temporary link element
-    const link = document.createElement('a');
-    link.href = QR_CODE_URL;
-    link.download = 'duitnow-qr.png';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    
+    // Track the event with Google Analytics
     ReactGA.event({
       action: 'download_duitnow_qr',
       category: 'donation',
     });
+    
+    // For mobile devices, we need a different approach
+    if (isMobile) {
+      // First try to fetch the image
+      fetch(QR_CODE_URL)
+        .then(response => response.blob())
+        .then(blob => {
+          // Create a blob URL
+          const blobUrl = URL.createObjectURL(blob);
+          
+          // Create a temporary link
+          const link = document.createElement('a');
+          link.href = blobUrl;
+          link.download = 'DuitNow-QR-Code.jpg';
+          link.setAttribute('data-downloadurl', ['image/jpeg', link.download, link.href].join(':'));
+          link.style.display = 'none';
+          document.body.appendChild(link);
+          
+          // Click the link to trigger download
+          link.click();
+          
+          // Clean up
+          setTimeout(() => {
+            document.body.removeChild(link);
+            URL.revokeObjectURL(blobUrl);
+          }, 100);
+        })
+        .catch(error => {
+          console.error('Error downloading QR code:', error);
+          // Fallback to opening in new tab
+          window.open(QR_CODE_URL, '_blank');
+        });
+    } else {
+      // Desktop approach - fetch and create a blob to ensure download works
+      fetch(QR_CODE_URL)
+        .then(response => response.blob())
+        .then(blob => {
+          const blobUrl = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = blobUrl;
+          link.download = 'DuitNow-QR-Code.jpg';
+          link.style.display = 'none';
+          document.body.appendChild(link);
+          link.click();
+          
+          setTimeout(() => {
+            document.body.removeChild(link);
+            URL.revokeObjectURL(blobUrl);
+          }, 100);
+        })
+        .catch(() => {
+          // Fallback to direct link method
+          const link = document.createElement('a');
+          link.href = QR_CODE_URL;
+          link.download = 'DuitNow-QR-Code.jpg';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        });
+    }
   };
 
   const openPaymentApp = (appUrl: string, appName: string) => {
@@ -517,9 +570,9 @@ export const TNGEWallet: React.FC = () => {
           Open TnG eWallet Payment
         </button>
         
-        <div className="bg-gray-800/50 p-4 rounded-lg">
-          <p className="text-white font-medium mb-2">Payment Link:</p>
-          <p className="text-gray-300 break-all text-sm">{TNG_PAYMENT_LINK}</p>
+        <div className="bg-gray-800/50 p-3 rounded-lg flex items-center space-x-2">
+          <LinkIcon className="h-4 w-4 text-yellow-500 flex-shrink-0" />
+          <p className="text-gray-300 break-all text-xs">{TNG_PAYMENT_LINK}</p>
         </div>
         
         <div className="bg-gray-700/30 p-4 rounded-lg border border-yellow-700/30">
