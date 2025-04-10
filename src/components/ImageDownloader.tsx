@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactGA from 'react-ga4';
 
 interface ImageDownloaderProps {
@@ -18,8 +18,16 @@ export const ImageDownloader: React.FC<ImageDownloaderProps> = ({
   trackingCategory = 'download',
   trackingAction = 'download_image'
 }) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleDownload = async (event: React.MouseEvent<HTMLImageElement>) => {
+    // Prevent default behavior (opening in new tab)
     event.preventDefault();
+    event.stopPropagation();
+    
+    if (isLoading) return;
+    
+    setIsLoading(true);
     
     // Track the event with Google Analytics
     ReactGA.event({
@@ -28,77 +36,64 @@ export const ImageDownloader: React.FC<ImageDownloaderProps> = ({
     });
     
     try {
-      console.log(`Attempting to download image: ${imageUrl}`);
-      
-      // Fetch the image as a blob
-      const response = await fetch(imageUrl, {
-        method: 'GET',
-        mode: 'cors',
-      });
-      
-      if (!response.ok) {
-        throw new Error(`Network response was not ok: ${response.status} ${response.statusText}`);
-      }
-      
-      // Convert the response to a blob
-      const imageBlob = await response.blob();
-      console.log(`Blob created, type: ${imageBlob.type}, size: ${imageBlob.size}`);
-      
-      // Create a URL for the blob
-      const blobUrl = window.URL.createObjectURL(imageBlob);
-      
-      // Create a temporary anchor element
+      // For S3 URLs, we'll use a different approach
+      // Create a hidden anchor element
       const downloadLink = document.createElement('a');
       
-      // Set anchor properties
-      downloadLink.href = blobUrl;
+      // Set the href to the image URL
+      downloadLink.href = imageUrl;
       
-      // Determine file extension from content type or URL
-      const contentType = response.headers.get('content-type');
-      let extension = 'jpg'; // Default extension
-      
-      if (contentType) {
-        // Extract extension from content type (e.g., 'image/png' -> 'png')
-        const match = contentType.match(/image\/(\w+)/);
-        if (match && match[1]) {
-          extension = match[1];
-        }
-      } else if (imageUrl.includes('.')) {
-        // Try to extract extension from URL
-        const urlExtension = imageUrl.split('.').pop()?.toLowerCase();
-        if (urlExtension && ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg'].includes(urlExtension)) {
-          extension = urlExtension;
+      // Extract file extension from URL
+      let extension = 'jpg';
+      const urlParts = imageUrl.split('.');
+      if (urlParts.length > 1) {
+        const possibleExt = urlParts.pop()?.toLowerCase();
+        if (possibleExt && ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg'].includes(possibleExt)) {
+          extension = possibleExt;
         }
       }
       
-      // Set the download attribute with filename
-      downloadLink.download = `${fileName}.${extension}`;
+      // Critical: Set download attribute
+      downloadLink.setAttribute('download', `${fileName}.${extension}`);
+      
+      // Critical: Set these attributes for cross-origin content
+      downloadLink.setAttribute('target', '_blank');
+      downloadLink.setAttribute('rel', 'noopener noreferrer');
+      
+      // Hide the element
       downloadLink.style.display = 'none';
       
       // Append to body, click, and remove
       document.body.appendChild(downloadLink);
       downloadLink.click();
       
-      // Clean up
+      // Small delay before removing
       setTimeout(() => {
         document.body.removeChild(downloadLink);
-        window.URL.revokeObjectURL(blobUrl);
-        console.log('Download process completed');
+        setIsLoading(false);
       }, 100);
+      
     } catch (error) {
       console.error('Error downloading the image:', error);
-      alert('Download failed. Please try again or save the image manually.');
+      setIsLoading(false);
     }
   };
 
   return (
-    <img
-      src={imageUrl}
-      alt={alt}
-      className={`cursor-pointer ${className}`}
-      onClick={handleDownload}
-      style={{ cursor: 'pointer' }}
-      title="Click to download"
-    />
+    <div className="inline-block relative">
+      <img
+        src={imageUrl}
+        alt={alt}
+        className={`${className} ${isLoading ? 'opacity-70' : ''}`}
+        onClick={handleDownload}
+        style={{ cursor: 'pointer' }}
+        title="Click to download"
+      />
+      {isLoading && (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <span className="text-sm">Downloading...</span>
+        </div>
+      )}
+    </div>
   );
 };
