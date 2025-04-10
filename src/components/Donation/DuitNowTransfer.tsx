@@ -117,9 +117,14 @@ const DuitNowTransfer: React.FC = () => {
             ))}
           </div>
           
-          <p className="text-gray-400 text-sm mt-4">
-            If your bank app doesn't open automatically, please open it manually and use the account details to complete your transfer.
-          </p>
+          <div className="mt-4 space-y-2">
+            <p className="text-gray-400 text-sm">
+              <span className="font-medium text-yellow-500">On Mobile:</span> If your bank app doesn't open automatically, please open it manually and use the account details to complete your transfer.
+            </p>
+            <p className="text-gray-400 text-sm">
+              <span className="font-medium text-yellow-500">On Desktop:</span> These buttons are optimized for mobile devices. If you're on a desktop computer, please log in to your online banking portal and use the account details above to make your transfer.
+            </p>
+          </div>
         </div>
       )}
     </div>

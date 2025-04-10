@@ -429,9 +429,14 @@ export const DuitNowTransfer: React.FC = () => {
             )}
           </div>
           
-          <p className="text-gray-400 text-sm mt-4">
-            If your bank app doesn't open automatically, please open it manually and use the account details to complete your transfer.
-          </p>
+          <div className="mt-4 space-y-2">
+            <p className="text-gray-400 text-sm">
+              <span className="font-medium text-yellow-500">On Mobile:</span> If your bank app doesn't open automatically, please open it manually and use the account details to complete your transfer.
+            </p>
+            <p className="text-gray-400 text-sm">
+              <span className="font-medium text-yellow-500">On Desktop:</span> Clicking these buttons will redirect you to the respective online banking portal or app store links.
+            </p>
+          </div>
         </div>
       )}
     </div>
@@ -770,9 +775,16 @@ export const DuitNowQR: React.FC = () => {
             </div>
           </div>
           
-          <p className="text-gray-400 text-sm mt-4">
-            If your app doesn't open automatically, please open it manually and use the QR scanner to scan the saved QR code.
-          </p>
+          <div className="mt-6 p-4 bg-gray-800/50 rounded-lg border border-gray-700">
+            <div className="space-y-2">
+              <p className="text-gray-400 text-sm">
+                <span className="font-medium text-yellow-500">On Mobile:</span> If your app doesn't open automatically, please open it manually and use the QR scanner to scan the saved QR code.
+              </p>
+              <p className="text-gray-400 text-sm">
+                <span className="font-medium text-yellow-500">On Desktop:</span> Clicking these buttons will redirect you to the respective app store links.
+              </p>
+            </div>
+          </div>
           
           {/* Modal for Additional Malaysian Apps */}
           {showModal && (
