@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Copy, ExternalLink, LinkIcon } from 'lucide-react';
+import { Copy, ExternalLink, Download, LinkIcon } from 'lucide-react';
 import { ImageDownloader } from '../ImageDownloader';
 import ReactGA from 'react-ga4';
 
@@ -330,8 +330,8 @@ const PAYMENT_APPS = [
   { name: 'Other App', appUrl: '', icon: '/images/wallets/other.png', category: 'Other' },
 ];
 
-// DuitNow QR code image URL - properly encoded for spaces and special characters
-const QR_CODE_URL = 'https://mynameisaliff.s3.ap-southeast-1.amazonaws.com/Maybank%20QRPayBiz%20(DuitNow).jpg';
+// DuitNow QR code image URL - using local file from public directory
+const QR_CODE_URL = '/images/Maybank QRPayBiz (DuitNow).jpg';
 
 export const DuitNowQR: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -406,26 +406,43 @@ export const DuitNowQR: React.FC = () => {
       {currentStep === 1 ? (
         <div className="space-y-6">
           <div className="bg-gray-800/50 p-4 rounded-lg flex flex-col items-center">
-            <div className="relative mb-4">
+            <div className="mb-4">
               <ImageDownloader 
                 imageUrl={QR_CODE_URL} 
-                fileName="DuitNow-QR-Code"
                 className="w-48 h-48 object-contain"
                 alt="DuitNow QR Code"
-                trackingCategory="donation"
-                trackingAction="download_duitnow_qr"
               />
-              <div className="absolute bottom-0 left-0 right-0 text-center text-xs text-gray-400">
-                Click image to download
-              </div>
             </div>
-            <button
-              onClick={() => window.open(QR_CODE_URL, '_blank')}
-              className="py-2 px-4 bg-yellow-700 hover:bg-yellow-800 text-white rounded-lg font-medium transition-colors flex items-center"
-            >
-              <ExternalLink className="h-4 w-4 mr-2" />
-              View QR Code
-            </button>
+            <div className="flex space-x-2">
+              <button
+                onClick={() => {
+                  // Track the event with Google Analytics
+                  ReactGA.event({
+                    action: 'download_duitnow_qr',
+                    category: 'donation',
+                  });
+                  
+                  // Create a download link
+                  const downloadLink = document.createElement('a');
+                  downloadLink.href = QR_CODE_URL;
+                  downloadLink.download = 'DuitNow-QR-Code.jpg';
+                  document.body.appendChild(downloadLink);
+                  downloadLink.click();
+                  document.body.removeChild(downloadLink);
+                }}
+                className="py-2 px-4 bg-yellow-700 hover:bg-yellow-800 text-white rounded-lg font-medium transition-colors flex items-center"
+              >
+                <Download className="h-4 w-4 mr-2" />
+                Save QR Code
+              </button>
+              <button
+                onClick={() => window.open(QR_CODE_URL, '_blank')}
+                className="py-2 px-4 bg-gray-700 hover:bg-gray-800 text-white rounded-lg font-medium transition-colors flex items-center"
+              >
+                <ExternalLink className="h-4 w-4 mr-2" />
+                View QR Code
+              </button>
+            </div>
           </div>
           
           <p className="text-gray-300 text-sm">
