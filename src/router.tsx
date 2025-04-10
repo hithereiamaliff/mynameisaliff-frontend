@@ -11,6 +11,7 @@ import { PublicTransportPage } from './pages/static/PublicTransport';
 import { UXDesignPage } from './pages/static/UXDesign';
 import { TourismPage } from './pages/static/Tourism';
 import { DownloadCVPage } from './pages/static/DownloadCV';
+import { DonatePage } from './pages/static/DonatePage';
 
 import { PageTransition } from './components/PageTransition';
 
@@ -65,6 +66,10 @@ export const router = createBrowserRouter([
   {
     path: '/download-cv',
     element: withTransition(DownloadCVPage),
+  },
+  {
+    path: '/donate',
+    element: withTransition(DonatePage),
   },
   {
     path: '/:slug',
