@@ -11,6 +11,7 @@ import { TransformationModal } from './components/TransformationModal';
 import { TransportModal } from './components/TransportModal';
 import { DevToolsModal } from './components/DevToolsModal';
 import { AIDevModal } from './components/AIDevModal';
+import DonationButton from './components/Donation/DonationButton';
 import { UXCaseStudyModal } from './components/UXCaseStudyModal';
 
 
@@ -112,6 +113,18 @@ function App() {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [isChatOpen, setIsChatOpen] = React.useState(false);
   const [isTourModalOpen, setIsTourModalOpen] = React.useState(false);
+  
+  // Feature flag for donation button
+  const [showDonationButton, setShowDonationButton] = React.useState(false);
+  
+  // Check for URL parameter to enable donation button for testing
+  React.useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('enableDonation') === 'true') {
+      setShowDonationButton(true);
+      console.log('Donation button enabled for testing');
+    }
+  }, []);
 
   // GA4 configuration
   React.useEffect(() => {
@@ -382,6 +395,15 @@ function App() {
               <Github className="mr-2 h-5 w-5" />
               GitHub
             </a>
+            {showDonationButton && (
+              <DonationButton 
+                variant="primary" 
+                text="Support My Work" 
+                showIcon={true}
+                size="lg"
+                className="inline-flex items-center px-6 py-3 bg-yellow-700 hover:bg-yellow-800 text-white rounded-lg font-medium transition-colors"
+              />
+            )}
             <a
               href="#"
               onClick={(e) => {
