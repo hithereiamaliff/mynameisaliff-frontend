@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Copy, ExternalLink, Download, LinkIcon } from 'lucide-react';
+import { Copy, ExternalLink, Download, LinkIcon, Plus, X } from 'lucide-react';
 import { ImageDownloader } from '../ImageDownloader';
 import ReactGA from 'react-ga4';
 
@@ -25,8 +25,9 @@ const { isMobile, isIOS, isAndroid } = getDeviceInfo();
 // Bank apps commonly used in Malaysia
 // Enhanced bank apps data with device-specific URLs
 const BANK_APPS = [
+  // First 6 apps (will be shown initially)
   { 
-    name: 'MAE', 
+    name: 'MAE by Maybank', 
     appUrl: 'maeapp://', 
     iosAppUrl: 'maeapp://', 
     iosAppStoreUrl: 'https://apps.apple.com/my/app/mae-by-maybank2u/id1481028763',
@@ -36,12 +37,28 @@ const BANK_APPS = [
     icon: '/images/banks/mae.png' 
   },
   { 
-    name: 'CIMB', 
+    name: 'CIMB OCTO', 
     appUrl: 'cimbclicks://', 
     webUrl: 'https://www.cimbclicks.com.my/clicks/',
     iosAppStoreUrl: 'https://apps.apple.com/my/app/cimb-clicks-malaysia/id328803038',
     androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=com.cimbmalaysia',
     icon: '/images/banks/cimb.png' 
+  },
+  { 
+    name: 'Touch n Go eWallet', 
+    appUrl: 'tngew://', 
+    webUrl: 'https://www.tngdigital.com.my/',
+    iosAppStoreUrl: 'https://apps.apple.com/my/app/touch-n-go-ewallet/id1344696702',
+    androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=my.com.tngdigital.ewallet',
+    icon: '/images/wallets/tng.png' 
+  },
+  { 
+    name: 'RHB Bank', 
+    appUrl: 'rhb://', 
+    webUrl: 'https://logon.rhb.com.my/',
+    iosAppStoreUrl: 'https://apps.apple.com/my/app/rhb-mobile-banking/id1405829991',
+    androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=my.com.rhbgroup.rhbmobileapp',
+    icon: '/images/banks/rhb.png' 
   },
   { 
     name: 'Public Bank', 
@@ -52,28 +69,40 @@ const BANK_APPS = [
     icon: '/images/banks/publicbank.png' 
   },
   { 
-    name: 'RHB', 
-    appUrl: 'rhb://', 
-    webUrl: 'https://logon.rhb.com.my/',
-    iosAppStoreUrl: 'https://apps.apple.com/my/app/rhb-mobile-banking/id1405829991',
-    androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=my.com.rhbgroup.rhbmobileapp',
-    icon: '/images/banks/rhb.png' 
+    name: 'HSBC', 
+    appUrl: 'hsbc://', 
+    webUrl: 'https://www.hsbc.com.my/ways-to-bank/online-banking/',
+    iosAppStoreUrl: 'https://apps.apple.com/my/app/hsbc-malaysia/id1472163288',
+    androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=my.com.hsbc.hsbcmalaysia',
+    icon: '/images/banks/hsbc.png' 
+  },
+
+  // Additional banks (shown after clicking "View More Apps")
+  { 
+    name: 'AEON Bank', 
+    appUrl: 'aeon://', 
+    webUrl: 'https://www.aeoncredit.com.my/aeon-internet-banking',
+    icon: '/images/banks/aeon.png' 
   },
   { 
-    name: 'Hong Leong Bank', 
-    appUrl: 'hlb://', 
-    webUrl: 'https://s.hongleongconnect.my/rib/app/fo/login',
-    iosAppStoreUrl: 'https://apps.apple.com/my/app/hlb-connect/id1457489341',
-    androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=my.com.hongleongconnect.rib',
-    icon: '/images/banks/hongleong.png' 
+    name: 'Affin Bank', 
+    appUrl: 'affin://', 
+    webUrl: 'https://rib.affinbank.com.my/affinribweb/html/index.html',
+    icon: '/images/banks/affin.png' 
   },
   { 
-    name: 'Bank Islam', 
-    appUrl: 'bankislam://', 
-    webUrl: 'https://www.bankislam.biz/',
-    iosAppStoreUrl: 'https://apps.apple.com/my/app/go-by-bank-islam/id1276775911',
-    androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=my.com.bankislam.gobi',
-    icon: '/images/banks/bankislam.png' 
+    name: 'Agro Bank', 
+    appUrl: 'agrobank://', 
+    webUrl: 'https://www.agrobank.com.my/home/personal-banking/online-banking/',
+    icon: '/images/banks/agrobank.png' 
+  },
+  { 
+    name: 'Alliance Bank', 
+    appUrl: 'alliancebank://', 
+    webUrl: 'https://www.allianceonline.com.my/personal/common/login.do',
+    iosAppStoreUrl: 'https://apps.apple.com/my/app/alliance-bank-mobile/id1457918406',
+    androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=com.alliancebank.mobile',
+    icon: '/images/banks/alliance.png' 
   },
   { 
     name: 'AmBank', 
@@ -84,31 +113,111 @@ const BANK_APPS = [
     icon: '/images/banks/ambank.png' 
   },
   { 
-    name: 'Bank Rakyat', 
-    appUrl: 'bankrakyat://', 
-    webUrl: 'https://www2.irakyat.com.my/personal/common/login.do',
-    iosAppStoreUrl: 'https://apps.apple.com/my/app/irakyat/id1119723840',
-    androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=com.bankrakyat.irakyat',
-    icon: '/images/banks/bankrakyat.png' 
+    name: 'AmBank Islamic', 
+    appUrl: 'ambankislamic://', 
+    webUrl: 'https://amaccess.ambankgroup.com/AmAccessWeb/AmAccess/login.jsp',
+    icon: '/images/banks/ambank.png' 
   },
   { 
-    name: 'Alliance Bank', 
-    appUrl: 'alliancebank://', 
-    webUrl: 'https://www.allianceonline.com.my/personal/common/login.do',
-    iosAppStoreUrl: 'https://apps.apple.com/my/app/alliance-bank-mobile/id1457918406',
-    androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=com.alliancebank.mobile',
-    icon: '/images/banks/alliance.png' 
+    name: 'Bank Islam', 
+    appUrl: 'bankislam://', 
+    webUrl: 'https://www.bankislam.biz/',
+    iosAppStoreUrl: 'https://apps.apple.com/my/app/go-by-bank-islam/id1276775911',
+    androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=my.com.bankislam.gobi',
+    icon: '/images/banks/bankislam.png' 
   },
-  { name: 'Other Bank App', appUrl: '', icon: '/images/banks/other.png' },
+  { 
+    name: 'Bank Muamalat', 
+    appUrl: 'muamalat://', 
+    webUrl: 'https://www.muamalat.com.my/consumer-banking/online-banking/',
+    icon: '/images/banks/muamalat.png' 
+  },
+  { 
+    name: 'Boost', 
+    appUrl: 'boost://', 
+    webUrl: 'https://www.myboost.com.my/',
+    iosAppStoreUrl: 'https://apps.apple.com/my/app/boost-online-payment-wallet/id1272178489',
+    androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=my.com.myboost.www',
+    icon: '/images/wallets/boost.png' 
+  },
+  { 
+    name: 'Boost Bank', 
+    appUrl: 'boostbank://', 
+    webUrl: 'https://www.boostbank.com.my/',
+    icon: '/images/wallets/boost.png' 
+  },
+  { 
+    name: 'BSN', 
+    appUrl: 'bsn://', 
+    webUrl: 'https://www.mybsn.com.my/mybsn/',
+    icon: '/images/banks/bsn.png' 
+  },
+  { 
+    name: 'Citibank', 
+    appUrl: 'citibank://', 
+    webUrl: 'https://www.citibank.com.my/MYGCB/JSO/username/signon/flow.action',
+    icon: '/images/banks/citibank.png' 
+  },
+  { 
+    name: 'Kayaaku', 
+    appUrl: 'kayaaku://', 
+    webUrl: 'https://www.kayaaku.my/',
+    icon: '/images/banks/kayaaku.png' 
+  },
+  { 
+    name: 'GXBank', 
+    appUrl: 'gxbank://', 
+    webUrl: 'https://www.gxbank.com.my/',
+    icon: '/images/banks/gxbank.png' 
+  },
+  { 
+    name: 'Hong Leong Bank', 
+    appUrl: 'hlb://', 
+    webUrl: 'https://s.hongleongconnect.my/rib/app/fo/login',
+    iosAppStoreUrl: 'https://apps.apple.com/my/app/hlb-connect/id1457489341',
+    androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=my.com.hongleongconnect.rib',
+    icon: '/images/banks/hongleong.png' 
+  },
+  { 
+    name: 'Merchantrade Money', 
+    appUrl: 'merchantrade://', 
+    webUrl: 'https://www.merchantrademoney.com/',
+    icon: '/images/wallets/merchantrade.png' 
+  },
+  { 
+    name: 'OCBC', 
+    appUrl: 'ocbc://', 
+    webUrl: 'https://internet.ocbc.com.my/internet-banking/',
+    icon: '/images/banks/ocbc.png' 
+  },
+  { 
+    name: 'ShopeePay', 
+    appUrl: 'shopeepay://', 
+    webUrl: 'https://shopee.com.my/shopeepay-my',
+    icon: '/images/wallets/shopeepay.png' 
+  },
+  { 
+    name: 'Standard Chartered', 
+    appUrl: 'sc://', 
+    webUrl: 'https://retail.sc.com/my/nfs/login.htm',
+    icon: '/images/banks/standardchartered.png' 
+  },
+  { 
+    name: 'UOB', 
+    appUrl: 'uob://', 
+    webUrl: 'https://pib.uob.com.my/PIBLogin/Public/processPreCapture.do?keyId=lpc',
+    icon: '/images/banks/uob.png' 
+  },
 ];
 
 // Replace with your actual bank details
-const ACCOUNT_NUMBER = '1234567890';
+const ACCOUNT_NUMBER = '557054644003';
 const BANK_NAME = 'Maybank';
 
 export const DuitNowTransfer: React.FC = () => {
   const [copied, setCopied] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
+  const [showAllApps, setShowAllApps] = useState(false);
 
   const copyAccountNumber = async () => {
     try {
@@ -287,7 +396,7 @@ export const DuitNowTransfer: React.FC = () => {
           </p>
           
           <div className="grid grid-cols-2 gap-3">
-            {BANK_APPS.map((bank) => (
+            {(showAllApps ? BANK_APPS : BANK_APPS.slice(0, 6)).map((bank) => (
               <button
                 key={bank.name}
                 onClick={() => openBankApp(bank.appUrl, bank.name)}
@@ -303,6 +412,21 @@ export const DuitNowTransfer: React.FC = () => {
                 <span className="text-white text-sm">{bank.name}</span>
               </button>
             ))}
+            
+            {!showAllApps && BANK_APPS.length > 6 && (
+              <button
+                onClick={() => {
+                  setShowAllApps(true);
+                  ReactGA.event({
+                    action: 'view_more_bank_apps',
+                    category: 'donation',
+                  });
+                }}
+                className="col-span-2 mt-2 p-3 bg-gray-800/50 hover:bg-gray-800/70 rounded-lg transition-colors flex items-center justify-center"
+              >
+                <span className="text-yellow-500 font-medium">View More Apps</span>
+              </button>
+            )}
           </div>
           
           <p className="text-gray-400 text-sm mt-4">
@@ -315,37 +439,114 @@ export const DuitNowTransfer: React.FC = () => {
 };
 
 // ===== DuitNow QR Component =====
-// Bank and eWallet apps for QR scanning (including non-Malaysian ones)
-const PAYMENT_APPS = [
-  // Malaysian Banks
-  { name: 'Maybank', appUrl: 'maybank2u://', icon: '/images/banks/maybank.png', category: 'Malaysian Bank' },
-  { name: 'CIMB', appUrl: 'cimbclicks://', icon: '/images/banks/cimb.png', category: 'Malaysian Bank' },
-  { name: 'Public Bank', appUrl: 'pbb://', icon: '/images/banks/publicbank.png', category: 'Malaysian Bank' },
-  { name: 'RHB', appUrl: 'rhb://', icon: '/images/banks/rhb.png', category: 'Malaysian Bank' },
-  { name: 'Hong Leong Bank', appUrl: 'hlb://', icon: '/images/banks/hongleong.png', category: 'Malaysian Bank' },
-  
-  // Malaysian eWallets
-  { name: 'Touch n Go', appUrl: 'tngew://', icon: '/images/wallets/tng.png', category: 'Malaysian eWallet' },
-  { name: 'Boost', appUrl: 'boost://', icon: '/images/wallets/boost.png', category: 'Malaysian eWallet' },
-  { name: 'GrabPay', appUrl: 'grab://', icon: '/images/wallets/grabpay.png', category: 'Malaysian eWallet' },
-  { name: 'MAE', appUrl: 'maeapp://', icon: '/images/wallets/mae.png', category: 'Malaysian eWallet' },
-  
-  // International Payment Apps
-  { name: 'PayPal', appUrl: 'paypal://', icon: '/images/wallets/paypal.png', category: 'International' },
-  { name: 'Wise', appUrl: 'wise://', icon: '/images/wallets/wise.png', category: 'International' },
-  { name: 'Revolut', appUrl: 'revolut://', icon: '/images/wallets/revolut.png', category: 'International' },
-  
-  // Other
-  { name: 'Other App', appUrl: '', icon: '/images/wallets/other.png', category: 'Other' },
+// Malaysian bank and eWallet apps for initial display
+const MALAYSIAN_MAIN_APPS = [
+  { name: 'MAE by Maybank', appUrl: 'maybank2u://', icon: '/images/banks/mae.png' },
+  { name: 'CIMB OCTO', appUrl: 'cimbclicks://', icon: '/images/banks/cimb.png' },
+  { name: 'Touch n Go eWallet', appUrl: 'tngew://', icon: '/images/wallets/tng.png' },
+  { name: 'Public Bank', appUrl: 'pbb://', icon: '/images/banks/publicbank.png' },
+  { name: 'GrabPay', appUrl: 'grab://', icon: '/images/wallets/grabpay.png' },
 ];
+
+// Additional Malaysian bank and eWallet apps for the modal
+const MALAYSIAN_ADDITIONAL_APPS = [
+  { name: 'AEON Bank', appUrl: 'aeon://', icon: '/images/banks/aeon.png' },
+  { name: 'Affin Bank', appUrl: 'affin://', icon: '/images/banks/affin.png' },
+  { name: 'Agro Bank', appUrl: 'agrobank://', icon: '/images/banks/agrobank.png' },
+  { name: 'Alliance Bank', appUrl: 'alliancebank://', icon: '/images/banks/alliance.png' },
+  { name: 'AmBank', appUrl: 'ambank://', icon: '/images/banks/ambank.png' },
+  { name: 'Bank Islam', appUrl: 'bankislam://', icon: '/images/banks/bankislam.png' },
+  { name: 'Bank Muamalat', appUrl: 'muamalat://', icon: '/images/banks/muamalat.png' },
+  { name: 'Bank Rakyat', appUrl: 'bankrakyat://', icon: '/images/banks/bankrakyat.png' },
+  { name: 'RHB Bank', appUrl: 'rhb://', icon: '/images/banks/rhb.png' },
+  { name: 'BigPay', appUrl: 'bigpay://', icon: '/images/wallets/bigpay.png' },
+  { name: 'Boost', appUrl: 'boost://', icon: '/images/wallets/boost.png' },
+  { name: 'GXBank', appUrl: 'gxbank://', icon: '/images/banks/gxbank.png' },
+  { name: 'Hong Leong Bank', appUrl: 'hlb://', icon: '/images/banks/hongleong.png' },
+  { name: 'HSBC', appUrl: 'hsbc://', icon: '/images/banks/hsbc.png' },
+  { name: 'Merchantrade Money', appUrl: 'merchantrade://', icon: '/images/wallets/merchantrade.png' },
+  { name: 'OCBC', appUrl: 'ocbc://', icon: '/images/banks/ocbc.png' },
+  { name: 'Setel', appUrl: 'setel://', icon: '/images/wallets/setel.png' },
+  { name: 'S Pay Global', appUrl: 'spay://', icon: '/images/wallets/spay.png' },
+  { name: 'ShopeePay', appUrl: 'shopeepay://', icon: '/images/wallets/shopeepay.png' },
+  { name: 'Standard Chartered', appUrl: 'sc://', icon: '/images/banks/standardchartered.png' },
+  { name: 'UOB', appUrl: 'uob://', icon: '/images/banks/uob.png' },
+];
+
+// Define app type
+type PaymentApp = {
+  name: string;
+  appUrl: string;
+  icon: string;
+};
+
+// Define country names as a union type for type safety
+type CountryName = 'China' | 'Hong Kong' | 'Indonesia' | 'Philippines' | 'Mongolia' | 'Macau' | 'Singapore' | 'South Korea' | 'Thailand';
+
+// Define countries type with specific keys
+type CountryApps = {
+  [country in CountryName]: PaymentApp[];
+};
+
+// International Payment Apps organized by country
+const INTERNATIONAL_APPS_BY_COUNTRY: CountryApps = {
+  'China': [
+    { name: 'Alipay', appUrl: 'alipay://', icon: '/images/wallets/alipay.png' },
+  ],
+  'Hong Kong': [
+    { name: 'AlipayHK', appUrl: 'alipayhk://', icon: '/images/wallets/alipayhk.png' },
+  ],
+  'Indonesia': [
+    { name: 'Bank Sinarmas', appUrl: 'banksinarmas://', icon: '/images/banks/sinarmas.png' },
+    { name: 'DANA', appUrl: 'dana://', icon: '/images/wallets/dana.png' },
+    { name: 'Bank Permata', appUrl: 'permata://', icon: '/images/banks/permata.png' },
+    { name: 'Bank CIMB Niaga', appUrl: 'cimbniaga://', icon: '/images/banks/cimbniaga.png' },
+    { name: 'Bank Pembangunan Daerah (BPD) Bali', appUrl: 'bpdbali://', icon: '/images/banks/bpdbali.png' },
+    { name: 'Bank Syariah Indonesia', appUrl: 'bsi://', icon: '/images/banks/bsi.png' },
+    { name: 'LinkAja', appUrl: 'linkaja://', icon: '/images/wallets/linkaja.png' },
+    { name: 'Bank Central Asia', appUrl: 'bca://', icon: '/images/banks/bca.png' },
+    { name: 'Ottocash', appUrl: 'ottocash://', icon: '/images/wallets/ottocash.png' },
+    { name: 'Bank Mega', appUrl: 'bankmega://', icon: '/images/banks/mega.png' },
+  ],
+  'Philippines': [
+    { name: 'HelloMoney by AUB', appUrl: 'hellomoney://', icon: '/images/wallets/hellomoney.png' },
+    { name: 'Gcash', appUrl: 'gcash://', icon: '/images/wallets/gcash.png' },
+  ],
+  'Mongolia': [
+    { name: 'Hipay', appUrl: 'hipay://', icon: '/images/wallets/hipay.png' },
+  ],
+  'Macau': [
+    { name: 'MPay', appUrl: 'mpay://', icon: '/images/wallets/mpay.png' },
+  ],
+  'Singapore': [
+    { name: 'DBS PayLah!', appUrl: 'paylah://', icon: '/images/wallets/paylah.png' },
+    { name: 'OCBC Digital', appUrl: 'ocbcdigital://', icon: '/images/banks/ocbcsg.png' },
+    { name: 'UOB TMRW', appUrl: 'uobtmrw://', icon: '/images/banks/uobsg.png' },
+    { name: 'Standard Chartered', appUrl: 'scsg://', icon: '/images/banks/scsg.png' },
+  ],
+  'South Korea': [
+    { name: 'Naver Pay', appUrl: 'naverpay://', icon: '/images/wallets/naverpay.png' },
+    { name: 'Toss Pay', appUrl: 'tosspay://', icon: '/images/wallets/tosspay.png' },
+  ],
+  'Thailand': [
+    { name: 'TrueMoney', appUrl: 'truemoney://', icon: '/images/wallets/truemoney.png' },
+    { name: 'Bangkok Bank', appUrl: 'bangkokbank://', icon: '/images/banks/bangkokbank.png' },
+    { name: 'Krungthai Bank', appUrl: 'krungthai://', icon: '/images/banks/krungthai.png' },
+    { name: 'Krungsri', appUrl: 'krungsri://', icon: '/images/banks/krungsri.png' },
+    { name: 'CIMB Thai', appUrl: 'cimbthai://', icon: '/images/banks/cimbthai.png' },
+  ],
+};
+
+// Get all countries for the dropdown
+const COUNTRIES = Object.keys(INTERNATIONAL_APPS_BY_COUNTRY).sort();
 
 // DuitNow QR code image URL - using local file from public directory
 const QR_CODE_URL = '/images/Maybank QRPayBiz (DuitNow).jpg';
 
 export const DuitNowQR: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(1);
-
-
+  const [showModal, setShowModal] = useState(false);
+  const [selectedCountry, setSelectedCountry] = useState<CountryName | ''>('');
 
   const openPaymentApp = (appUrl: string, appName: string) => {
     // Track the event
@@ -394,17 +595,17 @@ export const DuitNowQR: React.FC = () => {
     });
   };
 
-  // Group apps by category
-  const groupedApps = PAYMENT_APPS.reduce((acc, app) => {
-    if (!acc[app.category]) {
-      acc[app.category] = [];
-    }
-    acc[app.category].push(app);
-    return acc;
-  }, {} as Record<string, typeof PAYMENT_APPS>);
+  const openMoreAppsModal = () => {
+    setShowModal(true);
+    ReactGA.event({
+      action: 'view_more_malaysian_apps',
+      category: 'donation',
+    });
+  };
 
-  // Order of categories
-  const categoryOrder = ['Malaysian Bank', 'Malaysian eWallet', 'International', 'Other'];
+  const closeModal = () => {
+    setShowModal(false);
+  };
 
   return (
     <div>
@@ -480,15 +681,122 @@ export const DuitNowQR: React.FC = () => {
             Select your payment app below to open it directly. Once opened, use the QR scanner feature to scan the QR code you saved.
           </p>
           
-          {categoryOrder.map(category => (
-            groupedApps[category] && (
-              <div key={category} className="mb-6">
-                <h3 className="text-white font-medium mb-3">{category}</h3>
+          {/* Malaysian Apps Section */}
+          <div className="mb-6">
+            <h3 className="text-white font-medium mb-3">Malaysian Bank/eWallet Apps</h3>
+            <div className="grid grid-cols-3 gap-3">
+              {MALAYSIAN_MAIN_APPS.map((app) => (
+                <button
+                  key={app.name}
+                  onClick={() => openPaymentApp(app.appUrl, app.name)}
+                  className="p-3 bg-gray-800/50 hover:bg-gray-800/70 rounded-lg transition-colors flex flex-col items-center"
+                >
+                  <div className="w-10 h-10 bg-gray-700 rounded-full mb-2 flex items-center justify-center">
+                    {app.icon ? (
+                      <img src={app.icon} alt={app.name} className="w-6 h-6 object-contain" />
+                    ) : (
+                      <ExternalLink className="h-5 w-5 text-yellow-500" />
+                    )}
+                  </div>
+                  <span className="text-white text-xs text-center">{app.name}</span>
+                </button>
+              ))}
+              
+              {/* View More Apps Button */}
+              <button
+                onClick={openMoreAppsModal}
+                className="p-3 bg-gray-800/50 hover:bg-gray-800/70 rounded-lg transition-colors flex flex-col items-center"
+              >
+                <div className="w-10 h-10 bg-gray-700 rounded-full mb-2 flex items-center justify-center">
+                  <Plus className="h-5 w-5 text-yellow-500" />
+                </div>
+                <span className="text-white text-xs text-center">View More Apps</span>
+              </button>
+            </div>
+          </div>
+          
+          {/* International Apps Section */}
+          <div className="mb-6">
+            <h3 className="text-white font-medium mb-3">International Payment Apps</h3>
+            
+            {/* Country Dropdown */}
+            <div className="mb-4">
+              <label htmlFor="country-select" className="block text-sm font-medium text-gray-300 mb-2">
+                Select your country:
+              </label>
+              <select
+                id="country-select"
+                value={selectedCountry}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  setSelectedCountry(value === '' ? '' : value as CountryName);
+                  if (value) {
+                    ReactGA.event({
+                      action: 'select_international_country',
+                      category: 'donation',
+                      label: e.target.value,
+                    });
+                  }
+                }}
+                className="w-full p-2 bg-gray-800 text-white rounded-lg border border-gray-700 focus:outline-none focus:ring-2 focus:ring-yellow-700"
+              >
+                <option value="">Select Country</option>
+                {COUNTRIES.map((country) => (
+                  <option key={country} value={country}>
+                    {country}
+                  </option>
+                ))}
+              </select>
+            </div>
+            
+            {/* Apps for Selected Country */}
+            <div className="grid grid-cols-3 gap-3">
+              {selectedCountry && INTERNATIONAL_APPS_BY_COUNTRY[selectedCountry]?.map((app: PaymentApp) => (
+                <button
+                  key={app.name}
+                  onClick={() => openPaymentApp(app.appUrl, app.name)}
+                  className="p-3 bg-gray-800/50 hover:bg-gray-800/70 rounded-lg transition-colors flex flex-col items-center"
+                >
+                  <div className="w-10 h-10 bg-gray-700 rounded-full mb-2 flex items-center justify-center">
+                    {app.icon ? (
+                      <img src={app.icon} alt={app.name} className="w-6 h-6 object-contain" />
+                    ) : (
+                      <ExternalLink className="h-5 w-5 text-yellow-500" />
+                    )}
+                  </div>
+                  <span className="text-white text-xs text-center">{app.name}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+          
+          <p className="text-gray-400 text-sm mt-4">
+            If your app doesn't open automatically, please open it manually and use the QR scanner to scan the saved QR code.
+          </p>
+          
+          {/* Modal for Additional Malaysian Apps */}
+          {showModal && (
+            <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
+              <div className="bg-gray-900 rounded-lg p-6 w-full max-w-md max-h-[80vh] overflow-y-auto">
+                <div className="flex justify-between items-center mb-4">
+                  <h3 className="text-xl font-bold text-white">More Malaysian Apps</h3>
+                  <button 
+                    onClick={closeModal}
+                    className="p-2 bg-gray-700 hover:bg-gray-600 text-white rounded-full transition-colors flex items-center justify-center"
+                    aria-label="Close modal"
+                  >
+                    <X className="h-6 w-6" />
+                  </button>
+                </div>
+                
                 <div className="grid grid-cols-3 gap-3">
-                  {groupedApps[category].map((app) => (
+                  {MALAYSIAN_ADDITIONAL_APPS.map((app) => (
                     <button
                       key={app.name}
-                      onClick={() => openPaymentApp(app.appUrl, app.name)}
+                      onClick={() => {
+                        openPaymentApp(app.appUrl, app.name);
+                        closeModal();
+                      }}
                       className="p-3 bg-gray-800/50 hover:bg-gray-800/70 rounded-lg transition-colors flex flex-col items-center"
                     >
                       <div className="w-10 h-10 bg-gray-700 rounded-full mb-2 flex items-center justify-center">
@@ -503,12 +811,8 @@ export const DuitNowQR: React.FC = () => {
                   ))}
                 </div>
               </div>
-            )
-          ))}
-          
-          <p className="text-gray-400 text-sm mt-4">
-            If your app doesn't open automatically, please open it manually and use the QR scanner to scan the saved QR code.
-          </p>
+            </div>
+          )}
         </div>
       )}
     </div>
