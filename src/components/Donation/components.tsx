@@ -336,31 +336,51 @@ export const DuitNowQR: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(1);
 
   // Function to download the QR code
-  const downloadQR = () => {
+  const downloadQR = async () => {
     // Track the event with Google Analytics
     ReactGA.event({
       action: 'download_duitnow_qr',
       category: 'donation',
     });
 
-    // Create a direct download link with download attribute
-    // This is the simplest and most reliable approach
-    const link = document.createElement('a');
-    
-    // Set the link to the QR code image
-    link.href = QR_CODE_URL;
-    
-    // Set the download attribute with filename
-    link.download = 'DuitNow-QR-Code.jpg';
-    
-    // Set additional attributes to force download behavior
-    link.setAttribute('target', '_blank');
-    link.setAttribute('rel', 'noopener noreferrer');
-    
-    // Append to body, click, and remove
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    try {
+      // Show loading state or feedback to user
+      console.log('Starting download process...');
+      
+      // Fetch the image data
+      const response = await fetch(QR_CODE_URL, { method: 'GET' });
+      if (!response.ok) {
+        throw new Error('Network response was not ok: ' + response.statusText);
+      }
+      
+      // Convert response to Blob
+      const blob = await response.blob();
+      
+      // Create object URL for the blob
+      const blobUrl = window.URL.createObjectURL(blob);
+      
+      // Create a temporary anchor element
+      const link = document.createElement('a');
+      link.href = blobUrl;
+      link.download = 'DuitNow-QR-Code.jpg';
+      link.style.display = 'none';
+      
+      // Append to body, trigger click, and remove
+      document.body.appendChild(link);
+      link.click();
+      
+      // Clean up after a short delay
+      setTimeout(() => {
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(blobUrl);
+        console.log('Download process completed');
+      }, 100);
+    } catch (error) {
+      console.error('Download failed:', error);
+      
+      // Fallback method for browsers that don't support the above
+      alert('Download failed. Please right-click on the QR code image and select "Save Image As..."');
+    }
   };
 
   const openPaymentApp = (appUrl: string, appName: string) => {
