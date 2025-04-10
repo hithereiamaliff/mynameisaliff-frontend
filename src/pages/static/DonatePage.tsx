@@ -2,9 +2,10 @@ import React from 'react';
 import { SEO } from '../../components/SEO';
 import ReactGA from 'react-ga4';
 import { PageTransition } from '../../components/PageTransition';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Home } from 'lucide-react';
 import { DuitNowTransfer, DuitNowQR, TNGEWallet } from '../../components/Donation/components';
 import { DonationMethod } from '../../components/Donation/DonationModal';
+import { Link } from 'react-router-dom';
 
 export const DonatePage: React.FC = () => {
   const [selectedMethod, setSelectedMethod] = React.useState<DonationMethod | null>(null);
@@ -75,6 +76,21 @@ export const DonatePage: React.FC = () => {
       <PageTransition>
         <div className="min-h-screen bg-gray-900 text-white py-12 px-4">
           <div className="max-w-md mx-auto">
+            <div className="flex justify-between items-center mb-6">
+              <Link 
+                to="/"
+                className="flex items-center text-yellow-500 hover:text-yellow-400 transition-colors"
+                onClick={() => {
+                  ReactGA.event({
+                    action: 'donate_page_home_click',
+                    category: 'navigation',
+                  });
+                }}
+              >
+                <Home className="h-5 w-5 mr-2" />
+                Back to Home
+              </Link>
+            </div>
             <h1 className="text-3xl font-bold mb-2">Support My Work</h1>
             <p className="text-gray-300 mb-8">
               Thank you for considering supporting my work! Your contribution helps me continue creating content and improving this website.
