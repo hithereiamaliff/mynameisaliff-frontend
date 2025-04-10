@@ -335,11 +335,6 @@ const QR_CODE_URL = 'https://mynameisaliff.s3.ap-southeast-1.amazonaws.com/Mayba
 export const DuitNowQR: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(1);
 
-  // Function to directly open the QR code in a new tab
-  const openQRInNewTab = () => {
-    window.open(QR_CODE_URL, '_blank');
-  };
-
   // Function to download the QR code
   const downloadQR = () => {
     // Track the event with Google Analytics
@@ -348,58 +343,24 @@ export const DuitNowQR: React.FC = () => {
       category: 'donation',
     });
 
-    // Create an image element to ensure the image is loaded
-    const img = new Image();
-    img.crossOrigin = 'anonymous'; // Try to avoid CORS issues
-    img.src = QR_CODE_URL;
+    // Create a direct download link with download attribute
+    // This is the simplest and most reliable approach
+    const link = document.createElement('a');
     
-    img.onload = function() {
-      // Create a canvas element
-      const canvas = document.createElement('canvas');
-      canvas.width = img.width;
-      canvas.height = img.height;
-      
-      // Draw the image on the canvas
-      const ctx = canvas.getContext('2d');
-      if (ctx) {
-        ctx.drawImage(img, 0, 0);
-        
-        try {
-          // Convert canvas to blob
-          canvas.toBlob((blob) => {
-            if (blob) {
-              // Create a download link
-              const url = URL.createObjectURL(blob);
-              const link = document.createElement('a');
-              link.href = url;
-              link.download = 'DuitNow-QR-Code.jpg';
-              document.body.appendChild(link);
-              link.click();
-              
-              // Clean up
-              setTimeout(() => {
-                document.body.removeChild(link);
-                URL.revokeObjectURL(url);
-              }, 100);
-            } else {
-              // Fallback if blob creation fails
-              openQRInNewTab();
-            }
-          }, 'image/jpeg', 0.95);
-        } catch (e) {
-          console.error('Error creating download:', e);
-          openQRInNewTab();
-        }
-      } else {
-        // Fallback if canvas context fails
-        openQRInNewTab();
-      }
-    };
+    // Set the link to the QR code image
+    link.href = QR_CODE_URL;
     
-    img.onerror = function() {
-      console.error('Error loading image for download');
-      openQRInNewTab();
-    };
+    // Set the download attribute with filename
+    link.download = 'DuitNow-QR-Code.jpg';
+    
+    // Set additional attributes to force download behavior
+    link.setAttribute('target', '_blank');
+    link.setAttribute('rel', 'noopener noreferrer');
+    
+    // Append to body, click, and remove
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   const openPaymentApp = (appUrl: string, appName: string) => {
