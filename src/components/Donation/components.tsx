@@ -4,8 +4,22 @@ import ReactGA from 'react-ga4';
 
 // ===== DuitNow Transfer Component =====
 // Bank apps commonly used in Malaysia
+// Enhanced bank apps data with iOS-specific URLs and app store links
 const BANK_APPS = [
-  { name: 'Maybank', appUrl: 'maybank2u://', icon: '/images/banks/maybank.png' },
+  { 
+    name: 'Maybank', 
+    appUrl: 'maybank2u://', 
+    iosAppUrl: 'maybank2u://', 
+    iosAppStoreUrl: 'https://apps.apple.com/my/app/m2u/id1192180092',
+    icon: '/images/banks/maybank.png' 
+  },
+  { 
+    name: 'MAE', 
+    appUrl: 'maeapp://', 
+    iosAppUrl: 'maeapp://', 
+    iosAppStoreUrl: 'https://apps.apple.com/my/app/mae-by-maybank2u/id1481028763',
+    icon: '/images/banks/maybank.png' 
+  },
   { name: 'CIMB', appUrl: 'cimbclicks://', icon: '/images/banks/cimb.png' },
   { name: 'Public Bank', appUrl: 'pbb://', icon: '/images/banks/publicbank.png' },
   { name: 'RHB', appUrl: 'rhb://', icon: '/images/banks/rhb.png' },
@@ -59,6 +73,9 @@ export const DuitNowTransfer: React.FC = () => {
     }
   };
 
+  // Detect iOS device
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
+  
   const openBankApp = (appUrl: string, bankName: string) => {
     // Track the event first in case the user leaves the page
     ReactGA.event({
@@ -72,39 +89,98 @@ export const DuitNowTransfer: React.FC = () => {
       const confirmed = window.confirm(`This will attempt to open the ${bankName} app. Continue?`);
       
       if (confirmed) {
-        // Create an invisible iframe to try opening the app without navigating away
-        const iframe = document.createElement('iframe');
-        iframe.style.display = 'none';
-        document.body.appendChild(iframe);
+        // Find the bank app details
+        const bankApp = BANK_APPS.find(app => app.name === bankName);
+        let appUrlToUse = appUrl;
+        let appStoreUrl = '';
         
-        // Set a timeout to detect if app opening failed
-        const timeoutId = setTimeout(() => {
-          // If we're still here after timeout, app didn't open
-          document.body.removeChild(iframe);
-          
-          // Offer fallback options
-          const useFallback = window.confirm(
-            `Could not open ${bankName} app. Would you like to:
-            - Copy the account number and open your banking app manually
-            - Continue with another payment method`
-          );
-          
-          if (useFallback) {
-            // Copy account number automatically as a convenience
-            copyAccountNumber();
-            alert(`Account number copied! Open your ${bankName} app manually and paste the account number.`);
-          }
-        }, 2000);
+        // Use iOS-specific URL if available and on iOS device
+        if (isIOS && bankApp && bankApp.iosAppUrl) {
+          appUrlToUse = bankApp.iosAppUrl;
+          appStoreUrl = bankApp.iosAppStoreUrl || '';
+        }
         
-        // Try to open the app
-        try {
-          if (iframe.contentWindow) {
-            iframe.contentWindow.location.href = appUrl;
+        // For iOS, use a different approach that works better
+        if (isIOS) {
+          // Create a hidden anchor element
+          const link = document.createElement('a');
+          link.setAttribute('href', appUrlToUse);
+          link.style.display = 'none';
+          document.body.appendChild(link);
+          
+          // Set a timeout to detect if app opening failed
+          const timeoutId = setTimeout(() => {
+            // If we're still here after timeout, app didn't open
+            document.body.removeChild(link);
+            
+            // Offer fallback options with App Store link if available
+            let fallbackMessage = `Could not open ${bankName} app. Would you like to:\n`;
+            if (appStoreUrl) {
+              fallbackMessage += `- Download the app from App Store\n`;
+            }
+            fallbackMessage += `- Copy the account number and open your banking app manually\n`;
+            fallbackMessage += `- Continue with another payment method`;
+            
+            const useFallback = window.confirm(fallbackMessage);
+            
+            if (useFallback) {
+              if (appStoreUrl) {
+                const goToAppStore = confirm(`Go to App Store to download ${bankName}?`);
+                if (goToAppStore) {
+                  window.location.href = appStoreUrl;
+                  return;
+                }
+              }
+              
+              // Copy account number automatically as a convenience
+              copyAccountNumber();
+              alert(`Account number copied! Open your ${bankName} app manually and paste the account number.`);
+            }
+          }, 2500); // Slightly longer timeout for iOS
+          
+          // Try to open the app
+          try {
+            link.click();
+          } catch (e) {
+            clearTimeout(timeoutId);
+            document.body.removeChild(link);
+            alert(`Could not open ${bankName} app. Please try another method.`);
           }
-        } catch (e) {
-          clearTimeout(timeoutId);
-          document.body.removeChild(iframe);
-          alert(`Could not open ${bankName} app. Please try another method.`);
+        } else {
+          // For non-iOS devices, use the iframe approach
+          const iframe = document.createElement('iframe');
+          iframe.style.display = 'none';
+          document.body.appendChild(iframe);
+          
+          // Set a timeout to detect if app opening failed
+          const timeoutId = setTimeout(() => {
+            // If we're still here after timeout, app didn't open
+            document.body.removeChild(iframe);
+            
+            // Offer fallback options
+            const useFallback = window.confirm(
+              `Could not open ${bankName} app. Would you like to:\n` +
+              `- Copy the account number and open your banking app manually\n` +
+              `- Continue with another payment method`
+            );
+            
+            if (useFallback) {
+              // Copy account number automatically as a convenience
+              copyAccountNumber();
+              alert(`Account number copied! Open your ${bankName} app manually and paste the account number.`);
+            }
+          }, 2000);
+          
+          // Try to open the app
+          try {
+            if (iframe.contentWindow) {
+              iframe.contentWindow.location.href = appUrlToUse;
+            }
+          } catch (e) {
+            clearTimeout(timeoutId);
+            document.body.removeChild(iframe);
+            alert(`Could not open ${bankName} app. Please try another method.`);
+          }
         }
       }
     }
@@ -203,7 +279,7 @@ const PAYMENT_APPS = [
   { name: 'Touch n Go', appUrl: 'tngew://', icon: '/images/wallets/tng.png', category: 'Malaysian eWallet' },
   { name: 'Boost', appUrl: 'boost://', icon: '/images/wallets/boost.png', category: 'Malaysian eWallet' },
   { name: 'GrabPay', appUrl: 'grab://', icon: '/images/wallets/grabpay.png', category: 'Malaysian eWallet' },
-  { name: 'MAE', appUrl: 'mae://', icon: '/images/wallets/mae.png', category: 'Malaysian eWallet' },
+  { name: 'MAE', appUrl: 'maeapp://', icon: '/images/wallets/mae.png', category: 'Malaysian eWallet' },
   
   // International Payment Apps
   { name: 'PayPal', appUrl: 'paypal://', icon: '/images/wallets/paypal.png', category: 'International' },
