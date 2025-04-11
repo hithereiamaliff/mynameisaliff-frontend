@@ -642,52 +642,52 @@ export const DuitNowQR: React.FC = () => {
     
     // For mobile devices
     if (isMobile) {
-      // Try to open the app directly first using the appropriate URL for the device
-      let appUrlToUse = appUrl;
-      
-      // Use device-specific app URLs if available
-      if (isIOS && appDetails?.iosAppUrl) {
-        appUrlToUse = appDetails.iosAppUrl;
-      } else if (isAndroid && appDetails?.androidAppUrl) {
-        appUrlToUse = appDetails.androidAppUrl;
-      }
-      
       // Show a confirmation dialog before opening the app
       if (confirm(`Open ${appName} app?`)) {
-        // Create a timeout to check if the app opened successfully
-        const appOpenTimeout = setTimeout(() => {
-          // If we get here, the app didn't open, so redirect to app store
-          if (appDetails) {
-            if (isIOS && appDetails.iosAppStoreUrl) {
-              window.location.href = appDetails.iosAppStoreUrl;
-            } else if (isAndroid && appDetails.androidPlayStoreUrl) {
+        // For iOS devices, we'll handle things differently to avoid the invalid URL error
+        if (isIOS) {
+          if (appDetails?.iosAppStoreUrl) {
+            // On iOS, we'll go directly to the App Store instead of trying the custom URL scheme
+            // This avoids the "invalid URL" error message
+            window.location.href = appDetails.iosAppStoreUrl;
+          }
+        } else {
+          // For Android and other devices, use the original approach
+          // Try to open the app directly first using the appropriate URL for the device
+          let appUrlToUse = appUrl;
+          
+          // Use device-specific app URL if available
+          if (isAndroid && appDetails?.androidAppUrl) {
+            appUrlToUse = appDetails.androidAppUrl;
+          }
+          
+          // Create a timeout to check if the app opened successfully
+          const appOpenTimeout = setTimeout(() => {
+            // If we get here, the app didn't open, so redirect to app store
+            if (appDetails?.androidPlayStoreUrl) {
               window.location.href = appDetails.androidPlayStoreUrl;
             }
-          }
-        }, 2000); // 2 second timeout
-        
-        // Try to open the app
-        try {
-          // This will attempt to open the app
-          window.location.href = appUrlToUse;
+          }, 2000); // 2 second timeout
           
-          // Listen for page visibility change, which might indicate the app opened
-          const handleVisibilityChange = () => {
-            if (document.hidden) {
-              // App likely opened, clear the timeout
-              clearTimeout(appOpenTimeout);
-              document.removeEventListener('visibilitychange', handleVisibilityChange);
-            }
-          };
-          
-          document.addEventListener('visibilitychange', handleVisibilityChange);
-        } catch (e) {
-          // If there's an error, clear the timeout and try the app store directly
-          clearTimeout(appOpenTimeout);
-          if (appDetails) {
-            if (isIOS && appDetails.iosAppStoreUrl) {
-              window.location.href = appDetails.iosAppStoreUrl;
-            } else if (isAndroid && appDetails.androidPlayStoreUrl) {
+          // Try to open the app
+          try {
+            // This will attempt to open the app
+            window.location.href = appUrlToUse;
+            
+            // Listen for page visibility change, which might indicate the app opened
+            const handleVisibilityChange = () => {
+              if (document.hidden) {
+                // App likely opened, clear the timeout
+                clearTimeout(appOpenTimeout);
+                document.removeEventListener('visibilitychange', handleVisibilityChange);
+              }
+            };
+            
+            document.addEventListener('visibilitychange', handleVisibilityChange);
+          } catch (e) {
+            // If there's an error, clear the timeout and try the app store directly
+            clearTimeout(appOpenTimeout);
+            if (appDetails?.androidPlayStoreUrl) {
               window.location.href = appDetails.androidPlayStoreUrl;
             }
           }
