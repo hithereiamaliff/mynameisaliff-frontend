@@ -630,10 +630,23 @@ export const DuitNowQR: React.FC = () => {
       label: appName,
     });
     
-    // Find the app details in Malaysian apps list
-    let appDetails: PaymentApp | undefined = BANK_APPS.find(app => app.name === appName);
+    // Find the app details in all app arrays
+    let appDetails: PaymentApp | undefined;
     
-    // If not found in Malaysian apps, check international apps
+    // Check in BANK_APPS first (for DuitNow Transfer)
+    appDetails = BANK_APPS.find(app => app.name === appName);
+    
+    // If not found, check in Malaysian main apps
+    if (!appDetails) {
+      appDetails = MALAYSIAN_MAIN_APPS.find(app => app.name === appName);
+    }
+    
+    // If not found, check in Malaysian additional apps
+    if (!appDetails) {
+      appDetails = MALAYSIAN_ADDITIONAL_APPS.find(app => app.name === appName);
+    }
+    
+    // If not found, check in international apps
     if (!appDetails) {
       // Flatten all international apps into a single array
       const allInternationalApps = Object.values(INTERNATIONAL_APPS_BY_COUNTRY).flat();
