@@ -89,7 +89,7 @@ export function DonationModal({ isOpen, onClose }: DonationModalProps) {
                 >
                   <div className="w-12 h-12 mr-4 flex-shrink-0 bg-white rounded-lg p-1 flex items-center justify-center">
                     <img 
-                      src="/images/DuitNow Logos/DuitNow-QR-Logo_FA2.png" 
+                      src="/images/DuitNow Logos/DuitNowQR.png" 
                       alt="DuitNow QR" 
                       className="max-w-full max-h-full object-contain"
                     />
