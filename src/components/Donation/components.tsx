@@ -650,13 +650,9 @@ export const DuitNowQR: React.FC = () => {
         window.location.href = appUrl;
       }
     } else {
-      // For desktop, open web URL if available
-      if (appDetails && appDetails.webUrl) {
-        window.open(appDetails.webUrl, '_blank');
-      } else {
-        // No web URL, show instructions
-        alert(`Please use your mobile device to scan the QR code with the ${appName} app.`);
-      }
+      // For desktop, show instructions to scan QR code with mobile device
+      // Do NOT redirect to web URL for DuitNow QR section
+      alert(`Please use your mobile device to scan the QR code with the ${appName} app.`);
     }
   };
 
@@ -849,7 +845,7 @@ export const DuitNowQR: React.FC = () => {
                 <span className="font-medium text-yellow-500">On Mobile:</span> If your app doesn't open automatically, please open it manually and use the QR scanner to scan the saved QR code.
               </p>
               <p className="text-gray-400 text-sm">
-                <span className="font-medium text-yellow-500">On Desktop:</span> Clicking these buttons will redirect you to the respective app store links.
+                <span className="font-medium text-yellow-500">On Desktop:</span> Please use your mobile device to scan the QR code. The apps cannot be opened directly from desktop.
               </p>
             </div>
           </div>
