@@ -503,36 +503,37 @@ export const DuitNowTransfer: React.FC = () => {
 // ===== DuitNow QR Component =====
 // Malaysian bank and eWallet apps for initial display
 const MALAYSIAN_MAIN_APPS = [
-  { name: 'MAE by Maybank', appUrl: 'maybank2u://', icon: '/images/banks/mae.png' },
-  { name: 'CIMB OCTO', appUrl: 'cimbclicks://', icon: '/images/banks/cimb.png' },
-  { name: 'Touch n Go eWallet', appUrl: 'tngew://', icon: '/images/wallets/tng.png' },
-  { name: 'Public Bank', appUrl: 'pbb://', icon: '/images/banks/publicbank.png' },
-  { name: 'GrabPay', appUrl: 'grab://', icon: '/images/wallets/grabpay.png' },
+  { name: 'MAE by Maybank', appUrl: 'maybank2u://', icon: '/images/DuitNow QR Malaysia Apps Logo/1 mae.webp', iosAppStoreUrl: 'https://apps.apple.com/my/app/mae-by-maybank2u/id1481028763', androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=com.maybank2u.life', webUrl: 'https://www.maybank2u.com.my/maybank2u/malaysia/en/personal/services/digital_banking/mae_by_maybank2u.page' },
+  { name: 'CIMB OCTO', appUrl: 'cimbclicks://', icon: '/images/DuitNow QR Malaysia Apps Logo/2 cimb octo.webp', iosAppStoreUrl: 'https://apps.apple.com/my/app/cimb-octo-my/id1591184221', androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=com.cimb.cimbocto&hl=en', webUrl: 'https://www.cimb.com.my/en/personal/digital-services/cimb-octo-app.html' },
+  { name: 'Touch n Go eWallet', appUrl: 'tngew://', icon: '/images/DuitNow QR Malaysia Apps Logo/3 tng ewallet.png', iosAppStoreUrl: 'https://apps.apple.com/my/app/touch-n-go-ewallet/id1344696702', androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=my.com.tngdigital.ewallet', webUrl: 'https://www.touchngo.com.my/ewallet' },
+  { name: 'Public Bank', appUrl: 'pbb://', icon: '/images/DuitNow QR Malaysia Apps Logo/5 public bank.webp', iosAppStoreUrl: 'https://apps.apple.com/my/app/mypb-by-public-bank/id6446102283', androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=com.pbb.mypb&hl=en', webUrl: 'https://www.pbebank.com/en/digital-banking/mobile-banking/mypb-app' },
+  { name: 'GrabPay', appUrl: 'grab://', icon: '/images/DuitNow QR Malaysia Apps Logo/4 grabpay.png', iosAppStoreUrl: 'https://apps.apple.com/us/app/grab-taxi-ride-food-delivery/id647268330', androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=com.grabtaxi.passenger&hl=en', webUrl: 'https://www.grab.com/my/download' },
 ];
 
 // Additional Malaysian bank and eWallet apps for the modal
 const MALAYSIAN_ADDITIONAL_APPS = [
-  { name: 'AEON Bank', appUrl: 'aeon://', icon: '/images/banks/aeon.png' },
-  { name: 'Affin Bank', appUrl: 'affin://', icon: '/images/banks/affin.png' },
-  { name: 'Agro Bank', appUrl: 'agrobank://', icon: '/images/banks/agrobank.png' },
-  { name: 'Alliance Bank', appUrl: 'alliancebank://', icon: '/images/banks/alliance.png' },
-  { name: 'AmBank', appUrl: 'ambank://', icon: '/images/banks/ambank.png' },
-  { name: 'Bank Islam', appUrl: 'bankislam://', icon: '/images/banks/bankislam.png' },
-  { name: 'Bank Muamalat', appUrl: 'muamalat://', icon: '/images/banks/muamalat.png' },
-  { name: 'Bank Rakyat', appUrl: 'bankrakyat://', icon: '/images/banks/bankrakyat.png' },
-  { name: 'RHB Bank', appUrl: 'rhb://', icon: '/images/banks/rhb.png' },
-  { name: 'BigPay', appUrl: 'bigpay://', icon: '/images/wallets/bigpay.png' },
-  { name: 'Boost', appUrl: 'boost://', icon: '/images/wallets/boost.png' },
-  { name: 'GXBank', appUrl: 'gxbank://', icon: '/images/banks/gxbank.png' },
-  { name: 'Hong Leong Bank', appUrl: 'hlb://', icon: '/images/banks/hongleong.png' },
-  { name: 'HSBC', appUrl: 'hsbc://', icon: '/images/banks/hsbc.png' },
-  { name: 'Merchantrade Money', appUrl: 'merchantrade://', icon: '/images/wallets/merchantrade.png' },
-  { name: 'OCBC', appUrl: 'ocbc://', icon: '/images/banks/ocbc.png' },
-  { name: 'Setel', appUrl: 'setel://', icon: '/images/wallets/setel.png' },
-  { name: 'S Pay Global', appUrl: 'spay://', icon: '/images/wallets/spay.png' },
-  { name: 'ShopeePay', appUrl: 'shopeepay://', icon: '/images/wallets/shopeepay.png' },
-  { name: 'Standard Chartered', appUrl: 'sc://', icon: '/images/banks/standardchartered.png' },
-  { name: 'UOB', appUrl: 'uob://', icon: '/images/banks/uob.png' },
+  { name: 'AEON Bank', appUrl: 'aeon://', icon: '/images/DuitNow QR Malaysia Apps Logo/7 aeon bank.webp', iosAppStoreUrl: 'https://apps.apple.com/my/app/aeon-bank/id6469771768', androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=com.personal.adb', webUrl: 'https://www.aeonbank.com.my' },
+  { name: 'Affin Bank', appUrl: 'affin://', icon: '/images/DuitNow QR Malaysia Apps Logo/8 affin bank.webp', iosAppStoreUrl: 'https://apps.apple.com/my/app/affinalways/id6444671106', androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=com.affin.AffinMobileBanking', webUrl: 'https://www.affinalways.com/en/mobile-banking' },
+  { name: 'Agro Bank', appUrl: 'agrobank://', icon: '/images/DuitNow QR Malaysia Apps Logo/9 agro bank.webp', iosAppStoreUrl: 'https://apps.apple.com/my/app/agronet-mobile/id1491697309', androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=com.cedarplus.agro&hl=en', webUrl: 'https://www.agrobank.com.my/product/agronet-mobile-2/' },
+  { name: 'Alliance Bank', appUrl: 'alliancebank://', icon: '/images/DuitNow QR Malaysia Apps Logo/10 alliance bank.webp', iosAppStoreUrl: 'https://apps.apple.com/my/app/allianceonline-mobile/id1101100536', androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=com.alliance.AOPMobileApp&hl=en', webUrl: 'https://www.alliancebank.com.my/Digital/personal-banking/Transact-Digitally/allianceonline-mobile' },
+  { name: 'AmBank', appUrl: 'ambank://', icon: '/images/DuitNow QR Malaysia Apps Logo/11 AmOnline Logo.png', iosAppStoreUrl: 'https://apps.apple.com/my/app/amonline/id1514166708', androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=com.ambank.ambankonline', webUrl: 'https://ambank.amonline.com.my/web', },
+  { name: 'Bank Islam', appUrl: 'bankislam://', icon: '/images/DuitNow QR Malaysia Apps Logo/11 bimb mobile.webp', iosAppStoreUrl: 'https://apps.apple.com/my/app/bimb-mobile/id6670779902?platform=iphone', androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=com.bankislam.bimbmobile&hl=ms', webUrl: 'https://bimb.com/bimb-mobile/', },
+  { name: 'Bank Muamalat', appUrl: 'muamalat://', icon: '/images/DuitNow QR Malaysia Apps Logo/12 bank muamalat.webp', iosAppStoreUrl: 'https://apps.apple.com/my/app/i-muamalat-mobile/id1212175868', androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=my.com.muamalat.mobile.rib&hl=ms', webUrl: 'https://www.i-muamalat.com.my/rib/index.do' },
+  { name: 'Bank Rakyat', appUrl: 'bankrakyat://', icon: '/images/DuitNow QR Malaysia Apps Logo/13 bank rakyat.webp', iosAppStoreUrl: 'https://apps.apple.com/my/app/irakyat-mobile-banking/id1585944651', androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=com.irakyatmob.bkrm&hl=ms', webUrl: 'https://www.irakyat.com.my' },
+  { name: 'BSN', appUrl: 'bsn://', icon: '/images/DuitNow QR Malaysia Apps Logo/16 bsn.webp', iosAppStoreUrl: 'https://apps.apple.com/my/app/mybsn/id6449446936', androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=com.bsn.mybsn&hl=en', webUrl: 'https://www.bsn.com.my/page/myBSNMobileApp?csrt=6827472582746257187' },
+  { name: 'RHB Bank', appUrl: 'rhb://', icon: '/images/DuitNow Transfer Apps Logo/4 rhb.webp', iosAppStoreUrl: 'https://apps.apple.com/my/app/rhb-mobile-banking/id1440953606', androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=com.rhbgroup.rhbmobilebanking&hl=en', webUrl: 'https://www.rhbgroup.com/new-rhb-mobile-banking/index.html' },
+  { name: 'BigPay', appUrl: 'bigpay://', icon: '/images/DuitNow QR Malaysia Apps Logo/bigpay.webp', iosAppStoreUrl: 'https://apps.apple.com/my/app/bigpay-financial-services/id1243379690', androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=com.tpaay.bigpay', webUrl: 'https://bigpayme.com/' },
+  { name: 'Boost', appUrl: 'boost://', icon: '/images/DuitNow QR Malaysia Apps Logo/14 Boost-e-Wallet-app.png', iosAppStoreUrl: 'https://apps.apple.com/my/app/boost-app-malaysia/id1235987570', androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=my.com.myboost&hl=en', webUrl: 'https://myboost.co/download-boost', },
+  { name: 'GXBank', appUrl: 'gxbank://', icon: '/images/DuitNow QR Malaysia Apps Logo/17 gxbank.jpeg', iosAppStoreUrl: 'https://apps.apple.com/my/app/gxbank/id6454673510?mt=8', androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=my.com.gxbank.app&hl=en', webUrl: 'https://gxbank.my/#download' },
+  { name: 'Hong Leong Bank', appUrl: 'hlb://', icon: '/images/DuitNow QR Malaysia Apps Logo/18 hong leong bank.webp', iosAppStoreUrl: 'https://apps.apple.com/us/app/hlb-connect-mobile-banking-app/id1446719260', androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=my.com.hongleongconnect.mobileconnect&hl=en', webUrl: 'https://www.hlb.com.my/en/personal-banking/hlb-connect.html' },
+  { name: 'HSBC', appUrl: 'hsbc://', icon: '/images/DuitNow QR Malaysia Apps Logo/6 hsbc.webp', iosAppStoreUrl: 'https://apps.apple.com/my/app/hsbc-malaysia/id1437876264', androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=my.com.hsbc.hsbcmalaysia&hl=en', webUrl: 'https://www.hsbc.com.my/ways-to-bank/mobile-banking' },
+  { name: 'Merchantrade Money', appUrl: 'merchantrade://', icon: '/images/DuitNow QR Malaysia Apps Logo/19 merchantrade money.webp', iosAppStoreUrl: 'https://apps.apple.com/us/app/merchantrade-money/id6689505138', androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=com.mtradeasia.mmp&hl=en', webUrl: 'https://www.merchantrademoney.com/apply-card' },
+  { name: 'OCBC', appUrl: 'ocbc://', icon: '/images/DuitNow QR Malaysia Apps Logo/20 ocbc malaysia.webp', iosAppStoreUrl: 'https://apps.apple.com/my/app/ocbc-malaysia/id809472323', androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=com.ocbc.mobilemy&hl=en', webUrl: 'https://www.ocbc.com.my/personal-banking/digital-banking/overview' },
+  { name: 'Setel', appUrl: 'setel://', icon: '/images/DuitNow QR Malaysia Apps Logo/setel.png', iosAppStoreUrl: 'https://apps.apple.com/my/app/setel-fuel-parking-e-wallet/id1441424081', androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=com.setel.mobile&hl=en', webUrl: 'https://www.setel.com' },
+  { name: 'S Pay Global', appUrl: 'spay://', icon: '/images/DuitNow QR Malaysia Apps Logo/s pay global.webp', iosAppStoreUrl: 'https://apps.apple.com/my/app/s-pay-global/id1250845042', androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=my.gov.sarawak.paybills&hl=en', webUrl: 'https://spayglobal.my' },
+  { name: 'ShopeePay', appUrl: 'shopeepay://', icon: '/images/DuitNow QR Malaysia Apps Logo/21 shopeepay.webp', iosAppStoreUrl: 'https://apps.apple.com/my/app/shopeepay/id6497068994', androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=com.shopeepay.my&hl=en', webUrl: 'https://shopeepay.com.my' },
+  { name: 'Standard Chartered', appUrl: 'sc://', icon: '/images/DuitNow QR Malaysia Apps Logo/22 standard chartered.webp', iosAppStoreUrl: 'https://apps.apple.com/my/app/sc-mobile-malaysia/id392924154', androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=air.app.scb.breeze.android.main.my.prod&hl=en', webUrl: 'https://www.sc.com/my/digital-banking/' },
+  { name: 'UOB', appUrl: 'uob://', icon: '/images/DuitNow QR Malaysia Apps Logo/23 uob.webp', iosAppStoreUrl: 'https://apps.apple.com/my/app/uob-tmrw-malaysia/id1239716055', androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=com.uob.mightymy&pli=1', webUrl: 'https://www.uob.com.my/personal/eservices/tmrw/index.page' },
 ];
 
 // Define app type
@@ -540,6 +541,9 @@ type PaymentApp = {
   name: string;
   appUrl: string;
   icon: string;
+  iosAppStoreUrl: string;
+  androidPlayStoreUrl: string;
+  webUrl: string;
 };
 
 // Define country names as a union type for type safety
@@ -553,49 +557,54 @@ type CountryApps = {
 // International Payment Apps organized by country
 const INTERNATIONAL_APPS_BY_COUNTRY: CountryApps = {
   'China': [
-    { name: 'Alipay', appUrl: 'alipay://', icon: '/images/wallets/alipay.png' },
+    { name: 'Alipay', appUrl: 'alipay://', icon: '/images/DuitNow QR International Apps Logo/1 alipay.webp', iosAppStoreUrl: 'https://apps.apple.com/cn/app/alipay-simplify-your-life/id333206289', androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=com.eg.android.AlipayGphone&hl=en', webUrl: 'https://www.alipay.com' },
   ],
   'Hong Kong': [
-    { name: 'AlipayHK', appUrl: 'alipayhk://', icon: '/images/wallets/alipayhk.png' },
+    { name: 'AlipayHK', appUrl: 'alipayhk://', icon: '/images/DuitNow QR International Apps Logo/2 alipayhk.webp', iosAppStoreUrl: 'https://apps.apple.com/us/app/alipayhk/id1210638245', androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=hk.alipay.wallet&hl=en', webUrl: 'https://www.alipayhk.com/zh/shoppers' },
   ],
   'Indonesia': [
-    { name: 'Bank Sinarmas', appUrl: 'banksinarmas://', icon: '/images/banks/sinarmas.png' },
-    { name: 'DANA', appUrl: 'dana://', icon: '/images/wallets/dana.png' },
-    { name: 'Bank Permata', appUrl: 'permata://', icon: '/images/banks/permata.png' },
-    { name: 'Bank CIMB Niaga', appUrl: 'cimbniaga://', icon: '/images/banks/cimbniaga.png' },
-    { name: 'Bank Pembangunan Daerah (BPD) Bali', appUrl: 'bpdbali://', icon: '/images/banks/bpdbali.png' },
-    { name: 'Bank Syariah Indonesia', appUrl: 'bsi://', icon: '/images/banks/bsi.png' },
-    { name: 'LinkAja', appUrl: 'linkaja://', icon: '/images/wallets/linkaja.png' },
-    { name: 'Bank Central Asia', appUrl: 'bca://', icon: '/images/banks/bca.png' },
-    { name: 'Ottocash', appUrl: 'ottocash://', icon: '/images/wallets/ottocash.png' },
-    { name: 'Bank Mega', appUrl: 'bankmega://', icon: '/images/banks/mega.png' },
+    { name: 'Bank Sinarmas', appUrl: 'banksinarmas://', icon: '/images/DuitNow QR International Apps Logo/3 bank sinarmas.webp', iosAppStoreUrl: 'https://apps.apple.com/id/app/simobiplus/id938705552', androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=com.simas.mobile.SimobiPlus&hl=ms', webUrl: 'https://www.banksinarmas.com/id/layanan/simobi-plus' },
+    { name: 'DANA', appUrl: 'dana://', icon: '/images/DuitNow QR International Apps Logo/4 dana.jpg', iosAppStoreUrl: 'https://apps.apple.com/id/app/dana-dompet-digital-indonesia/id1437123008', androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=id.dana&hl=en', webUrl: 'https://www.dana.id' },
+    { name: 'Bank Permata', appUrl: 'permata://', icon: '/images/DuitNow QR International Apps Logo/5 bank permata.webp', iosAppStoreUrl: 'https://apps.apple.com/id/app/permata-me/id1323973644?l=ms', androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=net.myinfosys.PermataMobileX&hl=en', webUrl: 'https://www.permatabank.com/id/digital-channel/permatame' },
+    { name: 'CIMB Niaga', appUrl: 'cimbniaga://', icon: '/images/DuitNow QR International Apps Logo/5 cimb niaga.jpg', iosAppStoreUrl: 'https://apps.apple.com/id/app/octo-mobile-by-cimb-niaga/id505917174', androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=id.co.cimbniaga.mobile.android&hl=en', webUrl: 'https://branchlessbanking.cimbniaga.co.id/gomobile' },
+    { name: 'BPD Bali', appUrl: 'bpdbali://', icon: '/images/DuitNow QR International Apps Logo/6 bpd bali.webp', iosAppStoreUrl: 'https://apps.apple.com/id/app/bpdbali-mobile/id975110540?l=id', androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=com.dwidasa.bpdbali.mb.android&hl=id', webUrl: 'https://www.bpdbali.co.id/page/read/71' },
+    { name: 'Bank Syariah Indonesia', appUrl: 'bsi://', icon: '/images/DuitNow QR International Apps Logo/7 bank syariah indonesia.jpg', iosAppStoreUrl: 'https://apps.apple.com/id/app/byond-by-bsi/id6444697752', androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=co.id.bankbsi.superapp&hl=id', webUrl: 'https://www.bankbsi.co.id/produk&layanan/tipe/digital-banking/parent/produk/byond-by-bsi' },
+    { name: 'ShopeePay', appUrl: 'shopeepay://', icon: '/images/DuitNow QR International Apps Logo/9 shopeepayid.webp', iosAppStoreUrl: 'https://apps.apple.com/id/app/shopeepay-qris-kirim-uang/id6455990519', androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=com.shopeepay.id&source_caller=ui&shortlink=websitespay&c=ShopeePay%20Website&pid=website_shopeepay&af_xp=custom', webUrl: 'https://shopeepay.co.id' },
+    { name: 'LinkAja', appUrl: 'linkaja://', icon: '/images/DuitNow QR International Apps Logo/8 linkaja.webp', iosAppStoreUrl: 'https://apps.apple.com/id/app/linkaja-linkaja-syariah/id984436451', androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=com.telkom.mwallet&hl=id&gl=id', webUrl: 'https://www.linkaja.id' },
+    { name: 'Bank Central Asia', appUrl: 'bca://', icon: '/images/DuitNow QR International Apps Logo/10 bank central asia.jpg', iosAppStoreUrl: 'https://apps.apple.com/id/app/mybca/id1440241902', androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=com.bca.mybca.omni.android', webUrl: 'https://www.bca.co.id/id/Individu/layanan/e-banking/mybca' },
+    { name: 'Bank Mega', appUrl: 'bankmega://', icon: '/images/DuitNow QR International Apps Logo/11 bank mega.webp', iosAppStoreUrl: 'https://apps.apple.com/id/app/m-smile/id1446543289', androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=com.bankmega.msmile', webUrl: 'https://bankmega.com/id/mobile-app-msmile' },
   ],
   'Philippines': [
-    { name: 'HelloMoney by AUB', appUrl: 'hellomoney://', icon: '/images/wallets/hellomoney.png' },
-    { name: 'Gcash', appUrl: 'gcash://', icon: '/images/wallets/gcash.png' },
+    { name: 'HelloMoney by AUB', appUrl: 'hellomoney://', icon: '/images/DuitNow QR International Apps Logo/12 hellomoney.webp', iosAppStoreUrl: 'https://apps.apple.com/ph/app/hellomoney-by-aub/id1459989013', androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=com.aub.hellomoney&hl=en', webUrl: 'https://www.aub.com.ph/hellomoney' },
+    { name: 'GCash', appUrl: 'gcash://', icon: '/images/DuitNow QR International Apps Logo/13 gcash.webp', iosAppStoreUrl: 'https://apps.apple.com/ph/app/gcash/id520020791', androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=com.globe.gcash.android&hl=en', webUrl: 'https://new.gcash.com' },
   ],
   'Mongolia': [
-    { name: 'Hipay', appUrl: 'hipay://', icon: '/images/wallets/hipay.png' },
+    { name: 'Hipay', appUrl: 'hipay://', icon: '/images/DuitNow QR International Apps Logo/14 hipay.webp', iosAppStoreUrl: 'https://apps.apple.com/mn/app/hipay/id1530550896', androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=mn.highpaymentsolutions.hipay_wallet_v2&hl=en', webUrl: 'https://www.hipay.mn' },
   ],
   'Macau': [
-    { name: 'MPay', appUrl: 'mpay://', icon: '/images/wallets/mpay.png' },
+    { name: 'MPay', appUrl: 'mpay://', icon: '/images/DuitNow QR International Apps Logo/15 mpay.webp', iosAppStoreUrl: 'https://apps.apple.com/mo/app/mpay%E6%BE%B3%E9%96%80%E9%8C%A2%E5%8C%85/id1092594338', androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=com.macaupass.rechargeEasy&hl=en', webUrl: 'https://www.macaupass.com/MPay' },
   ],
   'Singapore': [
-    { name: 'DBS PayLah!', appUrl: 'paylah://', icon: '/images/wallets/paylah.png' },
-    { name: 'OCBC Digital', appUrl: 'ocbcdigital://', icon: '/images/banks/ocbcsg.png' },
-    { name: 'UOB TMRW', appUrl: 'uobtmrw://', icon: '/images/banks/uobsg.png' },
-    { name: 'Standard Chartered', appUrl: 'scsg://', icon: '/images/banks/scsg.png' },
+    { name: 'DBS PayLah!', appUrl: 'paylah://', icon: '/images/DuitNow QR International Apps Logo/16 dbs paylah.png', iosAppStoreUrl: 'https://apps.apple.com/sg/app/dbs-paylah/id878528688', androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=com.dbs.dbspaylah&hl=en', webUrl: 'https://www.dbs.com.sg/personal/deposits/pay-with-ease/dbs-paylah' },
+    { name: 'OCBC Digital', appUrl: 'ocbcdigital://', icon: '/images/DuitNow QR International Apps Logo/17 ocbcsg.webp', iosAppStoreUrl: 'https://apps.apple.com/sg/app/ocbc-singapore/id292506828', androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=com.ocbc.mobile&hl=en_SG', webUrl: 'https://www.ocbc.com/personal-banking/digital-banking/digital-solutions-and-services' },
+    { name: 'UOB TMRW', appUrl: 'uobtmrw://', icon: '/images/DuitNow QR International Apps Logo/18 uobtmrw.webp', iosAppStoreUrl: 'https://apps.apple.com/sg/app/uob-tmrw/id1049286296', androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=com.uob.mighty.app&hl=en', webUrl: 'https://www.uob.com.sg/personal/digital-banking/index.page' },
+    { name: 'Standard Chartered', appUrl: 'scsg://', icon: '/images/DuitNow QR International Apps Logo/19 standard chartered sg.webp', iosAppStoreUrl: 'https://apps.apple.com/sg/app/sc-mobile-singapore/id367337298', androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=air.app.scb.breeze.android.main.sg.prod&hl=en', webUrl: 'https://www.sc.com/sg/bank-with-us/mobile-banking-services/standard-chartered-mobile' },
+	{ name: 'Maybank2u SG', appUrl: 'maybank2usg://', icon: '/images/DuitNow QR International Apps Logo/20 maybank2u sg.webp', iosAppStoreUrl: 'https://apps.apple.com/my/app/maybank2u-sg/id1574139300', androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=sg.maybank.mae', webUrl: 'https://www.maybank2u.com.sg/en/m2usglite/main.html' },
   ],
   'South Korea': [
-    { name: 'Naver Pay', appUrl: 'naverpay://', icon: '/images/wallets/naverpay.png' },
-    { name: 'Toss Pay', appUrl: 'tosspay://', icon: '/images/wallets/tosspay.png' },
+    { name: 'Naver Pay', appUrl: 'naverpay://', icon: '/images/DuitNow QR International Apps Logo/21 naver pay.webp', iosAppStoreUrl: 'https://apps.apple.com/kr/app/%EB%84%A4%EC%9D%B4%EB%B2%84-naver/id393499958', androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=com.naverfin.payapp&hl=en', webUrl: 'https://pay.naver.com' },
+    { name: 'Toss Pay', appUrl: 'tosspay://', icon: '/images/DuitNow QR International Apps Logo/22 toss pay.webp', iosAppStoreUrl: 'https://apps.apple.com/kr/app/%ED%86%A0%EC%8A%A4/id839333328', androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=viva.republica.toss', webUrl: 'https://toss.im' },
+	{ name: 'Paybooc', appUrl: 'paybooc://', icon: '/images/DuitNow QR International Apps Logo/23 paybooc.webp', iosAppStoreUrl: 'https://apps.apple.com/kr/app/%ED%8E%98%EC%9D%B4%EB%B6%81-isp/id369125087', androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=kvp.jjy.MispAndroid320&hl=ko&gl=US', webUrl: 'https://web.paybooc.co.kr' }
   ],
   'Thailand': [
-    { name: 'TrueMoney', appUrl: 'truemoney://', icon: '/images/wallets/truemoney.png' },
-    { name: 'Bangkok Bank', appUrl: 'bangkokbank://', icon: '/images/banks/bangkokbank.png' },
-    { name: 'Krungthai Bank', appUrl: 'krungthai://', icon: '/images/banks/krungthai.png' },
-    { name: 'Krungsri', appUrl: 'krungsri://', icon: '/images/banks/krungsri.png' },
-    { name: 'CIMB Thai', appUrl: 'cimbthai://', icon: '/images/banks/cimbthai.png' },
+    { name: 'TrueMoney', appUrl: 'truemoney://', icon: '/images/DuitNow QR International Apps Logo/24 truemoney.png', iosAppStoreUrl: 'https://apps.apple.com/th/app/truemoney-pay-earn-coins/id663885752', androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=th.co.truemoney.wallet&hl=en', webUrl: 'https://www.truemoney.com' },
+    { name: 'Bangkok Bank', appUrl: 'bangkokbank://', icon: '/images/DuitNow QR International Apps Logo/25 bangkok bank.webp', iosAppStoreUrl: 'https://apps.apple.com/th/app/bangkok-bank-mobile-banking/id660238716', androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=com.bbl.mobilebanking&hl=en', webUrl: 'https://www.bangkokbank.com/en/Personal/Digital-Banking/Bualuang-mBanking' },
+	{ name: 'Kasikorn Bank', appUrl: 'kasikornbank://', icon: '/images/DuitNow QR International Apps Logo/26 kasikorn bank.png', iosAppStoreUrl: 'https://apps.apple.com/th/app/k-plus/id361170631', androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=com.kasikorn.retail.mbanking.wap&hl=en', webUrl: 'https://www.kasikornbank.com/th/kplus' },
+    { name: 'Krungthai Bank', appUrl: 'krungthai://', icon: '/images/DuitNow QR International Apps Logo/27 krungthai bank.webp', iosAppStoreUrl: 'https://apps.apple.com/th/app/krungthai-next/id436753378', androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=ktbcs.netbank&hl=en', webUrl: 'https://krungthai.com/th/content/personal/krungthai-next' },
+    { name: 'Krungsri', appUrl: 'krungsri://', icon: '/images/DuitNow QR International Apps Logo/28 krungsri bank.webp', iosAppStoreUrl: 'https://apps.apple.com/th/app/krungsri/id571873195', androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=com.krungsri.kma&hl=en', webUrl: 'https://www.krungsri.com/th/wealth/krungsri-exclusive/products/kma-krungsri-mobile-app' },
+	{ name: 'SCB', appUrl: 'siamcommercialbank://', icon: '/images/DuitNow QR International Apps Logo/29 scb.webp', iosAppStoreUrl: 'https://apps.apple.com/th/app/scb-easy/id568388474', androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=com.scb.phone&hl=en', webUrl: 'https://www.scb.co.th/th/personal-banking/digital-banking/scb-easy.html' },
+	{ name: 'BAAC', appUrl: 'baac://', icon: '/images/DuitNow QR International Apps Logo/30 baac.webp', iosAppStoreUrl: 'https://apps.apple.com/th/app/baac-mobile/id1591473167', androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=com.baac.amobileplus&hl=en', webUrl: 'https://www.baac.or.th/th/' },
+    { name: 'CIMB Thai', appUrl: 'cimbthai://', icon: '/images/DuitNow QR International Apps Logo/31 cimb thai.webp', iosAppStoreUrl: 'https://apps.apple.com/th/app/cimb-thai/id1437400271', androidPlayStoreUrl: 'https://play.google.com/store/apps/details?id=com.cimbthai.digital.mycimb&hl=en', webUrl: 'https://www.cimbthai.com/th/personal/ways-to-bank/cimb-thai-digital-banking.html' },
   ],
 };
 
