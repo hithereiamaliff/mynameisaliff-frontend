@@ -652,41 +652,44 @@ export const DuitNowQR: React.FC = () => {
         appUrlToUse = appDetails.androidAppUrl;
       }
       
-      // Create a timeout to check if the app opened successfully
-      const appOpenTimeout = setTimeout(() => {
-        // If we get here, the app didn't open, so redirect to app store
-        if (appDetails) {
-          if (isIOS && appDetails.iosAppStoreUrl) {
-            window.location.href = appDetails.iosAppStoreUrl;
-          } else if (isAndroid && appDetails.androidPlayStoreUrl) {
-            window.location.href = appDetails.androidPlayStoreUrl;
+      // Show a confirmation dialog before opening the app
+      if (confirm(`Open ${appName} app?`)) {
+        // Create a timeout to check if the app opened successfully
+        const appOpenTimeout = setTimeout(() => {
+          // If we get here, the app didn't open, so redirect to app store
+          if (appDetails) {
+            if (isIOS && appDetails.iosAppStoreUrl) {
+              window.location.href = appDetails.iosAppStoreUrl;
+            } else if (isAndroid && appDetails.androidPlayStoreUrl) {
+              window.location.href = appDetails.androidPlayStoreUrl;
+            }
           }
-        }
-      }, 2000); // 2 second timeout
-      
-      // Try to open the app
-      try {
-        // This will attempt to open the app
-        window.location.href = appUrlToUse;
+        }, 2000); // 2 second timeout
         
-        // Listen for page visibility change, which might indicate the app opened
-        const handleVisibilityChange = () => {
-          if (document.hidden) {
-            // App likely opened, clear the timeout
-            clearTimeout(appOpenTimeout);
-            document.removeEventListener('visibilitychange', handleVisibilityChange);
-          }
-        };
-        
-        document.addEventListener('visibilitychange', handleVisibilityChange);
-      } catch (e) {
-        // If there's an error, clear the timeout and try the app store directly
-        clearTimeout(appOpenTimeout);
-        if (appDetails) {
-          if (isIOS && appDetails.iosAppStoreUrl) {
-            window.location.href = appDetails.iosAppStoreUrl;
-          } else if (isAndroid && appDetails.androidPlayStoreUrl) {
-            window.location.href = appDetails.androidPlayStoreUrl;
+        // Try to open the app
+        try {
+          // This will attempt to open the app
+          window.location.href = appUrlToUse;
+          
+          // Listen for page visibility change, which might indicate the app opened
+          const handleVisibilityChange = () => {
+            if (document.hidden) {
+              // App likely opened, clear the timeout
+              clearTimeout(appOpenTimeout);
+              document.removeEventListener('visibilitychange', handleVisibilityChange);
+            }
+          };
+          
+          document.addEventListener('visibilitychange', handleVisibilityChange);
+        } catch (e) {
+          // If there's an error, clear the timeout and try the app store directly
+          clearTimeout(appOpenTimeout);
+          if (appDetails) {
+            if (isIOS && appDetails.iosAppStoreUrl) {
+              window.location.href = appDetails.iosAppStoreUrl;
+            } else if (isAndroid && appDetails.androidPlayStoreUrl) {
+              window.location.href = appDetails.androidPlayStoreUrl;
+            }
           }
         }
       }
