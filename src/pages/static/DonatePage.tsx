@@ -16,6 +16,9 @@ export const DonatePage: React.FC = () => {
       action: 'donate_page_view',
       category: 'page_view',
     });
+    
+    // Scroll to top when component mounts
+    window.scrollTo(0, 0);
   }, []);
 
   // Add schema.org structured data for SEO
@@ -57,10 +60,22 @@ export const DonatePage: React.FC = () => {
       category: 'engagement',
       label: method,
     });
+    
+    // Scroll to top when changing methods
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleBack = () => {
     setSelectedMethod(null);
+    
+    // Track the back button click
+    ReactGA.event({
+      action: 'donation_back_click',
+      category: 'navigation',
+    });
+    
+    // Scroll to top when going back to method selection
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -93,7 +108,7 @@ export const DonatePage: React.FC = () => {
             </div>
             <h1 className="text-3xl font-bold mb-2">Support My Work</h1>
             <p className="text-gray-300 mb-8">
-              Thank you for considering supporting my work! Your contribution helps me to continue creating better digital experiences for people like you and me.
+              Thank you for considering supporting my work! Your contribution helps me to continue creating better digital experiences for people like you and me. All payment methods are secure and support Malaysian banking apps.
             </p>
 
             {selectedMethod === null ? (
@@ -107,6 +122,7 @@ export const DonatePage: React.FC = () => {
                       src="/images/DuitNow Logos/DuitNow1.jpg" 
                       alt="DuitNow Transfer" 
                       className="max-w-full max-h-full object-contain"
+                      loading="eager"
                     />
                   </div>
                   <div className="flex-1">
@@ -122,9 +138,17 @@ export const DonatePage: React.FC = () => {
                 >
                   <div className="w-12 h-12 mr-4 flex-shrink-0 bg-white rounded-lg p-1 flex items-center justify-center">
                     <img 
-                      src="/images/DuitNow Logos/DuitNow-QR-Logo_FA2.png" 
+                      src="/images/DuitNow%20Logos/DuitNowQR.png" 
                       alt="DuitNow QR" 
                       className="max-w-full max-h-full object-contain"
+                      loading="eager"
+                      onError={(e) => {
+                        // Fallback if the image fails to load
+                        const target = e.target as HTMLImageElement;
+                        console.error('Image failed to load:', target.src);
+                        // Try an alternative path if the first one fails
+                        target.src = '/images/DuitNowQR.png';
+                      }}
                     />
                   </div>
                   <div className="flex-1">
@@ -143,6 +167,7 @@ export const DonatePage: React.FC = () => {
                       src="/images/Touch_'n_Go_eWallet.png" 
                       alt="Touch 'n Go eWallet" 
                       className="max-w-full max-h-full object-contain"
+                      loading="eager"
                     />
                   </div>
                   <div className="flex-1">
