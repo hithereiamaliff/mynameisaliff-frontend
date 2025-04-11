@@ -119,11 +119,8 @@ function App() {
   
   // Check for URL parameter to enable donation button for testing
   React.useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('enableDonation') === 'true') {
-      setShowDonationButton(true);
-      console.log('Donation button enabled for testing');
-    }
+    // Donation feature is now publicly available
+    setShowDonationButton(true);
   }, []);
 
   // GA4 configuration
