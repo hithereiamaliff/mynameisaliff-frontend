@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { X, ArrowRight, ArrowLeft, MessageCircle, Github, Bus } from 'lucide-react';
+import { X, ArrowRight, ArrowLeft, MessageCircle, Github, Bus, Calculator } from 'lucide-react';
 
 interface AIDevModalProps {
   isOpen: boolean;
@@ -34,7 +34,7 @@ const AI_DEV_STEPS = [
   {
     title: "Experience AI-Enhanced Development",
     content: "You're currently experiencing it! This website was developed with the assistance of AI, creating an intuitive and engaging user experience. How do you find it?",
-    image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=2000",
+    image: "https://images.unsplash.com/photo-XXXXXXXXXXXX-21780ecad995?auto=format&fit=crop&q=80&w=2000",
     poll: {
       question: "How would you rate the website's user experience?",
       options: [
@@ -47,24 +47,30 @@ const AI_DEV_STEPS = [
     title: "Tech Stack Showcase",
     content: "Here's the powerful combination of technologies that make this website possible:",
     techStacks: TECH_STACKS,
-    image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&q=80&w=2000"
+    image: "https://images.unsplash.com/photo-XXXXXXXXXXXX-f134324a6cee?auto=format&fit=crop&q=80&w=2000"
   },
   {
     title: "AI Assistant Integration",
     content: "Experience the power of AI assistance firsthand through our integrated chatbot. Click the Chat 💬 button on the bottom right of the page to ask questions about my experience, skills, or anything else you'd like to know!",
-    image: "https://images.unsplash.com/photo-1531746790731-6c087fecd65a?auto=format&fit=crop&q=80&w=2000"
+    image: "https://images.unsplash.com/photo-XXXXXXXXXXXX-6c087fecd65a?auto=format&fit=crop&q=80&w=2000"
   },
   {
     title: "Rapid Penang Bus Chatbot",
     content: "I've also developed a specialized chatbot for Rapid Penang bus information. It helps users navigate the public transport system by providing route information and travel tips based on my personal experience.\n\nTry it out to see how AI can make public transportation more accessible!",
-    chatbotUrl: "https://pgbusapp.mynameisaliff.co.uk",
-    image: "https://images.unsplash.com/photo-1527430253228-e93688616381?auto=format&fit=crop&q=80&w=2000"
+    chatbotUrl: "https://pgbusapp.your-website-name.co.uk",
+    image: "https://images.unsplash.com/photo-XXXXXXXXXXXX-e93688616381?auto=format&fit=crop&q=80&w=2000"
+  },
+  {
+    title: "LHDN Tax Calculator",
+    content: "Simplify your Malaysian personal income tax calculation with my modern yet unofficial LHDN Tax Calculator. Built with the latest 2024 tax rates and reliefs, this tool provides instant, accurate calculations of your personal income tax.\n\nTry it now to get a clear picture of your tax obligations of 2024!",
+    chatbotUrl: "https://lhdn-calculator.your-website-name.co.uk",
+    image: "https://images.unsplash.com/photo-XXXXXXXXXXXX-6726b3ff858f?auto=format&fit=crop&q=80&w=2000"
   },
   {
     title: "Open Source",
     content: "Interested in how this website works? The frontend codebase is open source and available on GitHub. Feel free to explore, learn, or even contribute!",
-    githubUrl: "https://github.com/hithereiamaliff/mynameisaliff-frontend",
-    image: "https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?auto=format&fit=crop&q=80&w=2000"
+    githubUrl: "https://github.com/your-username/your-website-name-frontend",
+    image: "https://images.unsplash.com/photo-XXXXXXXXXXXX-b98afee0b2eb?auto=format&fit=crop&q=80&w=2000"
   }
 ];
 
@@ -192,6 +198,17 @@ export function AIDevModal({ isOpen, onClose, onOpenChat }: AIDevModalProps) {
                 >
                   Visit Bus App
                   <Bus className="ml-2 h-4 w-4" />
+                </a>
+              )}
+              {currentStep === 4 && (
+                <a
+                  href={step.chatbotUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 bg-yellow-700 hover:bg-yellow-800 text-white rounded-lg font-medium transition-colors text-sm sm:text-base"
+                >
+                  Try Tax Calculator
+                  <Calculator className="ml-2 h-4 w-4" />
                 </a>
               )}
               {isLastStep ? (

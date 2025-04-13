@@ -76,7 +76,7 @@ export function AIProjectsPage({ setIsChatOpen }: { setIsChatOpen?: (open: boole
                 while maintaining high quality and performance standards.
               </p>
               <img 
-                src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=2000"
+                src="https://images.unsplash.com/photo-XXXXXXXXXXXX-21780ecad995?auto=format&fit=crop&q=80&w=2000"
                 alt="AI development visualization"
                 className="w-full rounded-lg my-8"
               />
@@ -108,7 +108,7 @@ export function AIProjectsPage({ setIsChatOpen }: { setIsChatOpen?: (open: boole
               </p>
               <div className="mt-6">
                 <a
-                  href="https://github.com/hithereiamaliff/mynameisaliff-frontend"
+                  href="https://github.com/your-username/your-website-name-frontend"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center px-6 py-3 bg-yellow-700 hover:bg-yellow-800 text-white rounded-lg font-medium transition-colors text-sm sm:text-base"
@@ -126,7 +126,7 @@ export function AIProjectsPage({ setIsChatOpen }: { setIsChatOpen?: (open: boole
                 questions about my experience, skills, and provide helpful information about my services.
               </p>
               <img 
-                src="https://images.unsplash.com/photo-1531746790731-6c087fecd65a?auto=format&fit=crop&q=80&w=2000"
+                src="https://images.unsplash.com/photo-XXXXXXXXXXXX-6c087fecd65a?auto=format&fit=crop&q=80&w=2000"
                 alt="AI assistant concept"
                 className="w-full rounded-lg mb-8"
               />
@@ -149,13 +149,13 @@ export function AIProjectsPage({ setIsChatOpen }: { setIsChatOpen?: (open: boole
                 experience.
               </p>
               <img 
-                src="https://images.unsplash.com/photo-1527430253228-e93688616381?auto=format&fit=crop&q=80&w=2000"
+                src="https://images.unsplash.com/photo-XXXXXXXXXXXX-e93688616381?auto=format&fit=crop&q=80&w=2000"
                 alt="Bus chatbot interface"
                 className="w-full rounded-lg mb-8"
               />
               <div className="mt-6">
                 <a
-                  href="https://pgbusapp.mynameisaliff.co.uk"
+                  href="https://pgbusapp.your-website-name.co.uk"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center px-6 py-3 bg-yellow-700 hover:bg-yellow-800 text-white rounded-lg font-medium transition-colors text-sm sm:text-base"

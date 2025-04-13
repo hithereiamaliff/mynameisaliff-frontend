@@ -6,3 +6,4 @@ declare module './components/ChatWidget' {
   
   export const ChatWidget: React.FC<ChatWidgetProps>;
 }
+

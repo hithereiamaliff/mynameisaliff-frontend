@@ -6,3 +6,4 @@ declare module './components/tourwithalan/TourModal' {
   
   export const TourModal: React.FC<TourModalProps>;
 }
+

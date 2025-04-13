@@ -58,7 +58,7 @@ export function PublicTransportPage() {
                 that users have access to the most up-to-date details for their journeys.
               </p>
               <img 
-                src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&q=80&w=2000"
+                src="https://images.unsplash.com/photo-XXXXXXXXXXXX-c4fd4a3d5957?auto=format&fit=crop&q=80&w=2000"
                 alt="Public transport volunteer work"
                 className="w-full rounded-lg my-8"
               />
@@ -92,7 +92,7 @@ export function PublicTransportPage() {
                 meaningful and practical.
               </p>
               <img 
-                src="https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?auto=format&fit=crop&q=80&w=2000"
+                src="https://images.unsplash.com/photo-XXXXXXXXXXXX-1a6fd9ae45c7?auto=format&fit=crop&q=80&w=2000"
                 alt="Public transport experience"
                 className="w-full rounded-lg my-8"
               />
@@ -163,7 +163,7 @@ export function PublicTransportPage() {
               </p>
               <div className="mt-6">
                 <a
-                  href="https://pgbusapp.mynameisaliff.co.uk"
+                  href="https://pgbusapp.your-website-name.co.uk"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center px-6 py-3 bg-yellow-700 hover:bg-yellow-800 text-white rounded-lg font-medium transition-colors text-sm sm:text-base"

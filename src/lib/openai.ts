@@ -2,8 +2,8 @@ export async function getChatResponse(messages: { text: string; isUser: boolean;
   try {
     // Use current window location for development, fallback to production URL
     const apiUrl = import.meta.env.MODE === 'development' 
-      ? `${window.location.protocol}//${window.location.hostname}:3000/api/chat`
-      : 'https://mynameisaliff-backend-production.up.railway.app/api/chat';
+      ? `${window.location.protocol}//${window.location.hostname}:3001/api/chat`
+      : 'https://your-backend-url.example.com/api/chat';
 
     console.log('Using API URL:', apiUrl);
     console.log('Environment variables:', {

@@ -10,17 +10,17 @@ const TRANSFORMATION_STEPS = [
   {
     title: "The Evolution of My Journey",
     content: "What started as a passion for content writing has evolved into something much more exciting. The integration of AI has transformed how I approach digital solutions, opening new possibilities I never imagined.",
-    image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=2000"
+    image: "https://images.unsplash.com/photo-XXXXXXXXXXXX-f06f85e504b3?auto=format&fit=crop&q=80&w=2000"
   },
   {
     title: "From Writing to Innovation",
     content: "While I still value the art of storytelling, my focus has shifted to leveraging AI and technology to create more impactful solutions. This transformation has allowed me to combine creativity with technical innovation in ways that better serve modern needs.",
-    image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&q=80&w=2000"
+    image: "https://images.unsplash.com/photo-XXXXXXXXXXXX-f134324a6cee?auto=format&fit=crop&q=80&w=2000"
   },
   {
     title: "The Future is AI-Powered",
     content: "Today, I'm excited to be working on AI-powered solutions that make technology more accessible to everyone. From chatbots to intelligent automation, I'm passionate about creating tools that enhance human capabilities rather than replace them.",
-    image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=2000"
+    image: "https://images.unsplash.com/photo-XXXXXXXXXXXX-21780ecad995?auto=format&fit=crop&q=80&w=2000"
   }
 ];
 
@@ -96,7 +96,7 @@ export function TransformationModal({ isOpen, onClose }: TransformationModalProp
               {isLastStep ? (
                 <>
                   <a
-                    href="https://works.alancopywritingservices.com"
+                    href="https://alancopywritingservices.com"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center px-4 py-2 bg-yellow-700 hover:bg-yellow-800 text-white rounded-lg font-medium transition-colors text-sm"

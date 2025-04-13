@@ -33,12 +33,12 @@ const CASE_STUDY_STEPS: UXStep[] = [
   {
     title: "Experience This Site's Performance",
     content: "You're experiencing it right now - a blazing fast website built with modern technologies. \n\nNotice the smooth animations and instant page loads? This site leverages React with Vite for optimal performance.\n\nThe result? Sub-second page loads and a perfect Lighthouse performance score.",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=2000",
+    image: "https://images.unsplash.com/photo-XXXXXXXXXXXX-afdab827c52f?auto=format&fit=crop&q=80&w=2000",
   },
   {
     title: "WordPress Optimization Specialist",
     content: "Speed is crucial for success. A 1-second delay can result in 7% fewer conversions and 11% fewer page views.",
-    image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&q=80&w=2000",
+    image: "https://images.unsplash.com/photo-XXXXXXXXXXXX-14dd9538aa97?auto=format&fit=crop&q=80&w=2000",
     stats: {
       performance: "92%",
       improvement: "40%"
@@ -54,7 +54,7 @@ const CASE_STUDY_STEPS: UXStep[] = [
       "High server response time",
       "Unoptimized images"
     ],
-    image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=2000",
+    image: "https://images.unsplash.com/photo-XXXXXXXXXXXX-43490279c0fa?auto=format&fit=crop&q=80&w=2000",
     beforeScore: "52%"
   },
   {
@@ -78,7 +78,7 @@ const CASE_STUDY_STEPS: UXStep[] = [
         description: "Smart compression"
       }
     ],
-    image: "https://images.unsplash.com/photo-1600132806370-bf17e65e942f?auto=format&fit=crop&q=80&w=2000"
+    image: "https://images.unsplash.com/photo-XXXXXXXXXXXX-bf17e65e942f?auto=format&fit=crop&q=80&w=2000"
   },
   {
     title: "Real Results for Real Websites",
@@ -102,7 +102,7 @@ const CASE_STUDY_STEPS: UXStep[] = [
         ]
       }
     ],
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=2000"
+    image: "https://images.unsplash.com/photo-XXXXXXXXXXXX-afdab827c52f?auto=format&fit=crop&q=80&w=2000"
   }
 ];
 

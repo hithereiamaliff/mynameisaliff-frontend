@@ -32,7 +32,7 @@ export function ContentWritingPage() {
                 I never imagined.
               </p>
               <img 
-                src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=2000"
+                src="https://images.unsplash.com/photo-XXXXXXXXXXXX-f06f85e504b3?auto=format&fit=crop&q=80&w=2000"
                 alt="Digital content writing evolution"
                 className="w-full rounded-lg my-8"
               />
@@ -46,7 +46,7 @@ export function ContentWritingPage() {
                 creativity with technical innovation in ways that better serve modern needs.
               </p>
               <img 
-                src="https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&q=80&w=2000"
+                src="https://images.unsplash.com/photo-XXXXXXXXXXXX-f134324a6cee?auto=format&fit=crop&q=80&w=2000"
                 alt="Innovation in content creation"
                 className="w-full rounded-lg my-8"
               />
@@ -60,7 +60,7 @@ export function ContentWritingPage() {
                 enhance human capabilities rather than replace them.
               </p>
               <img 
-                src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=2000"
+                src="https://images.unsplash.com/photo-XXXXXXXXXXXX-21780ecad995?auto=format&fit=crop&q=80&w=2000"
                 alt="AI-powered future"
                 className="w-full rounded-lg my-8"
               />

@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactGA from 'react-ga4';
+import { Link } from 'react-router-dom';
 import { Linkedin, Download, ChevronDown, User, ScrollText, MapPin, Newspaper, Github, Bot, Train, Wrench as Tool } from 'lucide-react';
 import { useTypewriter } from './hooks/useTypewriter';
 import { Modal } from './components/Modal';
@@ -10,7 +11,10 @@ import { TransformationModal } from './components/TransformationModal';
 import { TransportModal } from './components/TransportModal';
 import { DevToolsModal } from './components/DevToolsModal';
 import { AIDevModal } from './components/AIDevModal';
+import DonationButton from './components/Donation/DonationButton';
 import { UXCaseStudyModal } from './components/UXCaseStudyModal';
+import { ContactModal } from './components/ContactModal';
+
 
 const scrollToContent = () => {
   const element = document.getElementById('what-i-do');
@@ -67,10 +71,64 @@ function Card({ icon, title, description, actionText, link, action }: CardProps)
   );
 }
 
+// Error Boundary Component
+class ErrorBoundary extends React.Component<{ children: React.ReactNode }, { hasError: boolean }> {
+  constructor(props: { children: React.ReactNode }) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-yellow-950 via-yellow-900 to-yellow-950 text-white p-8">
+          <div className="text-center">
+            <h1 className="text-4xl font-bold mb-4">Oops! Something went wrong</h1>
+            <p className="mb-4">We're sorry for the inconvenience. Please try refreshing the page.</p>
+            <button 
+              onClick={() => window.location.reload()} 
+              className="bg-amber-600 hover:bg-amber-700 text-white font-bold py-2 px-4 rounded transition-colors"
+            >
+              Refresh Page
+            </button>
+          </div>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
 function App() {
+
+  // State declarations
+  const [isTransformationModalOpen, setIsTransformationModalOpen] = React.useState(false);
+  const [isUXCaseStudyOpen, setIsUXCaseStudyOpen] = React.useState(false);
+  const [isTransportModalOpen, setIsTransportModalOpen] = React.useState(false);
+  const [isDevToolsModalOpen, setIsDevToolsModalOpen] = React.useState(false);
+  const [isAIDevModalOpen, setIsAIDevModalOpen] = React.useState(false);
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [isChatOpen, setIsChatOpen] = React.useState(false);
+  const [isTourModalOpen, setIsTourModalOpen] = React.useState(false);
+  const [isContactModalOpen, setIsContactModalOpen] = React.useState(false);
+  
+  // Feature flag for donation button
+  const [showDonationButton, setShowDonationButton] = React.useState(false);
+  
+  // Check for URL parameter to enable donation button for testing
+  React.useEffect(() => {
+    // Donation feature is now publicly available
+    setShowDonationButton(true);
+  }, []);
+
+  // GA4 configuration
   React.useEffect(() => {
     // Initialize GA4 with your measurement ID
-    ReactGA.initialize('your_ga4_id_here', {
+    ReactGA.initialize('G-R37HQB2SJ7', {
       gaOptions: {
         cookieFlags: 'SameSite=None;Secure'
       }
@@ -93,14 +151,7 @@ function App() {
     console.log('GA4: Sent test event');
   }, []);
 
-  const [isTransformationModalOpen, setIsTransformationModalOpen] = React.useState(false);
-  const [isUXCaseStudyOpen, setIsUXCaseStudyOpen] = React.useState(false);
-  const [isTransportModalOpen, setIsTransportModalOpen] = React.useState(false);
-  const [isDevToolsModalOpen, setIsDevToolsModalOpen] = React.useState(false);
-  const [isAIDevModalOpen, setIsAIDevModalOpen] = React.useState(false);
-  const [isModalOpen, setIsModalOpen] = React.useState(false);
-  const [isChatOpen, setIsChatOpen] = React.useState(false);
-  const [isTourModalOpen, setIsTourModalOpen] = React.useState(false);
+
 
   const descriptions = [
     'Tour guide-in-training 🙋🏻',
@@ -113,7 +164,7 @@ function App() {
     'Public transport user 🚌🚉'
   ];
 
-  const currentText = useTypewriter({
+  const { text: currentText } = useTypewriter({
     texts: descriptions,
     typingSpeed: 50,
     deletingSpeed: 25,
@@ -121,9 +172,10 @@ function App() {
   });
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-yellow-950 via-yellow-900 to-yellow-950">
+    <ErrorBoundary>
+      <div className="min-h-screen bg-gradient-to-br from-yellow-950 via-yellow-900 to-yellow-950">
       {/* Hero Section */}
-      <div className="min-h-screen flex items-center justify-center px-4">
+      <div className="min-h-screen flex items-center justify-center px-4 py-12 lg:py-16">
         <div className="max-w-6xl w-full mx-auto grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Column - Introduction */}
           <div className="space-y-6 text-center lg:text-left">
@@ -133,7 +185,7 @@ function App() {
             <div className="space-y-4">
               <div className="text-xl text-gray-300 space-y-4">
                 <p>
-                  I'm Aliff, a <span className="text-amber-400 font-semibold">multi-faceted</span><br />
+                  I'm YourName, a <span className="text-amber-400 font-semibold">multi-faceted</span><br />
                   <span className="text-amber-400 font-semibold">digital experience creator</span>
                 </p>
                 
@@ -150,7 +202,10 @@ function App() {
                 </div>
                 <div className="flex lg:justify-start justify-center">
                 <a
-                  onClick={scrollToContent}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    scrollToContent();
+                  }}
                   href="#what-i-do"
                   className="inline-flex items-center px-6 py-3 bg-yellow-700 hover:bg-yellow-800 text-white rounded-lg font-medium transition-colors"
                 >
@@ -165,7 +220,7 @@ function App() {
           {/* Right Column - Image */}
           <div className="relative w-full">
             <img
-              src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&q=80&w=1200&h=675"
+              src="https://images.unsplash.com/photo-XXXXXXXXXXXX-187a5b1d37b8?auto=format&fit=crop&q=80&w=1200&h=675"
               alt="Workspace"
               className="rounded-2xl shadow-2xl w-full object-cover aspect-video"
             />
@@ -293,13 +348,11 @@ function App() {
         <div className="max-w-6xl mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold text-white mb-12">Let's Connect</h2>
           <div className="flex flex-wrap justify-center gap-4">
-            <a
-              href="https://hithere.mynameisaliff.co.uk"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              to="/ramblings"
               onClick={() => {
                 ReactGA.event({
-                  category: 'External Link',
+                  category: 'Navigation',
                   action: 'Click',
                   label: 'Ramblings'
                 });
@@ -308,9 +361,9 @@ function App() {
             >
               <Newspaper className="mr-2 h-5 w-5" />
               Ramblings
-            </a>
+            </Link>
             <a
-              href="https://www.linkedin.com/in/hithereiamaliff"
+              href="https://www.linkedin.com/in/your-username"
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => {
@@ -326,7 +379,7 @@ function App() {
               LinkedIn
             </a>
             <a
-              href="https://github.com/hithereiamaliff"
+              href="https://github.com/your-username"
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => {
@@ -345,17 +398,26 @@ function App() {
               href="#"
               onClick={(e) => {
                 e.preventDefault();
-                setIsChatOpen(true);
+                setIsContactModalOpen(true);
                 ReactGA.event({
                   category: 'User Interaction',
-                  action: 'Opened Chat Widget'
+                  action: 'Opened Contact Modal'
                 });
               }}
               className="inline-flex items-center px-6 py-3 bg-gray-800 hover:bg-gray-700 text-white rounded-lg font-medium transition-colors"
             >
               <User className="mr-2 h-5 w-5" />
-              Ask Aliff
+              Ask YourName
             </a>
+            {showDonationButton && (
+              <DonationButton 
+                variant="primary" 
+                text="Support My Work" 
+                showIcon={true}
+                size="lg"
+                className="inline-flex items-center px-6 py-3 bg-yellow-700 hover:bg-yellow-800 text-white rounded-lg font-medium transition-colors"
+              />
+            )}
           </div>
         </div>
       </div>
@@ -414,7 +476,12 @@ function App() {
         isOpen={isDevToolsModalOpen}
         onClose={() => setIsDevToolsModalOpen(false)}
       />
+      <ContactModal
+        isOpen={isContactModalOpen}
+        onClose={() => setIsContactModalOpen(false)}
+      />
     </div>
+    </ErrorBoundary>
   );
 }
 

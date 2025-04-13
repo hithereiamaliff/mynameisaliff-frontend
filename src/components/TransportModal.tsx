@@ -10,7 +10,7 @@ const TRANSPORT_STEPS = [
   {
     title: "Community Volunteer at Moovit",
     content: "As a Community Volunteer for Moovit, I focused on enhancing the accuracy and reliability of public transport data within Malaysia.\n\nI regularly contributed by fact-checking and updating timetables, routes, and other crucial transport information in the Moovit database, ensuring that users had access to the most up-to-date details for their journeys.",
-    image: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&q=80&w=2000"
+    image: "https://images.unsplash.com/photo-XXXXXXXXXXXX-c4fd4a3d5957?auto=format&fit=crop&q=80&w=2000"
   },
   {
     title: "Areas Covered",
@@ -29,12 +29,12 @@ const TRANSPORT_STEPS = [
         provider: "Rapid Kuantan"
       }
     ],
-    image: "https://images.unsplash.com/photo-1570125909232-e93688616381?auto=format&fit=crop&q=80&w=2000"
+    image: "https://images.unsplash.com/photo-XXXXXXXXXXXX-194d4455a60c?auto=format&fit=crop&q=80&w=2000"
   },
   {
     title: "Personal Experience",
     content: "My contributions to Moovit are backed by extensive personal experience as a frequent user of public transportation in Malaysia. For about 7 years, I've relied on Rapid Penang buses and KTM trains for my daily commute.\n\nThis firsthand experience helps me understand the challenges and needs of public transport users, making my contributions to Moovit more meaningful and practical.",
-    image: "https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?auto=format&fit=crop&q=80&w=2000"
+    image: "https://images.unsplash.com/photo-XXXXXXXXXXXX-1a6fd9ae45c7?auto=format&fit=crop&q=80&w=2000"
   },
   {
     title: "Try Moovit Today",
@@ -56,13 +56,13 @@ const TRANSPORT_STEPS = [
       text: "Need help getting started? Download our quick guide:",
       url: "https://alancopywritingservices.s3.ap-southeast-1.amazonaws.com/Previous+Works+by+Alan+Copywriting+Services/By+Topics/Public+Transportation/Start+Taking+Public+Transport+with+Moovit+-+Free+PDF-min.pdf"
     },
-    image: "https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&q=80&w=2000"
+    image: "https://images.unsplash.com/photo-XXXXXXXXXXXX-b35492cc74b4?auto=format&fit=crop&q=80&w=2000"
   },
   {
     title: "Ask Me About Rapid Penang",
     content: "I've developed a chatbot that can answer your questions about Rapid Penang based on my personal experience using the Rapid Penang bus.\n\nYou can ask about:\n• General information about Rapid Penang bus network 🚍\n• Tips for using the bus system 🚶🏻\n• Basic route information 🗺\n\nNOTE: For real-time information like bus arrivals, locations, and specific route recommendations, please use the Moovit app instead (just press the Back button below to download).",
-    chatbotUrl: "https://pgbusapp.mynameisaliff.co.uk",
-    image: "https://images.unsplash.com/photo-1527430253228-e93688616381?auto=format&fit=crop&q=80&w=2000"
+    chatbotUrl: "https://pgbusapp.your-website-name.co.uk",
+    image: "https://images.unsplash.com/photo-XXXXXXXXXXXX-e93688616381?auto=format&fit=crop&q=80&w=2000"
   }
 ];
 

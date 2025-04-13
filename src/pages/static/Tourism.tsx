@@ -15,7 +15,7 @@ export function TourismPage() {
   return (
     <>
       <SEO
-        title="Tourism & Local Experiences in Penang | Aliff"
+        title="Tourism & Local Experiences in Penang | YourName"
         description="Discover authentic Penang experiences with a local guide-in-training. From heritage walking tours to hidden gems and food adventures, explore the island's beauty through curated local experiences."
         keywords="penang tourism, local guide, heritage walks, food tours, photography walks, george town tours"
         path="/tourism"
@@ -44,7 +44,7 @@ export function TourismPage() {
               </p>
               <div className="relative">
                 <img 
-                  src="https://images.unsplash.com/photo-1592811069126-7e43dde028eb?q=80&w=1931&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                  src="https://images.unsplash.com/photo-XXXXXXXXXXXX-7e43dde028eb?q=80&w=1931&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                   alt="Penang skyline view"
                   className="w-full rounded-lg my-8 hidden md:block"
                 />

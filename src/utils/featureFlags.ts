@@ -20,3 +20,4 @@ export const hasFeatureFlag = (flag: string): boolean => {
   const url = new URL(window.location.href);
   return url.searchParams.has(flag);
 };
+

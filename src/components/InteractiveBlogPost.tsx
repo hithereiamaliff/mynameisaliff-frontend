@@ -99,7 +99,7 @@ export function InteractiveBlogPost({ post }: InteractiveBlogPostProps) {
               Article
             </button>
             <a
-              href={`https://medium.com/@mynameisaliff/${post.mediumSlug}`}
+              href={`https://medium.com/@your-website-name/${post.mediumSlug}`}
               target="_blank"
               rel="noopener noreferrer"
               className="px-4 py-2 rounded-md flex items-center gap-2 text-gray-400 hover:text-white transition-colors"

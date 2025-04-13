@@ -2,7 +2,7 @@
 export async function getChatResponse(userMessage: string): Promise<string> {
   try {
     // Use Railway backend URL since we want to test the Railway configuration
-    const apiUrl = 'https://mynameisaliff-backend-production.up.railway.app/api/chat';
+    const apiUrl = 'https://your-backend-url.example.com/api/chat';
 
     const response = await fetch(apiUrl, {
       method: 'POST',

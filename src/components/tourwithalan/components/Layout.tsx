@@ -11,7 +11,7 @@ export function Layout({ children, onClose }: LayoutProps) {
     <div 
       className="min-h-screen min-h-[100dvh] flex items-center justify-center bg-cover bg-center bg-no-repeat overflow-x-hidden px-4 py-6 md:px-8 md:py-8"
       style={{
-        backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://images.unsplash.com/photo-1596422846543-75c6fc197f07?auto=format&fit=crop&q=80")',
+        backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://images.unsplash.com/photo-XXXXXXXXXXXX-75c6fc197f07?auto=format&fit=crop&q=80")',
       }}
     >
       <div className="relative max-w-2xl mx-auto w-full">

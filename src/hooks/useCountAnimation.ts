@@ -34,3 +34,4 @@ export const useCountAnimation = (end: number = 0, duration: number = 1000) => {
 
   return count;
 };
+

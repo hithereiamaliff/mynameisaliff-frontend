@@ -42,7 +42,7 @@ export function UXDesignPage() {
                 and a perfect Lighthouse performance score.
               </p>
               <img 
-                src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=2000"
+                src="https://images.unsplash.com/photo-XXXXXXXXXXXX-afdab827c52f?auto=format&fit=crop&q=80&w=2000"
                 alt="Website performance visualization"
                 className="w-full rounded-lg my-8"
               />
@@ -59,7 +59,7 @@ export function UXDesignPage() {
                 <li>40% Average Improvement</li>
               </ul>
               <img 
-                src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&q=80&w=2000"
+                src="https://images.unsplash.com/photo-XXXXXXXXXXXX-14dd9538aa97?auto=format&fit=crop&q=80&w=2000"
                 alt="WordPress optimization"
                 className="w-full rounded-lg my-8"
               />

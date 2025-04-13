@@ -15,7 +15,7 @@ const TOOLS = [
       "Detailed documentation"
     ],
     techStack: ["Node.js", "WSL", "Various API keys"],
-    repoUrl: "https://github.com/hithereiamaliff/mcp-servers"
+    repoUrl: "https://github.com/hithereiamYourName/mcp-servers"
   },
   {
     name: "WSL Claude Code Launcher",
@@ -27,7 +27,7 @@ const TOOLS = [
       "Detailed documentation"
     ],
     techStack: ["Shell Script", "WSL", "Claude API"],
-    repoUrl: "https://github.com/hithereiamaliff/wsl-claudecode-launcher"
+    repoUrl: "https://github.com/hithereiamYourName/wsl-claudecode-launcher"
   }
 ];
 
@@ -72,7 +72,7 @@ export function DevToolsPage() {
                 documentation to help you get started.
               </p>
               <img 
-                src="https://images.unsplash.com/photo-1607799279861-4dd421887fb3?auto=format&fit=crop&q=80&w=2000"
+                src="https://images.unsplash.com/photo-XXXXXXXXXXXX-4dd421887fb3?auto=format&fit=crop&q=80&w=2000"
                 alt="Developer tools concept"
                 className="w-full rounded-lg my-8"
               />

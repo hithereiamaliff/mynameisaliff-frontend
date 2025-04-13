@@ -1,0 +1,47 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+  functions = "netlify/functions"
+
+[build.environment]
+  VITE_BACKEND_URL = "https://your-backend-url.example.com"
+  # Don't put actual API keys here - set them in Netlify UI
+
+# Function-specific configuration
+[functions]
+  # Preserve raw body for webhook function
+  node_bundler = "esbuild"
+
+[functions.webhook]
+  included_files = ["netlify/functions/webhook.js"]
+  
+[functions.webhook.environment]
+  PRESERVE_RAW_BODY = "true"
+
+# API redirects for Netlify Functions
+[[redirects]]
+  from = "/api/stripe-config"
+  to = "/.netlify/functions/stripe-config"
+  status = 200
+
+[[redirects]]
+  from = "/api/create-payment-intent"
+  to = "/.netlify/functions/create-payment-intent"
+  status = 200
+
+[[redirects]]
+  from = "/api/webhook"
+  to = "/.netlify/functions/webhook"
+  status = 200
+
+# Fallback to Railway backend for API endpoints not handled by Netlify Functions
+[[redirects]]
+  from = "/api/*"
+  to = "https://your-backend-url.example.com/api/:splat"
+  status = 200
+
+# SPA redirect
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

@@ -30,7 +30,7 @@ export function Welcome({ onNext, onClose }: WelcomeProps) {
         <div className="bg-black/30 backdrop-blur-sm p-4 md:p-8 rounded-2xl shadow-xl mb-6 md:mb-8">
           <h2 className="text-xl md:text-2xl font-medium mb-4 md:mb-6 text-yellow-400">
             Hi there! I'm your friendly Malaysian local, ready to help you prepare for your journey to our beautiful country! 
-            You can call me <span className="text-yellow-600 font-medium">Aliff</span> 😄.
+            You can call me <span className="text-yellow-600 font-medium">YourName</span> 😄.
           </h2>
 
           <div className="space-y-4 text-base md:text-xl text-gray-200">

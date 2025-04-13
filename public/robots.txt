@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://mynameisaliff.co.uk/sitemap.xml
+Sitemap: https://your-website-name.co.uk/sitemap.xml

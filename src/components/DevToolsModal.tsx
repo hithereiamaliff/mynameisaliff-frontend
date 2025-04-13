@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { X, ArrowRight, ArrowLeft, Github, FileCode, Bot, Terminal } from 'lucide-react';
+import { useState } from 'react';
+import { X, ArrowRight, ArrowLeft, Github } from 'lucide-react';
 
 interface DevToolsModalProps {
   isOpen: boolean;
@@ -10,21 +10,21 @@ const DEV_TOOLS_STEPS = [
   {
     title: "AI-Powered Developer Tools",
     content: "I've developed these tools initially for my own use, leveraging AI to enhance my development workflow. Now, I'm excited to share them with the community as open-source projects.\n\nWhile some technical knowledge is required to use these tools, I've provided detailed README documentation to help you get started.",
-    image: "https://images.unsplash.com/photo-1607799279861-4dd421887fb3?auto=format&fit=crop&q=80&w=2000"
+    image: "https://images.unsplash.com/photo-XXXXXXXXXXXX-4dd421887fb3?auto=format&fit=crop&q=80&w=2000"
   },
   {
     title: "Model Context Protocol (MCP) Servers",
     content: "A collection of server implementations for the Model Context Protocol, designed to enhance AI model interactions with structured context.\n\nKey Features:\n• Standardized context handling\n• Multiple server implementations\n• Easy integration with AI models\n• Detailed documentation",
-    repoUrl: "https://github.com/hithereiamaliff/mcp-servers",
+    repoUrl: "https://github.com/your-username/mcp-servers",
     techStack: ["Node.js", "WSL", "Various API keys"],
-    image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&q=80&w=2000"
+    image: "https://images.unsplash.com/photo-XXXXXXXXXXXX-f134324a6cee?auto=format&fit=crop&q=80&w=2000"
   },
   {
     title: "WSL Claude Code Launcher",
     content: "A specialized tool for launching Claude Code session through Windows Subsystem for Linux (WSL) without entering commands manually.\n\nKey Features:\n• Seamless WSL integration\n• Automated session management\n• Claude API integration configuration\n• Detailed documentation",
-    repoUrl: "https://github.com/hithereiamaliff/wsl-claudecode-launcher",
+    repoUrl: "https://github.com/your-username/wsl-claudecode-launcher",
     techStack: ["Shell Script", "WSL", "Claude API"],
-    image: "https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=2000"
+    image: "https://images.unsplash.com/photo-XXXXXXXXXXXX-c8506221ca97?auto=format&fit=crop&q=80&w=2000"
   }
 ];
 
@@ -83,23 +83,38 @@ export function DevToolsModal({ isOpen, onClose }: DevToolsModalProps) {
           </h2>
           
           <div className="text-gray-300 space-y-6">
-            <div className="leading-relaxed whitespace-pre-wrap">{step.content}</div>
-
-            {step.techStack && (
-              <div className="bg-gray-800/50 rounded-lg p-4">
-                <h3 className="text-white font-medium mb-3">Tech Stack:</h3>
-                <div className="flex flex-wrap gap-2">
-                  {step.techStack.map((tech, index) => (
-                    <span
-                      key={index}
-                      className="px-3 py-1 bg-gray-700/50 rounded-full text-sm text-yellow-400"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
+            <div className="leading-relaxed whitespace-pre-wrap">
+              {step.content.split('\n\nKey Features:').map((part, index) => {
+                if (index === 0) return part;
+                return (
+                  <div key={index} className="mt-6">
+                    <div className="md:flex md:gap-6">
+                      <div className="md:flex-1">
+                        <h3 className="text-white font-medium mb-3">Key Features:</h3>
+                        {part}
+                      </div>
+                      {step.techStack && (
+                        <div className="mt-6 md:mt-0 md:w-64">
+                          <div className="bg-gray-800/50 rounded-lg p-4">
+                            <h3 className="text-white font-medium mb-3">Tech Stack:</h3>
+                            <div className="flex flex-wrap gap-2">
+                              {step.techStack.map((tech, index) => (
+                                <span
+                                  key={index}
+                                  className="px-3 py-1 bg-gray-700/50 rounded-full text-sm text-yellow-400"
+                                >
+                                  {tech}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
 
             {step.repoUrl && (
               <a

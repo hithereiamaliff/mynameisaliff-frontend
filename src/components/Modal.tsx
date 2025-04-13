@@ -28,20 +28,20 @@ export function Modal({ isOpen, onClose, children }: ModalProps) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-6">
       <div 
         className="fixed inset-0 bg-black/60 backdrop-blur-sm"
         onClick={onClose}
       />
-      <div className="relative bg-white rounded-lg w-full max-w-md max-h-[90vh] flex flex-col">
+      <div className="relative bg-white rounded-lg w-full max-w-md md:max-w-lg lg:max-w-xl flex flex-col max-h-[80vh] overflow-hidden">
         <button
           onClick={onClose}
-          className="absolute top-3 right-3 p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-full transition-colors"
+          className="absolute top-3 right-3 p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-full transition-colors z-10"
           aria-label="Close modal"
         >
           <X className="h-5 w-5" />
         </button>
-        <div className="overflow-y-auto p-6 flex-1">
+        <div className="p-4 md:p-6 overflow-auto">
           {children}
         </div>
         <div className="p-4 border-t border-gray-100 flex justify-center">

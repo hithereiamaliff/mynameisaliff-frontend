@@ -1,0 +1,10 @@
+{
+    "name": "your-website-name-netlify-functions",
+    "version": "1.0.0",
+    "description": "Netlify Functions for your-website-name.co.uk",
+    "main": "index.js",
+    "dependencies": {
+      "dotenv": "^16.0.3",
+      "stripe": "^12.0.0"
+    }
+  }

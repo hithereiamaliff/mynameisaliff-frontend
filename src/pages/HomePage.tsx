@@ -32,12 +32,15 @@ export function HomePage({ setIsModalOpen, setIsChatOpen, setIsBlogPreviewOpen }
     'Public transport user 🚌🚉'
   ];
 
-  const currentText = useTypewriter({
+  const typewriterResult = useTypewriter({
     texts: descriptions,
     typingSpeed: 50,
     deletingSpeed: 25,
     delayBetweenTexts: 2000
   });
+  
+  // Extract the text property from the TypewriterResult object
+  const currentText = typewriterResult.text;
 
   return (
     <>
@@ -52,7 +55,7 @@ export function HomePage({ setIsModalOpen, setIsChatOpen, setIsBlogPreviewOpen }
             <div className="space-y-4">
               <div className="text-xl text-gray-300 space-y-4">
                 <p>
-                  I'm Aliff, currently based in<br />
+                  I'm YourName, currently based in<br />
                   George Town, Penang 🇲🇾
                 </p>
                 <div className="h-8">
@@ -75,7 +78,7 @@ export function HomePage({ setIsModalOpen, setIsChatOpen, setIsBlogPreviewOpen }
           {/* Right Column - Image */}
           <div className="relative w-full">
             <img
-              src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&q=80&w=1200&h=675"
+              src="https://images.unsplash.com/photo-XXXXXXXXXXXX-187a5b1d37b8?auto=format&fit=crop&q=80&w=1200&h=675"
               alt="Workspace"
               className="rounded-2xl shadow-2xl w-full object-cover aspect-video"
             />
@@ -209,7 +212,7 @@ export function HomePage({ setIsModalOpen, setIsChatOpen, setIsBlogPreviewOpen }
               Blog
             </button>
             <a
-              href="https://www.linkedin.com/in/hithereiamaliff"
+              href="https://www.linkedin.com/in/your-username"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center px-6 py-3 bg-gray-800 hover:bg-gray-700 text-white rounded-lg font-medium transition-colors"
@@ -226,7 +229,7 @@ export function HomePage({ setIsModalOpen, setIsChatOpen, setIsBlogPreviewOpen }
               className="inline-flex items-center px-6 py-3 bg-gray-800 hover:bg-gray-700 text-white rounded-lg font-medium transition-colors"
             >
               <User className="mr-2 h-5 w-5" />
-              Ask Aliff
+              Ask YourName
             </a>
           </div>
         </div>

@@ -27,7 +27,7 @@ interface Message {
 }
 
 const INITIAL_MESSAGE = {
-  text: "Selamat datang! I'm Aliff's virtual assistant. You can chat with me in any language you prefer, and I'll reply in the same language you use (powered by AI). How can I help you today?",
+  text: "Selamat datang! I'm YourName's virtual assistant. You can chat with me in any language you prefer, and I'll reply in the same language you use (powered by AI). How can I help you today?",
   isUser: false,
   timestamp: new Date()
 };
@@ -190,7 +190,7 @@ export function ChatWidget({ isOpen, onOpenChange }: ChatWidgetProps) {
       >
         {/* Header - Fixed position */}
         <div className="sticky top-0 p-4 bg-yellow-700 text-white sm:rounded-t-lg flex justify-between items-center z-10">
-          <h3 className="font-medium">Chat with Aliff's Assistant 🇲🇾</h3>
+          <h3 className="font-medium">Chat with YourName's Assistant 🇲🇾</h3>
           <button
             onClick={() => onOpenChange(false)}
             className="p-1 hover:bg-yellow-800 rounded"
