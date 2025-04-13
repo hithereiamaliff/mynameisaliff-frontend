@@ -189,7 +189,12 @@ export const DonatePage: React.FC = () => {
                   className="w-full p-4 bg-gray-800/50 hover:bg-gray-800/70 rounded-lg text-left transition-colors flex items-center"
                 >
                   <div className="w-12 h-12 mr-4 flex-shrink-0 bg-white rounded-lg p-1 flex items-center justify-center">
-                    <CreditCard className="h-8 w-8 text-gray-800" />
+                    <img 
+                      src="/images/Credit Debit Payment Logo/VisaMastercard logo.png" 
+                      alt="Visa Mastercard" 
+                      className="max-w-full max-h-full object-contain"
+                      loading="eager"
+                    />
                   </div>
                   <div className="flex-1">
                     <h3 className="text-white font-medium">Credit/Debit Card</h3>

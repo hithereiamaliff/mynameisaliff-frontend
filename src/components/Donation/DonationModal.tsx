@@ -135,11 +135,12 @@ export function DonationModal({ isOpen, onClose }: DonationModalProps) {
                   className="w-full p-4 bg-gray-800/50 hover:bg-gray-800/70 rounded-lg text-left transition-colors flex items-center"
                 >
                   <div className="w-12 h-12 mr-4 flex-shrink-0 bg-white rounded-lg p-1 flex items-center justify-center">
-                    <svg className="h-8 w-8" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M2 9C2 7.89543 2.89543 7 4 7H20C21.1046 7 22 7.89543 22 9V15C22 16.1046 21.1046 17 20 17H4C2.89543 17 2 16.1046 2 15V9Z" stroke="#1F2937" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                      <path d="M16 14C16.5523 14 17 13.5523 17 13C17 12.4477 16.5523 12 16 12C15.4477 12 15 12.4477 15 13C15 13.5523 15.4477 14 16 14Z" fill="#1F2937"/>
-                      <path d="M18 11C18.5523 11 19 10.5523 19 10C19 9.44772 18.5523 9 18 9C17.4477 9 17 9.44772 17 10C17 10.5523 17.4477 11 18 11Z" fill="#1F2937"/>
-                    </svg>
+                    <img 
+                      src="/images/Credit Debit Payment Logo/VisaMastercard logo.png" 
+                      alt="Visa Mastercard" 
+                      className="max-w-full max-h-full object-contain"
+                      loading="eager"
+                    />
                   </div>
                   <div className="flex-1">
                     <h3 className="text-white font-medium">Credit/Debit Card</h3>
